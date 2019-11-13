@@ -6,11 +6,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
-public class ClientTrusted : Client {
+public class TrustedShopClient : Bot {
 
     private HttpClient httpClient;
 
-    public ClientTrusted() {
+    /*
+     * Utilise l'API de trusted shops
+     * la version publique est très limité, on ne peut trouver que les 10 derniers commentaires
+     */
+
+    public TrustedShopClient() {
         httpClient = new HttpClient();
 
         /*
