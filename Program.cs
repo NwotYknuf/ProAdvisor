@@ -6,20 +6,17 @@ namespace TrustedShopsCrawler {
     class Program {
         public static async Task Main(string[] args) {
 
-            string url_entreprise = "moncoffrage.com";
-            ClientTrusted client = new ClientTrusted();
+            TrustedShopsScrapper ts = new TrustedShopsScrapper();
+            List<Review> reviews = await ts.getReviews("moncoffrage.com");
 
-            List<Review> reviews = await client.getReviews(url_entreprise);
             double moyenne = 0.0;
 
-            foreach (Review review in reviews) {
-                moyenne += review.note;
-                Console.WriteLine("Date : {0}, Note {1} Commentaire :\n{2}\n", review.date, review.note, review.commentaire);
+            foreach (Review rev in reviews) {
+                moyenne += rev.note;
+                Console.WriteLine($"date : {rev.date}, note : {rev.note}, commentaire : \n{rev.commentaire}\n");
             }
 
-            moyenne /= reviews.Count;
-
-            Console.WriteLine("Moyenne pour {0} : {1}", url_entreprise, moyenne);
+            Console.WriteLine($"{reviews.Count} reviews trouvées, note moyenne : {moyenne/reviews.Count}");
 
         }
     }
