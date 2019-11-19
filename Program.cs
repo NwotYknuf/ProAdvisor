@@ -6,17 +6,17 @@ using Newtonsoft.Json;
 
 namespace TrustedShopsCrawler {
     class Program {
-        public static async Task Main(string[] args) {
+        public static void Main(string[] args) {
 
             string recherche = "www.pimkie.fr";
             Console.WriteLine($"Recherche d'avis pour {recherche}");
 
             TrustPilotScrapper tps = new TrustPilotScrapper();
-            List<Review> tp_reviews = await tps.getReviews(recherche);
+            List<Review> tp_reviews = tps.getReviews(recherche).Result;
             Console.WriteLine($"{tp_reviews.Count} reviews trouvées pour TrustPilot");
 
             TrustedShopsScrapper tss = new TrustedShopsScrapper();
-            List<Review> ts_reviews = await tss.getReviews(recherche);
+            List<Review> ts_reviews = tss.getReviews(recherche).Result;
             Console.WriteLine($"{ts_reviews.Count} reviews trouvées pour TrustedShops");
 
             double moyenne = 0.0;
