@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using HtmlAgilityPack;
 
+namespace ProAdvisor.app {
 /*
  * Scrapper pour le site TrustedShop.
  * A besoin de l'adresse du site d'une entreprise pour trouver des avis
@@ -94,4 +95,5 @@ public class TrustedShopsScrapper : Bot {
     return tsid_node.InnerText;
   }
 
+}
 }

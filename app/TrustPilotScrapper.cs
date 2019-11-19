@@ -7,10 +7,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
+namespace ProAdvisor.app {
+
 /*
  * Scrapper pour le site Truspilot.
  * A besoin de l'adresse du site d'une entreprise pour trouver des avis
  */
+
 public class TrustPilotScrapper : Bot {
 
     private HttpClient client;
@@ -76,4 +79,5 @@ public class TrustPilotScrapper : Bot {
 
     }
 
+}
 }

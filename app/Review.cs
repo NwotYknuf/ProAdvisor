@@ -1,5 +1,5 @@
 using System;
-
+namespace ProAdvisor.app {
 public class Review {
 
     public Review(DateTime date, string commentaire, double note) {
@@ -24,4 +24,5 @@ public class Review {
         get => _note;
     }
 
+}
 }

@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace TrustedShopsCrawler {
+namespace ProAdvisor.app {
     class Program {
         public static void Main(string[] args) {
 

@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-
+namespace ProAdvisor.app {
 public class TrustedShopClient : Bot {
 
     private HttpClient httpClient;
@@ -87,4 +87,5 @@ public class TrustedShopClient : Bot {
         }
     }
 
+}
 }
