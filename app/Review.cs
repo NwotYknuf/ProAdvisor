@@ -1,28 +1,22 @@
 using System;
 namespace ProAdvisor.app {
-public class Review {
+    public class Review {
 
-    public Review(DateTime date, string commentaire, double note) {
-        this._date = date;
-        this._commentaire = commentaire;
-        this._note = note;
+        //TODO ajouter auteur et source du commentaire
+
+        public string commentaire { get; set; }
+        public string auteur { get; set; }
+        public double note { get; set; }
+        public string source { get; set; }
+        public DateTime date { get; set; }
+
+        public Review(DateTime date, string commentaire, double note, string source, string auteur) {
+            this.date = date;
+            this.commentaire = commentaire;
+            this.note = note;
+            this.auteur = auteur;
+            this.source = source;
+        }
+
     }
-
-    private string _commentaire;
-    private double _note;
-    private DateTime _date;
-
-    public string commentaire {
-        get => _commentaire;
-    }
-
-    public DateTime date {
-        get => _date;
-    }
-
-    public double note {
-        get => _note;
-    }
-
-}
 }
