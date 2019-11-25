@@ -64,7 +64,7 @@ namespace ProAdvisor.app {
                     }
 
                 } else { //Si la requête echoue
-                    throw new Exception($"Requête echouée pour l'url : {url}");
+                    throw new Exception($"Aucune entreprise trouvée pour : {url}");
                 }
 
                 HtmlNode bouton_suivant = doc.DocumentNode.SelectSingleNode("//a[@rel='next']");
