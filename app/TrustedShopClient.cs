@@ -16,6 +16,9 @@ namespace ProAdvisor.app {
          */
 
         public TrustedShopClient() {
+
+            this.source = "TrustedShop.com";
+
             httpClient = new HttpClient();
 
             /*
