@@ -10,7 +10,7 @@ namespace ProAdvisor.app {
     class Program {
         public static void Main(string[] args) {
 
-            Console.WriteLine("Entrez le l'url que vous souhaitez rechercher :");
+            Console.WriteLine("Entrez l'url que vous souhaitez rechercher :");
             string recherche = Console.ReadLine();
 
             List<Bot> bots = new List<Bot>();
@@ -23,7 +23,7 @@ namespace ProAdvisor.app {
             Console.WriteLine($"Recherche d'avis pour : {recherche}");
 
             /*
-             * Boucle en parallel pour chaque bot
+             * Boucle en parallèle pour chaque bot
              */
             Parallel.ForEach(
                 bots, new ParallelOptions { MaxDegreeOfParallelism = 4 },
@@ -31,7 +31,7 @@ namespace ProAdvisor.app {
                     try {
                         List<Review> reviews = bot.getReviews(recherche).Result;
                         reviewsPerSource.TryAdd(bot.source, reviews);
-                        Console.WriteLine($"{reviews.Count} reveiw(s) trouvée(s) pour la source {bot.source}");
+                        Console.WriteLine($"{reviews.Count} review(s) trouvée(s) pour la source {bot.source}");
                     } catch (Exception e) {
                         Console.WriteLine($"Erreur pour la source {bot.source} :\n{e.Message}");
                     }
@@ -58,7 +58,7 @@ namespace ProAdvisor.app {
 
                 Console.WriteLine($"{all_reviews.Count} reviews trouvées au total, note moyenne : {moyenne}");
             } else {
-                Console.WriteLine($"Aucuns avis trouvés pour {recherche}");
+                Console.WriteLine($"Aucun avis trouvé pour {recherche}");
             }
 
         }

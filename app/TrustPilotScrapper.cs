@@ -30,6 +30,13 @@ namespace ProAdvisor.app {
             bool stop = false;
             int page = 1;
             HtmlDocument doc;
+            /*
+            * Besoin des www. dans l'url
+            * Pas oublier de gérer pour les https://
+            */
+            if(!research.StartsWith("www.")){
+                research= "www." + research;
+            }
             while (!stop) { //On itère sur les pages de commentaire
 
                 string url = "https://fr.trustpilot.com/review/" + research + "?page=" + page.ToString();
@@ -41,13 +48,24 @@ namespace ProAdvisor.app {
                     HtmlNodeCollection comment_nodes = doc.DocumentNode.SelectNodes("//div[@class='review-card  ']");
 
                     foreach (HtmlNode node in comment_nodes) {
+                        
+                        HtmlNode reported = node.SelectSingleNode(".//div[@class='review-report-banner']");
+
+                        /*
+                         * Si le commentaire est signalé on l'ignore
+                         */
+                        if(reported != null){
+                            continue;
+                        }
+                        
                         string auteur = node.SelectSingleNode(".//div[@class='consumer-information__name']").InnerText.Trim();
                         HtmlNode rating_node = node.SelectSingleNode(".//div[@class='star-rating star-rating--medium']/img");
                         //format de la note : 1 étoile mauvais , 2 étoiles bas, ...
                         string note_str = rating_node.Attributes["alt"].Value;
-                        //Le site utilise un bout de script pour afficher la date au bon format celon le pays. 
+                        //Le site utilise un bout de script pour afficher la date au bon format selon le pays. 
                         //On peut récuperer les paramètres du script pour avoir la date
                         string date_str = node.SelectSingleNode(".//div[@class='review-content-header__dates']/script").InnerHtml.Trim();
+
                         string commentaire = node.SelectSingleNode(".//p[@class='review-content__text']").InnerText.Trim();
 
                         Regex date_reg = new Regex(@"\d{4}-\d{2}-\d{2}");
@@ -69,7 +87,7 @@ namespace ProAdvisor.app {
 
                 HtmlNode bouton_suivant = doc.DocumentNode.SelectSingleNode("//a[@rel='next']");
 
-                if (bouton_suivant == null) { //Si la page ne contient plus de boutton suivant on a finit le parcours
+                if (bouton_suivant == null) { //Si la page ne contient plus de bouton suivant on a fini le parcours
                     stop = true;
                 }
 
