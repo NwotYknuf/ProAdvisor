@@ -45,13 +45,13 @@ namespace ProAdvisor.app {
           HtmlNodeCollection comment_nodes = doc.DocumentNode.SelectNodes("//*[@class='col-xs-12 commentblock']");
 
           foreach (HtmlNode node in comment_nodes) {
-            //On récupère les informations qui nous interressent dans les déscendants du block actuel
+            //On récupère les informations qui nous intéressent dans les descendants du bloc actuel
             string date_publi_str = node.SelectSingleNode(".//div[@class='reviewCommentDateOpenedContent']/div[1]/div[2]").InnerText.Trim();
             string date_commande_str = node.SelectSingleNode(".//div[@class='reviewCommentDateOpenedContent']/div[3]/div[2]").InnerText.Trim();
             string commentaire = node.SelectSingleNode(".//div[@class='reviewComment']").InnerText.Trim();
-            string note = node.SelectSingleNode(".//meta[@itemprop='ratingValue']").Attributes["content"].Value; //La note ce trouve dans un attribut de balise
+            string note = node.SelectSingleNode(".//meta[@itemprop='ratingValue']").Attributes["content"].Value; //La note se trouve dans un attribut de balise
 
-            //Certains commentaires sont annonymes
+            //Certains commentaires sont anonymes
             string auteur = "anonnyme";
             HtmlNode node_auteur = node.SelectSingleNode(".//div[@itemprop='author']/a");
             if (node_auteur != null) {
