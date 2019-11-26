@@ -10,7 +10,8 @@ namespace ProAdvisor.app {
     class Program {
         public static void Main(string[] args) {
 
-            string recherche = "www.moncoffrage.com";
+            Console.WriteLine("Entrez le l'url que vous souhaitez rechercher :");
+            string recherche = Console.ReadLine();
 
             List<Bot> bots = new List<Bot>();
 
