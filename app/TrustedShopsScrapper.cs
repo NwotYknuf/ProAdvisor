@@ -18,7 +18,7 @@ namespace ProAdvisor.app {
 
     public TrustedShopsScrapper() {
 
-      this.source = "TrustPilot.com";
+      this.source = "TrustedShops.com";
       client = new HttpClient();
       Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
     }
