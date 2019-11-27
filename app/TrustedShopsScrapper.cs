@@ -63,7 +63,7 @@ namespace ProAdvisor.app {
               commentaire,
               Double.Parse(note),
               "TrustedShops.com",
-              auteur));
+              new Utilisateur(auteur)));
 
           }
         } else {

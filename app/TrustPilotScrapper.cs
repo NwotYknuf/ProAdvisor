@@ -31,11 +31,11 @@ namespace ProAdvisor.app {
             int page = 1;
             HtmlDocument doc;
             /*
-            * Besoin des www. dans l'url
-            * Pas oublier de gérer pour les https://
-            */
-            if(!research.StartsWith("www.")){
-                research= "www." + research;
+             * Besoin des www. dans l'url
+             * Pas oublier de gérer pour les https://
+             */
+            if (!research.StartsWith("www.")) {
+                research = "www." + research;
             }
             while (!stop) { //On itère sur les pages de commentaire
 
@@ -48,16 +48,16 @@ namespace ProAdvisor.app {
                     HtmlNodeCollection comment_nodes = doc.DocumentNode.SelectNodes("//div[@class='review-card  ']");
 
                     foreach (HtmlNode node in comment_nodes) {
-                        
+
                         HtmlNode reported = node.SelectSingleNode(".//div[@class='review-report-banner']");
 
                         /*
                          * Si le commentaire est signalé on l'ignore
                          */
-                        if(reported != null){
+                        if (reported != null) {
                             continue;
                         }
-                        
+
                         string auteur = node.SelectSingleNode(".//div[@class='consumer-information__name']").InnerText.Trim();
                         HtmlNode rating_node = node.SelectSingleNode(".//div[@class='star-rating star-rating--medium']/img");
                         //format de la note : 1 étoile mauvais , 2 étoiles bas, ...
@@ -77,7 +77,7 @@ namespace ProAdvisor.app {
                         DateTime date = DateTime.ParseExact(date_str, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                         double note = Double.Parse(note_str);
 
-                        Review review = new Review(date, commentaire, note, "Trustpilot.com", auteur);
+                        Review review = new Review(date, commentaire, note, "Trustpilot.com", new Utilisateur(auteur));
                         res.Add(review);
                     }
 
