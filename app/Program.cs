@@ -38,25 +38,30 @@ namespace ProAdvisor.app {
                 }
             );
 
-            List<Review> all_reviews = new List<Review>();
+            List<Donnee> donnes = new List<Donnee>();
 
             foreach (var keyValuePair in reviewsPerSource) {
-                all_reviews.AddRange(keyValuePair.Value);
+
+                foreach (Review review in keyValuePair.Value) {
+                    Donnee donne = new Donnee(new Entreprise(recherche), review);
+                    donnes.Add(donne);
+                }
+
             }
 
-            if (all_reviews.Count > 0) {
+            if (donnes.Count > 0) {
                 double moyenne = 0.0;
-                foreach (Review rev in all_reviews) {
-                    moyenne += rev.note;
+                foreach (Donnee donnee in donnes) {
+                    moyenne += donnee.review.note;
                 }
-                moyenne /= all_reviews.Count;
+                moyenne /= donnes.Count;
 
-                string output = JsonConvert.SerializeObject(all_reviews);
+                string output = JsonConvert.SerializeObject(donnes);
                 StreamWriter sw = new StreamWriter("res.json");
                 sw.WriteLine(output);
                 sw.Close();
 
-                Console.WriteLine($"{all_reviews.Count} reviews trouvées au total, note moyenne : {moyenne}");
+                Console.WriteLine($"{donnes.Count} reviews trouvées au total, note moyenne : {moyenne}");
             } else {
                 Console.WriteLine($"Aucun avis trouvé pour {recherche}");
             }
