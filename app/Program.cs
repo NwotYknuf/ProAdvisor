@@ -13,7 +13,8 @@ namespace ProAdvisor.app {
             string[] entreprises = new string[] {
                 "www.moncoffrage.com",
                 "www.pimkie.fr",
-                "www.alzkeaze.caz"
+                "www.alzkeaze.caz",
+                "www.habitatpresto.com"
             };
 
             List<Bot> bots = new List<Bot>();
@@ -60,7 +61,7 @@ namespace ProAdvisor.app {
                         moyenne += donnee.review.note;
                     }
                     moyenne /= donnes_entreprise.Count;
-
+                    donees.AddRange(donnes_entreprise);
                     Console.WriteLine($"{donnes_entreprise.Count} reviews trouvées au total, note moyenne : {moyenne}");
                 } else {
                     Console.WriteLine($"Aucun avis trouvé pour {recherche}");
