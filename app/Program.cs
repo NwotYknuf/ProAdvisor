@@ -10,61 +10,70 @@ namespace ProAdvisor.app {
     class Program {
         public static void Main(string[] args) {
 
-            Console.WriteLine("Entrez l'url que vous souhaitez rechercher :");
-            string recherche = Console.ReadLine();
+            string[] entreprises = new string[] {
+                "www.moncoffrage.com",
+                "www.pimkie.fr",
+                "www.alzkeaze.caz"
+            };
 
             List<Bot> bots = new List<Bot>();
 
             bots.Add(new TrustPilotScrapper());
             bots.Add(new TrustedShopsScrapper());
 
-            ConcurrentDictionary<string, List<Review>> reviewsPerSource = new ConcurrentDictionary<string, List<Review>>();
+            List<Donnee> donees = new List<Donnee>();
 
-            Console.WriteLine($"Recherche d'avis pour : {recherche}");
+            foreach (string recherche in entreprises) {
+                ConcurrentDictionary<string, List<Review>> reviewsPerSource = new ConcurrentDictionary<string, List<Review>>();
+                List<Donnee> donnes_entreprise = new List<Donnee>();
 
-            /*
-             * Boucle en parallèle pour chaque bot
-             */
-            Parallel.ForEach(
-                bots, new ParallelOptions { MaxDegreeOfParallelism = 4 },
-                (bot) => {
-                    try {
-                        List<Review> reviews = bot.getReviews(recherche).Result;
-                        reviewsPerSource.TryAdd(bot.source, reviews);
-                        Console.WriteLine($"{reviews.Count} review(s) trouvée(s) pour la source {bot.source}");
-                    } catch (Exception e) {
-                        Console.WriteLine($"Erreur pour la source {bot.source} :\n{e.Message}");
+                Console.WriteLine($"Recherche d'avis pour : {recherche}");
+
+                /*
+                 * Boucle en parallèle pour chaque bot
+                 */
+                Parallel.ForEach(
+                    bots, new ParallelOptions { MaxDegreeOfParallelism = 4 },
+                    (bot) => {
+                        try {
+                            List<Review> reviews = bot.getReviews(recherche).Result;
+                            reviewsPerSource.TryAdd(bot.source, reviews);
+                            Console.WriteLine($"{reviews.Count} review(s) trouvée(s) pour la source {bot.source}");
+                        } catch (Exception e) {
+                            Console.WriteLine($"Erreur pour la source {bot.source} :\n{e.Message}");
+                        }
                     }
+                );
+
+                foreach (var keyValuePair in reviewsPerSource) {
+
+                    foreach (Review review in keyValuePair.Value) {
+                        Donnee donne = new Donnee(new Entreprise(recherche), review);
+                        donnes_entreprise.Add(donne);
+                    }
+
                 }
-            );
 
-            List<Donnee> donnes = new List<Donnee>();
+                if (donnes_entreprise.Count > 0) {
+                    double moyenne = 0.0;
+                    foreach (Donnee donnee in donnes_entreprise) {
+                        moyenne += donnee.review.note;
+                    }
+                    moyenne /= donnes_entreprise.Count;
 
-            foreach (var keyValuePair in reviewsPerSource) {
-
-                foreach (Review review in keyValuePair.Value) {
-                    Donnee donne = new Donnee(new Entreprise(recherche), review);
-                    donnes.Add(donne);
+                    Console.WriteLine($"{donnes_entreprise.Count} reviews trouvées au total, note moyenne : {moyenne}");
+                } else {
+                    Console.WriteLine($"Aucun avis trouvé pour {recherche}");
                 }
+
+                Console.WriteLine();
 
             }
 
-            if (donnes.Count > 0) {
-                double moyenne = 0.0;
-                foreach (Donnee donnee in donnes) {
-                    moyenne += donnee.review.note;
-                }
-                moyenne /= donnes.Count;
-
-                string output = JsonConvert.SerializeObject(donnes);
-                StreamWriter sw = new StreamWriter("res.json");
-                sw.WriteLine(output);
-                sw.Close();
-
-                Console.WriteLine($"{donnes.Count} reviews trouvées au total, note moyenne : {moyenne}");
-            } else {
-                Console.WriteLine($"Aucun avis trouvé pour {recherche}");
-            }
+            string output = JsonConvert.SerializeObject(donees);
+            StreamWriter sw = new StreamWriter("res.json");
+            sw.WriteLine(output);
+            sw.Close();
 
         }
     }
