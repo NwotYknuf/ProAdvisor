@@ -62,7 +62,7 @@ namespace ProAdvisor.app {
               DateTime.ParseExact(date_publi_str, "dd.MM.yyyy", CultureInfo.InvariantCulture),
               commentaire,
               Double.Parse(note),
-              "TrustedShops.com",
+              new Source("TrustedShops.com", true),
               new Utilisateur(auteur)));
 
           }

@@ -69,7 +69,7 @@ namespace ProAdvisor.app {
                 double note = Double.Parse(rewiew_node.SelectSingleNode("mark").InnerText);
                 string auteur = rewiew_node.SelectSingleNode("author").InnerText;
 
-                Review review = new Review(date, commentaire, note, "TrustedShops.com", new Utilisateur(auteur));
+                Review review = new Review(date, commentaire, note, new Source("TrustedShops.com", true), new Utilisateur(auteur));
                 reviews.Add(review);
             }
 

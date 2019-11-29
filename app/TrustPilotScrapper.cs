@@ -77,7 +77,7 @@ namespace ProAdvisor.app {
                         DateTime date = DateTime.ParseExact(date_str, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                         double note = Double.Parse(note_str);
 
-                        Review review = new Review(date, commentaire, note, "Trustpilot.com", new Utilisateur(auteur));
+                        Review review = new Review(date, commentaire, note, new Source("Trustpilot.com", true), new Utilisateur(auteur));
                         res.Add(review);
                     }
 
