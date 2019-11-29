@@ -39,7 +39,7 @@ namespace ProAdvisor.app {
                         try {
                             List<Review> reviews = bot.getReviews(entreprise).Result;
                             reviewsPerSource.TryAdd(bot.source, reviews);
-                            Console.WriteLine($"{reviews.Count} review(s) trouvée(s) pour la source {bot.source}");
+                            Console.WriteLine($"{reviews.Count} review(s) certifiées AFNOR trouvée(s) pour la source {bot.source}");
                         } catch (Exception e) {
                             Console.WriteLine($"Erreur pour la source {bot.source} :\n{e.Message}");
                         }
