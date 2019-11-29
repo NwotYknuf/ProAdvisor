@@ -24,11 +24,11 @@ namespace ProAdvisor.app {
 
             List<Donnee> donees = new List<Donnee>();
 
-            foreach (string recherche in entreprises) {
+            foreach (string entreprise in entreprises) {
                 ConcurrentDictionary<string, List<Review>> reviewsPerSource = new ConcurrentDictionary<string, List<Review>>();
                 List<Donnee> donnes_entreprise = new List<Donnee>();
 
-                Console.WriteLine($"Recherche d'avis pour : {recherche}");
+                Console.WriteLine($"Recherche d'avis pour : {entreprise}");
 
                 /*
                  * Boucle en parallèle pour chaque bot
@@ -37,7 +37,7 @@ namespace ProAdvisor.app {
                     bots, new ParallelOptions { MaxDegreeOfParallelism = 4 },
                     (bot) => {
                         try {
-                            List<Review> reviews = bot.getReviews(recherche).Result;
+                            List<Review> reviews = bot.getReviews(entreprise).Result;
                             reviewsPerSource.TryAdd(bot.source, reviews);
                             Console.WriteLine($"{reviews.Count} review(s) trouvée(s) pour la source {bot.source}");
                         } catch (Exception e) {
@@ -49,7 +49,7 @@ namespace ProAdvisor.app {
                 foreach (var keyValuePair in reviewsPerSource) {
 
                     foreach (Review review in keyValuePair.Value) {
-                        Donnee donne = new Donnee(new Entreprise(recherche), review);
+                        Donnee donne = new Donnee(new Entreprise(entreprise), review);
                         donnes_entreprise.Add(donne);
                     }
 
@@ -64,7 +64,7 @@ namespace ProAdvisor.app {
                     donees.AddRange(donnes_entreprise);
                     Console.WriteLine($"{donnes_entreprise.Count} reviews trouvées au total, note moyenne : {moyenne}");
                 } else {
-                    Console.WriteLine($"Aucun avis trouvé pour {recherche}");
+                    Console.WriteLine($"Aucun avis trouvé pour {entreprise}");
                 }
 
                 Console.WriteLine();
