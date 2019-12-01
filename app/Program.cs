@@ -40,8 +40,19 @@ namespace ProAdvisor.app {
                             List<Review> reviews = bot.getReviews(entreprise).Result;
                             reviewsPerSource.TryAdd(bot.source, reviews);
                             Console.WriteLine($"{reviews.Count} review(s) certifiées AFNOR trouvée(s) pour la source {bot.source}");
-                        } catch (Exception e) {
-                            Console.WriteLine($"Erreur pour la source {bot.source} :\n{e.Message}");
+                        } catch (AggregateException ae) {
+
+                            foreach (Exception e in ae.InnerExceptions) {
+                                if (e is PasDeCommentaireException) {
+                                    Console.WriteLine($"Aucun commentaires trouvés pour {entreprise} sur la source {bot.source}");
+                                } else {
+                                    if (e is EntrepriseInconnueException) {
+                                        Console.WriteLine($"Aucune entreprise trouvée pour {entreprise} sur la source {bot.source}");
+                                    } else {
+                                        throw e;
+                                    }
+                                }
+                            }
                         }
                     }
                 );

@@ -48,7 +48,7 @@ namespace ProAdvisor.app {
                     HtmlNodeCollection comment_nodes = doc.DocumentNode.SelectNodes("//div[@class='review-card  ']");
 
                     if (comment_nodes == null) {
-                        throw new Exception("Pas d'avis trouvé pour : " + research);
+                        throw new PasDeCommentaireException("Pas d'avis trouvé pour : " + research);
                     }
 
                     foreach (HtmlNode node in comment_nodes) {
@@ -86,7 +86,7 @@ namespace ProAdvisor.app {
                     }
 
                 } else { //Si la requête echoue
-                    throw new Exception($"Aucune entreprise trouvée pour : {url}");
+                    throw new EntrepriseInconnueException($"Aucune entreprise trouvée pour : {url}");
                 }
 
                 HtmlNode bouton_suivant = doc.DocumentNode.SelectSingleNode("//a[@rel='next']");

@@ -44,6 +44,10 @@ namespace ProAdvisor.app {
           //On récupère uniquement les blocs commentaires
           HtmlNodeCollection comment_nodes = doc.DocumentNode.SelectNodes("//*[@class='col-xs-12 commentblock']");
 
+          if (comment_nodes == null) {
+            throw new PasDeCommentaireException($"Pas de commentaires pour : {research}");
+          }
+
           foreach (HtmlNode node in comment_nodes) {
             //On récupère les informations qui nous intéressent dans les descendants du bloc actuel
             string date_publi_str = node.SelectSingleNode(".//div[@class='reviewCommentDateOpenedContent']/div[1]/div[2]").InnerText.Trim();
@@ -96,7 +100,7 @@ namespace ProAdvisor.app {
       XmlNode tsid_node = doc.SelectSingleNode("response/data/shops/shop/tsId");
 
       if (tsid_node == null) { //Si on n'a rien trouvé
-        throw new Exception($"Aucune entreprise trouvée pour : {research}");
+        throw new EntrepriseInconnueException($"Aucune entreprise trouvée pour : {research}");
       }
 
       return tsid_node.InnerText;
