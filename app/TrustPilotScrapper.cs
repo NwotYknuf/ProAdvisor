@@ -47,6 +47,10 @@ namespace ProAdvisor.app {
                     doc.LoadHtml(response.Content.ReadAsStringAsync().Result);
                     HtmlNodeCollection comment_nodes = doc.DocumentNode.SelectNodes("//div[@class='review-card  ']");
 
+                    if (comment_nodes == null) {
+                        throw new Exception("Pas d'avis trouvé pour : " + research);
+                    }
+
                     foreach (HtmlNode node in comment_nodes) {
 
                         HtmlNode reported = node.SelectSingleNode(".//div[@class='review-report-banner']");
