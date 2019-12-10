@@ -34,12 +34,22 @@ namespace ProAdvisor.app {
              * Besoin des www. dans l'url
              * Pas oublier de gérer pour les https://
              */
+                /*
             if (!research.StartsWith("www.")) {
                 research = "www." + research;
             }
+            */
+            string url = "https://fr.trustpilot.com/review/" + research + "?page=1";
+            HttpResponseMessage reponse = await client.GetAsync(url);
+            if (reponse.IsSuccessStatusCode) {
+                    doc = new HtmlDocument();
+                    doc.LoadHtml(reponse.Content.ReadAsStringAsync().Result);
+                    research = doc.DocumentNode.SelectSingleNode(".//span[@class='badge-card__title']").InnerText.Trim();
+            }
+            
             while (!stop) { //On itère sur les pages de commentaire
 
-                string url = "https://fr.trustpilot.com/review/" + research + "?page=" + page.ToString();
+                url = "https://fr.trustpilot.com/review/" + research + "?page=" + page.ToString();
                 HttpResponseMessage response = await client.GetAsync(url);
 
                 if (response.IsSuccessStatusCode) {
