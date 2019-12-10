@@ -6,11 +6,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using HtmlAgilityPack;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace ProAdvisor.app {
   /*
    * Scrapper pour le site TrustedShop.
    * A besoin de l'adresse du site d'une entreprise pour trouver des avis
+   * Cette classe utilise la librairie Selenium. C'est une librairie qui permet
+   * de controller un navigateur. On l'utilise pour simuler des évenements javascript.
    */
   public class TrustedShopsScrapper : Bot {
 
@@ -26,55 +33,65 @@ namespace ProAdvisor.app {
     public override async Task<List<Review>> getReviews(string research) {
 
       List<Review> res = new List<Review>();
-      int page = 1;
       bool stop = false;
       string trusted_id = await getTsId(research);
 
+      /*
+       * On initialise un navigateur Selenium
+       * L'option headless permet de ne pas ouvrir de fenetre
+       */
+      ChromeOptions options = new ChromeOptions();
+      //options.AddArgument("headless");
+      IWebDriver driver = new ChromeDriver(options);
+      WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+
+      string url = "https://www.trustedshops.fr/evaluation/info_" + trusted_id + ".html?shop_id=" + trusted_id + "&page=1&category=ALL";
+
+      driver.Url = url;
+
+      IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+
       while (!stop) { //On itère sur les pages de commentaire
+        /*
+         * On attend une seconde que la page charge
+         */
 
-        string url = "https://www.trustedshops.fr/evaluation/info_" + trusted_id + ".html?shop_id=" + trusted_id + "&page=" + page + "&category=ALL";
+        await Task.Delay(3000);
+        wait.Until(ExpectedConditions.ElementExists(By.XPath(" //review")));
+        var dates = driver.FindElements(By.XPath("//review"));
+        int i = 1;
 
-        HttpResponseMessage response = await client.GetAsync(url);
+        foreach (IWebElement review in dates) {
 
-        if (response.IsSuccessStatusCode) { //Si la requête échoue ici on a finit le parcours des pages
+          /*
+           * La date n'est disponible que si on met la sourie sur un certain composant dans la balise <review>
+           * on exécute donc un script qui simule le mouse over puis le mouse out
+           */
+          string jscode_mouse_over = jsScriptEvent("mouseover", i);
+          string jscode_mouse_out = jsScriptEvent("mouseout", i);
 
-          HtmlDocument doc = new HtmlDocument();
-          doc.LoadHtml(response.Content.ReadAsStringAsync().Result);
+          js.ExecuteScript(jscode_mouse_over);
 
-          //On récupère uniquement les blocs commentaires
-          HtmlNodeCollection comment_nodes = doc.DocumentNode.SelectNodes("//*[@class='col-xs-12 commentblock']");
+          /*
+           * On attend que la balise apparaisse
+           */
+          IWebElement date_u = wait.Until(ExpectedConditions.ElementExists(By.XPath("//bs-tooltip-container/div[2]")));
+          string date_strr = date_u.Text;
 
-          if (comment_nodes == null) {
-            throw new PasDeCommentaireException($"Pas de commentaires pour : {research}");
-          }
+          js.ExecuteScript(jscode_mouse_out);
+          i++;
 
-          foreach (HtmlNode node in comment_nodes) {
-            //On récupère les informations qui nous intéressent dans les descendants du bloc actuel
-            string date_publi_str = node.SelectSingleNode(".//div[@class='reviewCommentDateOpenedContent']/div[1]/div[2]").InnerText.Trim();
-            string date_commande_str = node.SelectSingleNode(".//div[@class='reviewCommentDateOpenedContent']/div[3]/div[2]").InnerText.Trim();
-            string commentaire = node.SelectSingleNode(".//div[@class='reviewComment']").InnerText.Trim();
-            string note = node.SelectSingleNode(".//meta[@itemprop='ratingValue']").Attributes["content"].Value; //La note se trouve dans un attribut de balise
+        }
 
-            //Certains commentaires sont anonymes
-            string auteur = "anonnyme";
-            HtmlNode node_auteur = node.SelectSingleNode(".//div[@itemprop='author']/a");
-            if (node_auteur != null) {
-              auteur = node_auteur.InnerText.Trim();
-            }
-
-            res.Add(new Review(
-              DateTime.ParseExact(date_publi_str, "dd.MM.yyyy", CultureInfo.InvariantCulture),
-              commentaire,
-              Double.Parse(note),
-              new Source("TrustedShops.com", true),
-              new Utilisateur(auteur)));
-
-          }
-        } else {
+        try {
+          IWebElement btn_suivant = driver.FindElement(By.XPath("//div[@class='col-auto pr-0 pl-0 next ng-star-inserted']"));
+          Actions action = new Actions(driver).MoveToElement(btn_suivant).Click();
+          action.Build().Perform();
+        } catch {
           stop = true;
         }
-        page++;
       }
+      driver.Close();
       return res;
 
     }
@@ -104,6 +121,20 @@ namespace ProAdvisor.app {
       }
 
       return tsid_node.InnerText;
+    }
+
+    /*
+     * Le morceau de code Javascript suivant va simuler l'évenement mouseover ou mouseout sur l'élément concerné dans la baslise n
+     * On peut demander à Selenium d'executer ce javascript
+     */
+    private string jsScriptEvent(string event_type, int n) {
+      return "var event = new MouseEvent('" + event_type + "', {" +
+        "'view': window," +
+        "'bubbles': true," +
+        "'cancelable': true" +
+        "});" +
+        "var myTarget = document.evaluate(\"/html/body/presentation-frame/main/shop-profile/div[2]/div/div/div[1]/div[2]/ratings/div[4]/div/async-list/review[" + n.ToString() + "]/div/div[1]/div[2]/loading-line/div/div/div[2]/span\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
+        "var canceled = !myTarget.dispatchEvent(event);";
     }
 
   }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using OpenQA.Selenium;
 
 namespace ProAdvisor.app {
     class Program {
@@ -49,7 +50,11 @@ namespace ProAdvisor.app {
                                     if (e is EntrepriseInconnueException) {
                                         Console.WriteLine($"Aucune entreprise trouvée pour {entreprise} sur la source {bot.source}");
                                     } else {
-                                        throw e;
+                                        if (e is DriverServiceNotFoundException) {
+                                            Console.WriteLine($"Driver Selenium non installé, impossible de trouver des commentaires pour {bot.source}");
+                                        } else {
+                                            throw e;
+                                        }
                                     }
                                 }
                             }
