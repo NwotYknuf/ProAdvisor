@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -41,7 +42,10 @@ namespace ProAdvisor.app {
        * L'option headless permet de ne pas ouvrir de fenetre
        */
       ChromeOptions options = new ChromeOptions();
-      //options.AddArgument("headless");
+      //headless pour ne pas ouvrir une fenetre navigateur
+      options.AddArgument("headless");
+      //Log level 3 pour ignorer les sorties consoles
+      options.AddArgument("log-level=3");
       IWebDriver driver = new ChromeDriver(options);
       WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
 
@@ -52,10 +56,10 @@ namespace ProAdvisor.app {
       IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
 
       while (!stop) { //On itère sur les pages de commentaire
+
         /*
          * On attend une seconde que la page charge
          */
-
         await Task.Delay(3000);
         wait.Until(ExpectedConditions.ElementExists(By.XPath(" //review")));
         var dates = driver.FindElements(By.XPath("//review"));
@@ -71,14 +75,50 @@ namespace ProAdvisor.app {
           string jscode_mouse_out = jsScriptEvent("mouseout", i);
 
           js.ExecuteScript(jscode_mouse_over);
-
           /*
            * On attend que la balise apparaisse
            */
           IWebElement date_u = wait.Until(ExpectedConditions.ElementExists(By.XPath("//bs-tooltip-container/div[2]")));
-          string date_strr = date_u.Text;
+          string date_str = date_u.Text;
 
+          Regex find_date = new Regex(@"\d{2}\/\d{2}\/\d{4}");
+          date_str = find_date.Match(date_str).Value;
+
+          DateTime date = DateTime.ParseExact(date_str, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+          //On lance mouse out pour que l'élément disparaisse
           js.ExecuteScript(jscode_mouse_out);
+
+          /*
+           * Cet élément contient un style qui définit le nombre d'étoiles colorées en jaune
+           * "
+          max - width : 100 % " : 5 étoiles
+           * "
+          max - width : 20 % " : 1 étoile
+           * On peut donc en déduire la note (width/20) pour la ramener sur 5
+           */
+          IWebElement star_rating = review.FindElement(By.XPath(". //div/div[1]/div[1]/loading-line/div/div/div[2]/div/div[1]/rating-stars/div/div[1]"));
+          string note_str = star_rating.GetAttribute("style");
+          //On cherche le nombre dans le style
+          Regex findNote = new Regex(@"\d{1,3}");
+          note_str = findNote.Match(note_str).Value;
+          double note = double.Parse(note_str) / 20.0;
+
+          string auteur_str = "annonyme";
+          try {
+            IWebElement auteur = review.FindElement(By.XPath(".//div/div[1]/div[1]/loading-line/div/div/div[2]/div/div[2]/a"));
+            auteur_str = auteur.Text;
+          } catch (NoSuchElementException) {
+            //Le commentaire est annonyme, rien à faire ici
+          } catch (Exception e) {
+            throw e;
+          }
+
+          IWebElement comment = review.FindElement(By.XPath(".//div/div[3]/div/loading-line/div/div/div[2]/span"));
+          string comment_str = comment.Text;
+
+          Review rev = new Review(date, comment_str, note, new Source(this.source, true), new Utilisateur(auteur_str));
+          res.Add(rev);
           i++;
 
         }
@@ -124,7 +164,7 @@ namespace ProAdvisor.app {
     }
 
     /*
-     * Le morceau de code Javascript suivant va simuler l'évenement mouseover ou mouseout sur l'élément concerné dans la baslise n
+     * Le morceau de code Javascript suivant va simuler l'évenement mouseover ou mouseout sur l'élément concerné dans la n ième balise <review>
      * On peut demander à Selenium d'executer ce javascript
      */
     private string jsScriptEvent(string event_type, int n) {
