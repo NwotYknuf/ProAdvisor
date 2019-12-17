@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -31,7 +32,7 @@ namespace ProAdvisor.app {
       Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
     }
 
-    public override async Task<List<Review>> getReviews(string research) {
+    public override async Task<List<Review>> getReviews(string research, DateTime limitDate) {
 
       List<Review> res = new List<Review>();
       bool stop = false;
@@ -61,7 +62,13 @@ namespace ProAdvisor.app {
          * On attend une seconde que la page charge
          */
         await Task.Delay(3000);
-        wait.Until(ExpectedConditions.ElementExists(By.XPath(" //review")));
+
+        try {
+          wait.Until(ExpectedConditions.ElementExists(By.XPath(" //review")));
+        } catch (WebDriverTimeoutException e) {
+          throw new PasDeCommentaireException("Pas de commentaires pour :" + research);
+        }
+
         var dates = driver.FindElements(By.XPath("//review"));
         int i = 1;
 
@@ -117,9 +124,14 @@ namespace ProAdvisor.app {
           IWebElement comment = review.FindElement(By.XPath(".//div/div[3]/div/loading-line/div/div/div[2]/span"));
           string comment_str = comment.Text;
 
-          Review rev = new Review(date, comment_str, note, new Source(this.source, true), new Utilisateur(auteur_str));
-          res.Add(rev);
-          i++;
+          if (date >= limitDate) {
+            Review rev = new Review(date, comment_str, note, new Source(this.source, true), new Utilisateur(auteur_str));
+            res.Add(rev);
+            i++;
+          } else {
+            stop = true;
+            break;
+          }
 
         }
 
@@ -177,5 +189,68 @@ namespace ProAdvisor.app {
         "var canceled = !myTarget.dispatchEvent(event);";
     }
 
+    public async override Task<InfoEntreprise> getEntreprise(string research) {
+
+      string trusted_id = await getTsId(research);
+
+      string url = "https://www.trustedshops.fr/evaluation/info_" + trusted_id + ".html?shop_id=" + trusted_id + "&page=1&category=ALL";
+
+      HttpResponseMessage response = await client.GetAsync(url);
+
+      if (response.IsSuccessStatusCode) {
+
+        HtmlDocument doc = new HtmlDocument();
+        doc.LoadHtml(response.Content.ReadAsStringAsync().Result);
+        HtmlNode mainbox = doc.DocumentNode.SelectSingleNode("//div[@class='main-box d-none d-lg-block no-margin detail-box mt-0']");
+
+        string cat = "";
+
+        HtmlNodeCollection categorie_nodes = mainbox.SelectNodes(".//shop-search-category");
+
+        if (categorie_nodes != null) {
+          foreach (HtmlNode node in categorie_nodes) {
+            cat += node.InnerText + ";";
+          }
+        }
+
+        string desc = "";
+
+        HtmlNode desc_node = mainbox.SelectSingleNode(".//shop-details//div[@innertext and @class='col-12 fw-light mt-1']");
+        if (desc_node != null) {
+          desc = desc_node.InnerText;
+        }
+
+        string nom = "";
+        HtmlNode name_node = mainbox.SelectSingleNode(".//div[@class='shop-name fw-light mt-1']");
+        if (name_node != null) {
+          nom = name_node.InnerText;
+        }
+
+        string adresse = "";
+        HtmlNode addr_node = mainbox.SelectSingleNode(".//div[@class='address row mt-12']");
+        if (addr_node != null) {
+          adresse = addr_node.InnerText;
+        }
+
+        string email = "";
+        HtmlNode email_node = mainbox.SelectSingleNode(".//div[@class='email row mt-12 ng-star-inserted']");
+        if (email_node != null) {
+          email = email_node.InnerText;
+        }
+
+        string telephone = "";
+        HtmlNode tel_node = mainbox.SelectSingleNode(".//div[@class='phone row mt-12 ng-star-inserted']");
+        if (tel_node != null) {
+          telephone = tel_node.InnerText;
+        }
+
+        return new InfoTrustedShops(url: research, nom: nom, categories: cat, description: desc, adresse: adresse, email: email, telephone: telephone);
+
+      }
+
+      throw new Exception("Unsuccessfull request : " + url);
+
+    }
   }
+
 }
