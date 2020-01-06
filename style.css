@@ -1,0 +1,118 @@
+/*
+CSS Credit: http://www.templatemo.com/
+
+*{
+	transition-property: margin;
+	transition-duration: 0.6s;
+	transition-timing-function: ease-out;
+}*/
+body{
+	text-align: center;
+	margin:0;
+	padding:0;
+	line-height: 1.5em;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 1.2em;
+	color: #FFFFFF;
+	background: #1a1f19;
+}
+a, a:link, a:visited { color: #cccc66; text-decoration: none} 
+a:active, a:hover { color: #cccc66; text-decoration: underline}
+
+#templatemo_container_wrapper {
+	background: url(images/mainbackground.gif) repeat-x;
+}
+
+#templatemo_container {
+	text-align: center;
+	width: 80%;
+	margin-left: 10%;
+	border: 1px solid #ffffff;
+}
+
+
+/*------------ Header --------------- */
+
+#templatemo_header {
+	height: 251px;
+	background: #000000 url(images/banner.gif) no-repeat;
+}
+
+#templatemo_site_title {
+	padding-top: 160px;
+	padding-left: 50px;
+	font-size: 50px;
+	color:#a8a8b4;
+}
+
+#templatemo_site_title span{
+	font-weight: 200;
+	color:#cccc33;
+}
+
+#templatemo_site_slogan {
+	padding-top: 20px;
+	padding-left: 200px;
+	font-size: 1.1em;
+	color:#5a5c51;
+}
+/* ---------------------------------- */
+
+/*------------- Menu ------------------*/
+.templatemo_menu{
+	display: inline-block;
+	width: 80%;
+	margin: auto;
+	height: 67px;
+	padding: 0px;
+	background: #434343;
+}
+
+.templatemo_menu ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	text-align: center;
+}
+
+.templatemo_menu li{
+	display: inline;
+}
+
+.templatemo_menu li a{
+	padding: 0px 0px;
+	font: 3em arial;
+	text-align: center;
+	text-decoration: none;
+	color: #c6c6c6;
+	width: 160px;
+}
+
+.templatemo_menu li a:hover, .templatemo_menu li .current{
+	color: #ffffff;
+	background: #000;
+}
+
+/* ----------------- end of menu----------------*/
+
+/* ----------------- Content ----------------------- */
+
+
+#templatemo_content {
+	width: 1800px;
+}
+
+#templatemo_top {
+	float: left;
+	padding: 20px;
+	width: 1760px;
+	background: #383a2f;
+}
+
+
+
+
+
+
+/*--------- End of Content -------------*/
+
