@@ -205,6 +205,12 @@ namespace ProAdvisor.app {
 
         string cat = "";
 
+        HtmlNode shop_not_found_nodes = doc.DocumentNode.SelectSingleNode("//shop-not-found");
+
+        if (shop_not_found_nodes != null) { //L'entreprise n'est plus membre trustedshops
+          throw new EntrepriseInconnueException();
+        }
+
         HtmlNodeCollection categorie_nodes = mainbox.SelectNodes(".//shop-search-category");
 
         if (categorie_nodes != null) {
