@@ -60,16 +60,18 @@ namespace ProAdvisor.app {
 
             Parallel.ForEach(bots, bot => {
 
+                StreamWriter logFile = new StreamWriter(bot.source + DateTime.Now.Date.ToString("dd-MM-yyyy") + ".log");
+
                 List<Donnee> donnee = new List<Donnee>();
 
                 foreach (string recherche in entreprises) {
 
                     DateTime lastComment;
-                    string log = $"Recherche d'avis pour {recherche} sur {bot.source}\n";
+                    string log = $"Recherche d'avis pour {recherche}\n";
 
                     try {
                         lastComment = dateDerniereReview(recherche, bot.source);
-                        log += $"Dernier commentaire trouvé pour cette source : {lastComment}\n";
+                        log += $"Dernier commentaire trouvé pour cette source : {lastComment.ToString("dd-MM-yyyy")}\n";
                     } catch (PasDeCommentaireException e) {
                         log += "Aucun avis trouvés précedement\n";
                     }
@@ -89,22 +91,24 @@ namespace ProAdvisor.app {
                     } catch (AggregateException ae) {
 
                         if (ae.InnerException is EntrepriseInconnueException) {
-                            log += $"Pas de résultats pour {recherche}\n";
+                            log += $"Pas trouvé d'entreprise pour {recherche}\n";
                         }
 
                         if (ae.InnerException is PasDeCommentaireException) {
-                            log += $"Pas de commentaire pour {recherche}\n";
+                            log += $"Pas de nouveaux commentaire pour {recherche}\n";
                         }
 
                         if (!(ae.InnerException is EntrepriseInconnueException) &&
                             !(ae.InnerException is PasDeCommentaireException)) {
-                            throw ae.InnerException;
+                            log += "Exception non atendue : " + ae.InnerException.Message + "\n" + ae.InnerException.StackTrace + "\n";
                         }
                     }
 
-                    Console.WriteLine(log);
+                    logFile.WriteLine(log);
 
                 }
+
+                logFile.Close();
 
                 StreamWriter sw = new StreamWriter(bot.source + ".json");
                 sw.Write(JsonConvert.SerializeObject(donnee));
