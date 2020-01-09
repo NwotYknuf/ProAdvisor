@@ -78,14 +78,14 @@ namespace ProAdvisor.app {
            * La date n'est disponible que si on met la sourie sur un certain composant dans la balise <review>
            * on exécute donc un script qui simule le mouse over puis le mouse out
            */
-          string jscode_mouse_over = jsScriptEvent("mouseover", i);
-          string jscode_mouse_out = jsScriptEvent("mouseout", i);
+          string jscode_mouse_over = jsScriptEvent("mouseenter", i);
+          string jscode_mouse_out = jsScriptEvent("mouseleave", i);
 
           js.ExecuteScript(jscode_mouse_over);
           /*
            * On attend que la balise apparaisse
            */
-          IWebElement date_u = wait.Until(ExpectedConditions.ElementExists(By.XPath("//bs-tooltip-container/div[2]")));
+          IWebElement date_u = wait.Until(ExpectedConditions.ElementExists(By.XPath("//div[@class='tooltip-content']")));
           string date_str = date_u.Text;
 
           Regex find_date = new Regex(@"\d{2}\/\d{2}\/\d{4}");
@@ -104,7 +104,7 @@ namespace ProAdvisor.app {
           max - width : 20 % " : 1 étoile
            * On peut donc en déduire la note (width/20) pour la ramener sur 5
            */
-          IWebElement star_rating = review.FindElement(By.XPath(". //div/div[1]/div[1]/loading-line/div/div/div[2]/div/div[1]/rating-stars/div/div[1]"));
+          IWebElement star_rating = review.FindElement(By.XPath("//review[1]//div[@class='stars-active']"));
           string note_str = star_rating.GetAttribute("style");
           //On cherche le nombre dans le style
           Regex findNote = new Regex(@"\d{1,3}");
@@ -185,7 +185,7 @@ namespace ProAdvisor.app {
         "'bubbles': true," +
         "'cancelable': true" +
         "});" +
-        "var myTarget = document.evaluate(\"/html/body/presentation-frame/main/shop-profile/div[2]/div/div/div[1]/div[2]/ratings/div[4]/div/async-list/review[" + n.ToString() + "]/div/div[1]/div[2]/loading-line/div/div/div[2]/span\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
+        "var myTarget = document.evaluate(\"/html/body/presentation-frame/main/shop-profile/div[2]/div/div/div[1]/div[2]/ratings/div[3]/div/async-list/review[" + n.ToString() + "]/div/div[1]/div[3]/loading-line/div/div/div[2]/span\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
         "var canceled = !myTarget.dispatchEvent(event);";
     }
 
