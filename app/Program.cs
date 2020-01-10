@@ -56,8 +56,6 @@ namespace ProAdvisor.app {
                 new TrustPilotScrapper()
             };
 
-            DateTime limit_date = new DateTime(2020, 01, 01);
-
             Parallel.ForEach(bots, bot => {
 
                 StreamWriter logFile = new StreamWriter(bot.source + DateTime.Now.Date.ToString("dd-MM-yyyy") + ".log");
@@ -66,12 +64,15 @@ namespace ProAdvisor.app {
 
                 foreach (string recherche in entreprises) {
 
+                    DateTime limit_date = new DateTime(2000, 01, 01);
+
                     DateTime lastComment;
                     string log = $"Recherche d'avis pour {recherche}\n";
 
                     try {
                         lastComment = dateDerniereReview(recherche, bot.source);
                         log += $"Dernier commentaire trouvé pour cette source : {lastComment.ToString("dd-MM-yyyy")}\n";
+                        limit_date = lastComment;
                     } catch (PasDeCommentaireException e) {
                         log += "Aucun avis trouvés précedement\n";
                     }
