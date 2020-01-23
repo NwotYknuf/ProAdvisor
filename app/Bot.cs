@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,9 @@ namespace ProAdvisor.app {
             set { _source = value; }
         }
 
-        public abstract Task<List<Review>> getReviews(string research);
+        public abstract Task<List<Review>> getReviews(string research, DateTime limitDate);
+
+        public abstract Task<InfoEntreprise> getEntreprise(string research);
 
     }
 }

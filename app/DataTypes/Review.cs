@@ -2,8 +2,6 @@ using System;
 namespace ProAdvisor.app {
     public class Review {
 
-        //TODO ajouter auteur et source du commentaire
-
         public string commentaire { get; set; }
         public Utilisateur auteur { get; set; }
         public Source source { get; set; }

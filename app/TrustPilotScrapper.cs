@@ -24,7 +24,7 @@ namespace ProAdvisor.app {
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         }
 
-        public override async Task<List<Review>> getReviews(string research) {
+        public override async Task<List<Review>> getReviews(string research, DateTime limitDate) {
 
             List<Review> res = new List<Review>();
             bool stop = false;
@@ -34,7 +34,7 @@ namespace ProAdvisor.app {
              * Besoin des www. dans l'url
              * Pas oublier de gérer pour les https://
              */
-                /*
+            /*
             if (!research.StartsWith("www.")) {
                 research = "www." + research;
             }
@@ -42,11 +42,11 @@ namespace ProAdvisor.app {
             string url = "https://fr.trustpilot.com/review/" + research + "?page=1";
             HttpResponseMessage reponse = await client.GetAsync(url);
             if (reponse.IsSuccessStatusCode) {
-                    doc = new HtmlDocument();
-                    doc.LoadHtml(reponse.Content.ReadAsStringAsync().Result);
-                    research = doc.DocumentNode.SelectSingleNode(".//span[@class='badge-card__title']").InnerText.Trim();
+                doc = new HtmlDocument();
+                doc.LoadHtml(reponse.Content.ReadAsStringAsync().Result);
+                research = doc.DocumentNode.SelectSingleNode(".//span[@class='badge-card__title']").InnerText.Trim();
             }
-            
+
             while (!stop) { //On itère sur les pages de commentaire
 
                 url = "https://fr.trustpilot.com/review/" + research + "?page=" + page.ToString();
@@ -91,8 +91,14 @@ namespace ProAdvisor.app {
                         DateTime date = DateTime.ParseExact(date_str, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                         double note = Double.Parse(note_str);
 
-                        Review review = new Review(date, commentaire, note, new Source("Trustpilot.com", true), new Utilisateur(auteur));
-                        res.Add(review);
+                        if (date >= limitDate) {
+                            Review review = new Review(date, commentaire, note, new Source("Trustpilot.com", true), new Utilisateur(auteur));
+                            res.Add(review);
+                        } else {
+                            stop = true;
+                            break;
+                        }
+
                     }
 
                 } else { //Si la requête echoue
@@ -110,6 +116,82 @@ namespace ProAdvisor.app {
 
             return res;
 
+        }
+
+        public async override Task<InfoEntreprise> getEntreprise(string research) {
+
+            string url = "https://fr.trustpilot.com/review/" + research;
+
+            HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode) {
+
+                HtmlDocument doc = new HtmlDocument();
+                doc.LoadHtml(response.Content.ReadAsStringAsync().Result);
+
+                string cat = "";
+
+                HtmlNodeCollection categorie_nodes = doc.DocumentNode.SelectNodes("//a[@class='category category--name']");
+
+                if (categorie_nodes != null) {
+                    foreach (HtmlNode node in categorie_nodes) {
+                        cat += node.InnerText + ";";
+                    }
+                }
+
+                string desc = "";
+
+                HtmlNode desc_node = doc.DocumentNode.SelectSingleNode("//div[@class='company-description__text']");
+                if (desc_node != null) {
+                    desc = desc_node.InnerText;
+                }
+
+                string email = "";
+                string adrresse = "";
+                string telephone = "";
+
+                HtmlNodeCollection contact_points = doc.DocumentNode.SelectNodes("//div[@class='contact-point']");
+                if (contact_points != null) {
+
+                    foreach (HtmlNode contact_point in contact_points) {
+                        /*
+                         * On se sert de l'icone pour deternminer le type de point de contact
+                         */
+
+                        HtmlNode icon_node = contact_point.SelectSingleNode("./div[1]/*[name()='svg']/*[name()='use']");
+                        HtmlNode contact_info = contact_point.SelectSingleNode("./div[2]");
+
+                        //url
+                        if (icon_node.Attributes["xlink:href"].Value == "#icon_at-sign") {
+                            email = contact_info.InnerText;
+                        }
+
+                        //telephone
+                        if (icon_node.Attributes["xlink:href"].Value == "#icon_phone") {
+                            telephone = contact_info.InnerText;
+                        }
+
+                        //url
+                        if (icon_node.Attributes["xlink:href"].Value == "#icon_map-pin") {
+                            adrresse = contact_info.InnerText;
+                        }
+
+                    }
+
+                }
+
+                string nom = "";
+
+                HtmlNode name_node = doc.DocumentNode.SelectSingleNode("//span[@class='multi-size-header__big']");
+                if (name_node != null) {
+                    nom = name_node.InnerText;
+                }
+
+                return new InfoTrustPilot(research, desc, adrresse, telephone, email, cat, nom);
+
+            }
+
+            throw new EntrepriseInconnueException("Aucune entreprise trouvée pour " + research);
         }
 
     }
