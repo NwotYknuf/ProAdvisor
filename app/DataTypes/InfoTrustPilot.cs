@@ -1,7 +1,7 @@
 namespace ProAdvisor.app {
-    public class InfoTrustPilot : InfoEntreprise {
+    public class InfoTrustPilot : Info {
 
-        public InfoTrustPilot(string url, string description = "", string adresse = "", string telephone = "", string email = "", string categories = "", string nom = "") {
+        public InfoTrustPilot(string id, string url, string description = "", string adresse = "", string telephone = "", string email = "", string categories = "", string nom = "") : base(id) {
             this.url = url;
             this.description = description;
             this.adresse = adresse;

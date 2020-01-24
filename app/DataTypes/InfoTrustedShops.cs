@@ -1,7 +1,7 @@
 namespace ProAdvisor.app {
-    public class InfoTrustedShops : InfoEntreprise {
+    public class InfoTrustedShops : Info {
 
-        public InfoTrustedShops(string url, string description = "", string adresse = "", string telephone = "", string email = "", string categories = "", string nom = "", string num_regisre = "", string representant = "") {
+        public InfoTrustedShops(string id, string url, string description = "", string adresse = "", string telephone = "", string email = "", string categories = "", string nom = "", string num_regisre = "", string representant = "") : base(id) {
             this.url = url;
             this.description = description;
             this.adresse = adresse;

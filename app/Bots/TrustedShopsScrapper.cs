@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -21,22 +22,16 @@ namespace ProAdvisor.app {
    * Cette classe utilise la librairie Selenium. C'est une librairie qui permet
    * de controller un navigateur. On l'utilise pour simuler des évenements javascript.
    */
-  public class TrustedShopsScrapper : Bot {
+  public class TrustedShopsScrapper : Bot, ISourceInfo, ISourceReview {
 
     private HttpClient client;
+    private IWebDriver driver;
 
     public TrustedShopsScrapper() {
 
       this.source = "TrustedShops.com";
       client = new HttpClient();
       Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-    }
-
-    public override async Task<List<Review>> getReviews(string research, DateTime limitDate) {
-
-      List<Review> res = new List<Review>();
-      bool stop = false;
-      string trusted_id = await getTsId(research);
 
       /*
        * On initialise un navigateur Selenium
@@ -47,7 +42,22 @@ namespace ProAdvisor.app {
       options.AddArgument("headless");
       //Log level 3 pour ignorer les sorties consoles
       options.AddArgument("log-level=3");
-      IWebDriver driver = new ChromeDriver(options);
+      driver = new ChromeDriver(options);
+    }
+
+    public async Task<List<Review>> findReviews(Entite entite, DateTime limitDate) {
+
+      string research;
+
+      try {
+        research = entite.researchString;
+      } catch {
+        throw new EntrepriseInconnueException();
+      }
+      List<Review> res = new List<Review>();
+      bool stop = false;
+      string trusted_id = await getTsId(research);
+
       WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
 
       string url = "https://www.trustedshops.fr/evaluation/info_" + trusted_id + ".html?shop_id=" + trusted_id + "&page=1&category=ALL";
@@ -61,7 +71,7 @@ namespace ProAdvisor.app {
         /*
          * On attend une seconde que la page charge
          */
-        await Task.Delay(3000);
+        await Task.Delay(1000);
 
         try {
           wait.Until(ExpectedConditions.ElementExists(By.XPath(" //review")));
@@ -78,14 +88,15 @@ namespace ProAdvisor.app {
            * La date n'est disponible que si on met la sourie sur un certain composant dans la balise <review>
            * on exécute donc un script qui simule le mouse over puis le mouse out
            */
-          string jscode_mouse_over = jsScriptEvent("mouseenter", i);
-          string jscode_mouse_out = jsScriptEvent("mouseleave", i);
+          string xpath = "/html/body/presentation-frame/main/shop-profile/div[2]/div/div/div[1]/div[2]/ratings/div[3]/div/async-list/review[" + i.ToString() + "]/div/div[1]/div[3]/loading-line/div/div/div[2]/span";
+          string jscode_mouse_over = JsEvent.getEvent(xpath, "'mouseenter'");
+          string jscode_mouse_out = JsEvent.getEvent(xpath, "'mouseleave'");
 
           js.ExecuteScript(jscode_mouse_over);
           /*
            * On attend que la balise apparaisse
            */
-          IWebElement date_u = wait.Until(ExpectedConditions.ElementExists(By.XPath("//div[@class='tooltip-content']")));
+          IWebElement date_u = wait.Until(ExpectedConditions.ElementExists(By.XPath(" //div[@class='tooltip-content']")));
           string date_str = date_u.Text;
 
           Regex find_date = new Regex(@"\d{2}\/\d{2}\/\d{4}");
@@ -125,7 +136,7 @@ namespace ProAdvisor.app {
           string comment_str = comment.Text;
 
           if (date >= limitDate) {
-            Review rev = new Review(date, comment_str, note, new Source(this.source, true), new Utilisateur(auteur_str));
+            Review rev = new ReviewBasic(entite.id, this.source, auteur_str, date, note, comment_str);
             res.Add(rev);
             i++;
           } else {
@@ -175,21 +186,15 @@ namespace ProAdvisor.app {
       return tsid_node.InnerText;
     }
 
-    /*
-     * Le morceau de code Javascript suivant va simuler l'évenement mouseover ou mouseout sur l'élément concerné dans la n ième balise <review>
-     * On peut demander à Selenium d'executer ce javascript
-     */
-    private string jsScriptEvent(string event_type, int n) {
-      return "var event = new MouseEvent('" + event_type + "', {" +
-        "'view': window," +
-        "'bubbles': true," +
-        "'cancelable': true" +
-        "});" +
-        "var myTarget = document.evaluate(\"/html/body/presentation-frame/main/shop-profile/div[2]/div/div/div[1]/div[2]/ratings/div[3]/div/async-list/review[" + n.ToString() + "]/div/div[1]/div[3]/loading-line/div/div/div[2]/span\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
-        "var canceled = !myTarget.dispatchEvent(event);";
-    }
+    public async Task<Info> findInfos(Entite entite) {
 
-    public async override Task<InfoEntreprise> getEntreprise(string research) {
+      string research;
+
+      try {
+        research = entite.researchString;
+      } catch {
+        throw new EntrepriseInconnueException();
+      }
 
       string trusted_id = await getTsId(research);
 
@@ -250,12 +255,20 @@ namespace ProAdvisor.app {
           telephone = tel_node.InnerText;
         }
 
-        return new InfoTrustedShops(url: research, nom: nom, categories: cat, description: desc, adresse: adresse, email: email, telephone: telephone);
+        return new InfoTrustedShops(id: entite.id, url: research, nom: nom, categories: cat, description: desc, adresse: adresse, email: email, telephone: telephone);
 
+      }
+
+      if (response.StatusCode == HttpStatusCode.Gone) {
+        throw new EntrepriseInconnueException();
       }
 
       throw new Exception("Unsuccessfull request : " + url);
 
+    }
+
+    public override void destroy() {
+      driver.Close();
     }
   }
 

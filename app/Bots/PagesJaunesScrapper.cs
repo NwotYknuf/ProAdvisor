@@ -14,54 +14,119 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace ProAdvisor.app {
-    class PagesJaunesScrapper : ISourceEntreprise {
+    class PagesJaunesScrapper : Bot, ISourceEntreprise {
 
         private HttpClient httpClient;
+        private IWebDriver driver;
 
         public PagesJaunesScrapper() {
             httpClient = new HttpClient();
-        }
-
-        public async Task<List<Entreprise>> findEntreprise(string research) {
-
-            string url = @"https://www.pagesjaunes.fr/annuaire/chercherlespros?quoiqui=peinture&ou=Autour+de+moi&univers=pagesjaunes&sourceOu=AUTOURDEMOI&accuracy=2230&latitude=49.086464&longitude=6.217728";
+            this.source = "pagesjaunes.fr";
 
             ChromeOptions options = new ChromeOptions();
             //headless pour ne pas ouvrir une fenetre navigateur
-            //options.AddArgument("headless");
+            options.AddArgument("headless ");
             //Log level 3 pour ignorer les sorties consoles
             options.AddArgument("log-level=3");
-            IWebDriver driver = new ChromeDriver(options);
+            driver = new ChromeDriver(options);
+
+        }
+
+        public override void destroy() {
+            driver.Close();
+        }
+
+        public async Task<List<Entreprise>> findEntreprise(string research, double lat, double lon) {
+
+            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+
+            List<Entreprise> res = new List<Entreprise>();
+
+            string url = @"https://www.pagesjaunes.fr/annuaire/chercherlespros" +
+                "?quoiqui=" + research +
+                "&ou=Autour%20de%20moi" +
+                "&longitude=" + lon.ToString() +
+                "&latitude=" + lat.ToString();
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
 
             driver.Url = url;
 
-            var filter = By.XPath("//a[@class='denomination-links pj-lb pj-link'] | //a[@class='denomination-links pj-link']");
-            wait.Until(ExpectedConditions.ElementExists(filter));
-            var entrepriseNodes = driver.FindElements(filter);
-            int N = entrepriseNodes.Count;
+            bool done = false;
+            bool cookies = false;
+            List<string> hrefs = new List<string>();
 
-            for (int i = 1; i <= N; i++) {
-                driver.Url = url;
-                filter = By.XPath("(//a[@class='denomination-links pj-lb pj-link' or @class='denomination-links pj-link'])[" + i.ToString() + "]");
+            while (!done) {
+                var filter = By.XPath(" //a[@class='denomination-links pj-lb pj-link'] | //a[@class='denomination-links pj-link']");
                 wait.Until(ExpectedConditions.ElementExists(filter));
-                var node = driver.FindElement(filter);
-                node.Click();
+                var entrepriseNodes = driver.FindElements(filter);
+                await Task.Delay(1000);
+
+                foreach (IWebElement node in entrepriseNodes) {
+                    hrefs.Add(node.GetAttribute("href"));
+                }
+
+                try {
+                    if (!cookies) {
+                        filter = By.XPath("//button[@id='toutAccepter']");
+                        wait.Until(ExpectedConditions.ElementExists(filter));
+                        var cookiesBtn = driver.FindElement(filter);
+                        cookiesBtn.Click();
+                        cookies = true;
+                    }
+
+                    filter = By.XPath("//a[@class='link_pagination next pj-lb pj-link']");
+                    wait.Until(ExpectedConditions.ElementExists(filter));
+                    var button = driver.FindElement(filter);
+                    button.Click();
+
+                } catch {
+                    done = true;
+                }
+
             }
 
             driver.Close();
 
-            return null;
+            foreach (string href in hrefs) {
+
+                HttpClient client = new HttpClient();
+
+                HttpResponseMessage response = await client.GetAsync(href);
+
+                if (response.IsSuccessStatusCode) {
+
+                    HtmlDocument doc = new HtmlDocument();
+                    doc.LoadHtml(await response.Content.ReadAsStringAsync());
+
+                    HtmlNode siretNode = doc.DocumentNode.SelectSingleNode("//div[@class='row siret']/span");
+
+                    if (siretNode != null) {
+                        string siret = siretNode.InnerText;
+
+                        HtmlNode nomNode = doc.DocumentNode.SelectSingleNode("//h1[@class='noTrad no-margin']");
+                        string nom = nomNode.InnerText;
+
+                        HtmlNode adresseNode = doc.DocumentNode.SelectSingleNode("//a[@class='teaser-item black-icon address streetAddress clearfix map-click-zone pj-lb pj-link']");
+                        string adresse = adresseNode.InnerText;
+
+                        string siteWeb = "";
+                        var linkNodes = doc.DocumentNode.SelectNodes("//a[@class='teaser-item black-icon pj-lb pj-link']");
+                        if (linkNodes != null) {
+                            foreach (var node in linkNodes)
+                                if (node.SelectSingleNode("./span[@class='icon icon-lien']") != null) {
+                                    siteWeb = node.InnerText;
+                                }
+                        }
+
+                        res.Add(new Entreprise(siret, nom, siteWeb, adresse));
+                    }
+
+                }
+            }
+
+            return res;
         }
 
-        private string jsScriptEvent(string event_type, int n) {
-            return "var event = new MouseEvent('" + event_type + "', {" +
-                "'view': window," +
-                "'bubbles': true," +
-                "'cancelable': true" +
-                "});" +
-                "var myTarget = document.evaluate(\"/html/body/presentation-frame/main/shop-profile/div[2]/div/div/div[1]/div[2]/ratings/div[4]/div/async-list/review[" + n.ToString() + "]/div/div[1]/div[2]/loading-line/div/div/div[2]/span\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
-                "var canceled = !myTarget.dispatchEvent(event);";
-        }
     }
 }

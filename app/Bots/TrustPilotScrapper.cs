@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace ProAdvisor.app {
 
@@ -14,18 +20,34 @@ namespace ProAdvisor.app {
      * A besoin de l'adresse du site d'une entreprise pour trouver des avis
      */
 
-    public class TrustPilotScrapper : Bot {
+    public class TrustPilotScrapper : Bot, ISourceInfo, ISourceReview {
 
         private HttpClient client;
+        private IWebDriver driver;
 
         public TrustPilotScrapper() {
             this.source = "TrustPilot.com";
             client = new HttpClient();
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
+            ChromeOptions options = new ChromeOptions();
+            //headless pour ne pas ouvrir une fenetre navigateur
+            options.AddArgument("headless");
+            //Log level 3 pour ignorer les sorties consoles
+            options.AddArgument("log-level=3");
+            driver = new ChromeDriver(options);
+
         }
 
-        public override async Task<List<Review>> getReviews(string research, DateTime limitDate) {
+        public async Task<List<Review>> findReviews(Entite entite, DateTime limitDate) {
 
+            string research;
+
+            try {
+                research = entite.researchString;
+            } catch {
+                throw new EntrepriseInconnueException();
+            }
             List<Review> res = new List<Review>();
             bool stop = false;
             int page = 1;
@@ -92,7 +114,7 @@ namespace ProAdvisor.app {
                         double note = Double.Parse(note_str);
 
                         if (date >= limitDate) {
-                            Review review = new Review(date, commentaire, note, new Source("Trustpilot.com", true), new Utilisateur(auteur));
+                            Review review = new ReviewBasic(entite.id, this.source, auteur, date, note, commentaire);
                             res.Add(review);
                         } else {
                             stop = true;
@@ -118,81 +140,104 @@ namespace ProAdvisor.app {
 
         }
 
-        public async override Task<InfoEntreprise> getEntreprise(string research) {
+        public async Task<Info> findInfos(Entite entite) {
+
+            string research;
+
+            try {
+                research = entite.researchString;
+            } catch {
+                throw new EntrepriseInconnueException();
+            }
 
             string url = "https://fr.trustpilot.com/review/" + research;
 
-            HttpResponseMessage response = await client.GetAsync(url);
+            driver.Url = url;
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
 
-            if (response.IsSuccessStatusCode) {
+            for (int i = 0; i < 5; i++) {
+                js.ExecuteScript("window.scrollBy(0,250)");
+                await Task.Delay(100);
+            }
 
-                HtmlDocument doc = new HtmlDocument();
-                doc.LoadHtml(response.Content.ReadAsStringAsync().Result);
+            try {
+                driver.FindElement(By.XPath("//div[@class='container error-page']"));
+                throw new EntrepriseInconnueException();
+            } catch { }
 
-                string cat = "";
+            string cat = "";
 
-                HtmlNodeCollection categorie_nodes = doc.DocumentNode.SelectNodes("//a[@class='category category--name']");
+            try {
+                var categorie_nodes = driver.FindElements(By.XPath("//a[@class='category category--name']"));
 
                 if (categorie_nodes != null) {
-                    foreach (HtmlNode node in categorie_nodes) {
-                        cat += node.InnerText + ";";
+                    foreach (IWebElement node in categorie_nodes) {
+                        cat += node.Text + ";";
                     }
                 }
+            } catch { }
 
-                string desc = "";
+            string desc = "";
 
-                HtmlNode desc_node = doc.DocumentNode.SelectSingleNode("//div[@class='company-description__text']");
+            try {
+                var desc_node = driver.FindElement(By.XPath("//div[@class='company-description__text']"));
+
                 if (desc_node != null) {
-                    desc = desc_node.InnerText;
+                    desc = desc_node.Text;
                 }
+            } catch { }
 
-                string email = "";
-                string adrresse = "";
-                string telephone = "";
+            string email = "";
+            string adrresse = "";
+            string telephone = "";
 
-                HtmlNodeCollection contact_points = doc.DocumentNode.SelectNodes("//div[@class='contact-point']");
+            try {
+                var contact_points = driver.FindElements(By.XPath("//div[@class='contact-point']"));
                 if (contact_points != null) {
 
-                    foreach (HtmlNode contact_point in contact_points) {
+                    foreach (IWebElement contact_point in contact_points) {
                         /*
                          * On se sert de l'icone pour deternminer le type de point de contact
                          */
 
-                        HtmlNode icon_node = contact_point.SelectSingleNode("./div[1]/*[name()='svg']/*[name()='use']");
-                        HtmlNode contact_info = contact_point.SelectSingleNode("./div[2]");
+                        IWebElement icon_node = contact_point.FindElement(By.XPath("./div[1]/*[name()='svg']/*[name()='use']"));
+                        IWebElement contact_info = contact_point.FindElement(By.XPath("./div[2]"));
 
                         //url
-                        if (icon_node.Attributes["xlink:href"].Value == "#icon_at-sign") {
-                            email = contact_info.InnerText;
+                        if (icon_node.GetAttribute("xlink:href") == "#icon_at-sign") {
+                            email = contact_info.Text;
                         }
 
                         //telephone
-                        if (icon_node.Attributes["xlink:href"].Value == "#icon_phone") {
-                            telephone = contact_info.InnerText;
+                        if (icon_node.GetAttribute("xlink:href") == "#icon_phone") {
+                            telephone = contact_info.Text;
                         }
 
                         //url
-                        if (icon_node.Attributes["xlink:href"].Value == "#icon_map-pin") {
-                            adrresse = contact_info.InnerText;
+                        if (icon_node.GetAttribute("xlink:href") == "#icon_map-pin") {
+                            adrresse = contact_info.Text;
                         }
 
                     }
 
                 }
+            } catch { }
 
-                string nom = "";
+            string nom = "";
 
-                HtmlNode name_node = doc.DocumentNode.SelectSingleNode("//span[@class='multi-size-header__big']");
+            try {
+                IWebElement name_node = driver.FindElement(By.XPath("//span[@class='multi-size-header__big']"));
                 if (name_node != null) {
-                    nom = name_node.InnerText;
+                    nom = name_node.Text;
                 }
+            } catch { }
 
-                return new InfoTrustPilot(research, desc, adrresse, telephone, email, cat, nom);
+            return new InfoTrustPilot(research, desc, adrresse, telephone, email, cat, nom);
 
-            }
-
-            throw new EntrepriseInconnueException("Aucune entreprise trouvée pour " + research);
         }
 
+        public override void destroy() {
+            driver.Close();
+        }
     }
 }
