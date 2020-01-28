@@ -8,12 +8,14 @@ namespace api.Model {
         public DateTime Date { get; set; }
         public string Source { get; set; }
         public string Auteur { get; set; }
+        public bool RespecteAfnor { get; set; }
 
-        public ApiResCommentaire(int note, DateTime date, string source, string auteur) {
+        public ApiResCommentaire(int note, DateTime date, string source, string auteur, bool respecteAfnor) {
             Note = note;
             Date = date;
             Source = source;
             Auteur = auteur;
+            RespecteAfnor = respecteAfnor;
         }
 
     }

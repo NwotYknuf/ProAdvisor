@@ -15,10 +15,10 @@ namespace api.Model {
         public string Adresse { get; set; }
         public string CodePostal { get; set; }
 
-        public List<string> serveices { get; set; }
+        public List<string> services { get; set; }
         public List<string> zonesIntervention { get; set; }
 
-        public ApiResEntreprise(string siret, string siren, string nom, string representant, string description, string telephone, string email, string ville, string adresse, string codePostal, List<string> serveices, List<string> zonesIntervention) {
+        public ApiResEntreprise(string siret, string siren, string nom, string representant, string description, string telephone, string email, string ville, string adresse, string codePostal, List<string> services, List<string> zonesIntervention) {
             Siret = siret;
             Siren = siren;
             Nom = nom;
@@ -29,7 +29,7 @@ namespace api.Model {
             Ville = ville;
             Adresse = adresse;
             CodePostal = codePostal;
-            this.serveices = serveices;
+            this.services = services;
             this.zonesIntervention = zonesIntervention;
         }
 
