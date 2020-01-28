@@ -75,7 +75,7 @@ namespace ProAdvisor.app {
 
         try {
           wait.Until(ExpectedConditions.ElementExists(By.XPath(" //review")));
-        } catch (WebDriverTimeoutException e) {
+        } catch (WebDriverTimeoutException) {
           throw new PasDeCommentaireException("Pas de commentaires pour :" + research);
         }
 
