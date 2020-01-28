@@ -50,7 +50,7 @@ namespace ProAdvisor.app {
       string research;
 
       try {
-        research = entite.researchString;
+        research = entite.getResearchString();
       } catch {
         throw new EntrepriseInconnueException();
       }
@@ -191,7 +191,7 @@ namespace ProAdvisor.app {
       string research;
 
       try {
-        research = entite.researchString;
+        research = entite.getResearchString();
       } catch {
         throw new EntrepriseInconnueException();
       }

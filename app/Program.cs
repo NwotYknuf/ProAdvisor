@@ -6,7 +6,94 @@ using Newtonsoft.Json;
 namespace ProAdvisor.app {
     class Program {
 
-        public void trouverEntreprises(List<Bot> bots) {
+        public static List<Entreprise> trouverEntreprises(List<Bot> bots, string quoi, (double lat, double lon)ou) {
+
+            List<Entreprise> entreprises = new List<Entreprise>();
+
+            foreach (Bot bot in bots) {
+
+                if (bot is ISourceEntreprise) {
+                    ISourceEntreprise scrapper = bot as ISourceEntreprise;
+
+                    try {
+                        entreprises.AddRange(scrapper.findEntreprise(quoi, ou.lat, ou.lon).Result);
+                    } catch (AggregateException ae) {
+                        throw ae.InnerException;
+                    }
+                }
+
+            }
+
+            return entreprises;
+
+        }
+
+        public static DateTime findLastComment(Bot bot, Entite entite) {
+            return new DateTime(2010, 1, 1); //TODO
+        }
+
+        public static List<Review> trouverReviews(List<Bot> bots, Entite entite) {
+
+            List<Review> reviews = new List<Review>();
+            DateTime dateLimite;
+
+            foreach (Bot bot in bots) {
+
+                if (bot is ISourceInfo) {
+
+                    dateLimite = findLastComment(bot, entite);
+
+                    try {
+                        reviews.AddRange((bot as ISourceReview).findReviews(entite, dateLimite).Result);
+                    } catch (AggregateException ae) {
+
+                        if (!(ae.InnerException is EntrepriseInconnueException) &&
+                            !(ae.InnerException is PasDeCommentaireException)) {
+                            Console.WriteLine(ae.InnerException.Message + ae.InnerException.StackTrace);
+                        }
+                    }
+
+                }
+            }
+
+            return reviews;
+
+        }
+
+        public static List<Info> trouverInfos(List<Bot> bots, Entite entite) {
+
+            List<Info> infos = new List<Info>();
+
+            foreach (Bot bot in bots) {
+
+                if (bot is ISourceInfo) {
+
+                    try {
+                        infos.Add((bot as ISourceInfo).findInfos(entite).Result);
+                    } catch (AggregateException ae) {
+
+                        if (!(ae.InnerException is EntrepriseInconnueException)) {
+                            Console.WriteLine(ae.InnerException.Message + ae.InnerException.StackTrace);
+                        }
+                    }
+
+                }
+            }
+
+            return infos;
+        }
+
+        public static List<Entite> getEntites() {
+            return new List<Entite>(); //TODO
+        }
+
+        public static void Main(string[] args) {
+
+            List<Bot> bots = new List<Bot>();
+
+            bots.Add(new PagesJaunesScrapper());
+            bots.Add(new TrustPilotScrapper());
+            bots.Add(new TrustedShopsScrapper());
 
             List<string> recherches = new List<string>() {
                 "plombier",
@@ -21,89 +108,24 @@ namespace ProAdvisor.app {
 
             List<Entreprise> entreprises = new List<Entreprise>();
 
-            foreach (ISourceEntreprise scrapper in bots) {
-
-                foreach (string recherche in recherches) {
-                    foreach ((double lat, double lon)pos in positions) {
-                        try {
-                            entreprises.AddRange(scrapper.findEntreprise(recherche, pos.lat, pos.lon).Result);
-                        } catch (AggregateException ae) {
-                            throw ae.InnerException;
-                        }
-                    }
+            foreach (string recherche in recherches) {
+                foreach (var pos in positions) {
+                    entreprises.AddRange(trouverEntreprises(bots, recherche, pos));
                 }
-
             }
 
             StreamWriter sw = new StreamWriter("entreprises.json");
             sw.Write(JsonConvert.SerializeObject(entreprises));
             sw.Close();
-        }
 
-        public static void Main(string[] args) {
+            List<Entite> entites = getEntites();
 
-            List<Bot> bots = new List<Bot>();
+            List<Info> infos = new List<Info>();
+            List<Review> reviews = new List<Review>();
 
-            bots.Add(new PagesJaunesScrapper());
-            bots.Add(new TrustPilotScrapper());
-            bots.Add(new TrustedShopsScrapper());
-
-            DateTime limitDate = new DateTime(2010, 1, 1);
-
-            StreamReader sr = new StreamReader("entreprises.json");
-            List<Entreprise> entreprises = JsonConvert.DeserializeObject<List<Entreprise>>(sr.ReadToEnd());
-
-            List<Entite> entites = new List<Entite>();
-            entites.AddRange(entreprises);
-
-            entites.Add(new Service("www.pimkie.fr", "pimkie"));
-            entites.Add(new Service("www.moncoffrage.com", "moncoffrage"));
-
-            foreach (Bot bot in bots) {
-
-                if (bot is ISourceInfo) {
-
-                    List<Info> infos = new List<Info>();
-
-                    foreach (Entite entite in entites) {
-                        try {
-                            infos.Add((bot as ISourceInfo).findInfos(entite).Result);
-                        } catch (AggregateException ae) {
-
-                            if (!(ae.InnerException is EntrepriseInconnueException)) {
-                                Console.WriteLine(ae.InnerException.Message + ae.InnerException.StackTrace);
-                            }
-                        }
-                    }
-
-                    StreamWriter sw = new StreamWriter("infos" + bot.source + ".json");
-                    sw.Write(JsonConvert.SerializeObject(infos));
-                    sw.Close();
-                }
-            }
-
-            foreach (Bot bot in bots) {
-
-                if (bot is ISourceInfo) {
-
-                    List<Review> reviews = new List<Review>();
-
-                    foreach (Entite entite in entites) {
-                        try {
-                            reviews.AddRange((bot as ISourceReview).findReviews(entite, limitDate).Result);
-                        } catch (AggregateException ae) {
-
-                            if (!(ae.InnerException is EntrepriseInconnueException) &&
-                                !(ae.InnerException is PasDeCommentaireException)) {
-                                Console.WriteLine(ae.InnerException.Message + ae.InnerException.StackTrace);
-                            }
-                        }
-                    }
-
-                    StreamWriter sw = new StreamWriter("reviews" + bot.source + ".json");
-                    sw.Write(JsonConvert.SerializeObject(reviews));
-                    sw.Close();
-                }
+            foreach (Entite entite in entites) {
+                infos.AddRange(trouverInfos(bots, entite));
+                reviews.AddRange(trouverReviews(bots, entite));
             }
 
             foreach (Bot bot in bots) {

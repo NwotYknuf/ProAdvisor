@@ -25,7 +25,7 @@ namespace ProAdvisor.app {
 
             ChromeOptions options = new ChromeOptions();
             //headless pour ne pas ouvrir une fenetre navigateur
-            options.AddArgument("headless ");
+            //options.AddArgument("headless ");
             //Log level 3 pour ignorer les sorties consoles
             options.AddArgument("log-level=3");
             driver = new ChromeDriver(options);
@@ -86,8 +86,6 @@ namespace ProAdvisor.app {
 
             }
 
-            driver.Close();
-
             foreach (string href in hrefs) {
 
                 HttpClient client = new HttpClient();
@@ -119,7 +117,25 @@ namespace ProAdvisor.app {
                                 }
                         }
 
-                        res.Add(new Entreprise(siret, nom, siteWeb, adresse));
+                        HtmlNodeCollection prestationNodes = doc.DocumentNode.SelectNodes("//div[@class='ligne prestations marg-btm-m generique']//li");
+                        List<string> prestations = new List<string>();
+
+                        if (prestationNodes != null) {
+                            foreach (HtmlNode prestationNode in prestationNodes) {
+                                prestations.Add(prestationNode.InnerText);
+                            }
+                        }
+
+                        HtmlNodeCollection zoneNodes = doc.DocumentNode.SelectNodes("//div[@class='zone-chalandise']/div//li");
+                        List<string> zones = new List<string>();
+
+                        if (zoneNodes != null) {
+                            foreach (HtmlNode zoneNode in zoneNodes) {
+                                zones.Add(zoneNode.InnerText);
+                            }
+                        }
+
+                        res.Add(new Entreprise(siret, nom, siteWeb, adresse, prestations, zones));
                     }
 
                 }
