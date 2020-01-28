@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace api.Model {
-    public partial class ServiceWeb {
-        public ServiceWeb() {
+namespace api.Model
+{
+    public partial class ServiceWeb
+    {
+        public ServiceWeb()
+        {
             APourServiceSite = new HashSet<APourServiceSite>();
             Commentaire = new HashSet<Commentaire>();
         }

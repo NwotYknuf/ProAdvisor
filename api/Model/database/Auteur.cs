@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace api.Model {
-    public partial class Auteur {
-        public Auteur() {
+namespace api.Model
+{
+    public partial class Auteur
+    {
+        public Auteur()
+        {
             Commentaire = new HashSet<Commentaire>();
         }
 

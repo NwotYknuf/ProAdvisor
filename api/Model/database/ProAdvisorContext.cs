@@ -198,6 +198,13 @@ namespace api.Model {
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
+                entity.Property(e => e.Adresse)
+                    .IsRequired()
+                    .HasColumnName("adresse")
+                    .HasColumnType("varchar(128)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_unicode_ci");
+
                 entity.Property(e => e.CodePostal)
                     .IsRequired()
                     .HasColumnName("code_postal")
@@ -223,10 +230,6 @@ namespace api.Model {
                     .HasColumnType("varchar(128)")
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
-
-                entity.Property(e => e.Numero)
-                    .HasColumnName("numero")
-                    .HasColumnType("int(5)");
 
                 entity.Property(e => e.Representant)
                     .HasColumnName("representant")

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace api.Model {
-    public partial class Commentaire {
+namespace api.Model
+{
+    public partial class Commentaire
+    {
         public int Id { get; set; }
         public int Note { get; set; }
         public DateTime Date { get; set; }
