@@ -75,11 +75,17 @@ namespace api.Controllers {
             List<ApiResCommentaire> res = new List<ApiResCommentaire>();
 
             var filteredComments = _context.Commentaire.Where(x => x.Siret == entreprise.Siret).
-            Where(x => Source == null ? true : x.Source.ToLower() == Source.ToLower()).
-            Where(x => estAFNOR == null ? true : x.AuteurNavigation.UrlNavigation.RespecteAfnor == estAFNOR).ToList();
+            Where(x => Source == null ? true : x.Source.ToLower() == Source.ToLower()).ToList();
 
             foreach (Commentaire commentaire in filteredComments) {
-                res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Source, commentaire.AuteurNavigation.Nom, commentaire.AuteurNavigation.UrlNavigation.RespecteAfnor));
+                bool AFNOR = _context.Source.Where(x => x.Url == commentaire.Source).Select(x => x.RespecteAfnor).FirstOrDefault();
+                if (estAFNOR != null) {
+                    if (estAFNOR == AFNOR) {
+                        res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, AFNOR, commentaire.Commentaire1));
+                    }
+                } else {
+                    res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, AFNOR, commentaire.Commentaire1));
+                }
             }
 
             return res;
