@@ -74,7 +74,7 @@ namespace api.Controllers {
 
             List<ApiResCommentaire> res = new List<ApiResCommentaire>();
 
-            var filteredComments = entreprise.Commentaire.
+            var filteredComments = _context.Commentaire.Where(x => x.Siret == entreprise.Siret).
             Where(x => Source == null ? true : x.Source.ToLower() == Source.ToLower()).
             Where(x => estAFNOR == null ? true : x.AuteurNavigation.UrlNavigation.RespecteAfnor == estAFNOR).ToList();
 
