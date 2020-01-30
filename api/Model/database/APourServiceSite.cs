@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace api.Model
-{
-    public partial class APourServiceSite
-    {
+namespace api.Model {
+    public partial class APourServiceSite {
         public string Nom { get; set; }
         public string Url { get; set; }
 

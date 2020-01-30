@@ -17,6 +17,22 @@ namespace api.Controllers {
             _context = context;
         }
 
+        private ApiResEntreprise convert(Entreprise e) {
+            List<string> zones = new List<string>();
+            List<string> services = new List<string>();
+
+            foreach (APourServiceEntr truc in _context.APourServiceEntr.Where(x => x.Siret == e.Siret)) {
+                services.Add(truc.Nom);
+            }
+
+            foreach (ZoneIntervention zone in _context.ZoneIntervention.Where(x => x.Siret == e.Siret)) {
+                zones.Add(zone.NomVille);
+            }
+
+            return new ApiResEntreprise(e.Siret, e.Siren, e.Nom, e.Representant, e.Description, e.Telephone, e.Email, e.Ville, e.Adresse, e.CodePostal, services, zones);
+
+        }
+
         // GET: api/Entreprise?Ville=Metz&Zone=Borgny&Service=Plomberie
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApiResEntreprise>>> GetEntreprise(string Ville = null, string Zone = null, string Service = null) {
@@ -29,19 +45,7 @@ namespace api.Controllers {
             List<ApiResEntreprise> res = new List<ApiResEntreprise>();
 
             foreach (Entreprise e in entreprises) {
-                List<string> zones = new List<string>();
-                List<string> services = new List<string>();
-
-                foreach (APourServiceEntr truc in e.APourServiceEntr) {
-                    services.Add(truc.NomNavigation.NomService);
-                }
-
-                foreach (ZoneIntervention zone in e.ZoneIntervention) {
-                    zones.Add(zone.NomVille);
-                }
-
-                res.Add(new ApiResEntreprise(e.Siret, e.Siren, e.Nom, e.Representant, e.Description, e.Telephone, e.Email, e.Ville, e.Adresse, e.CodePostal, services, zones));
-
+                res.Add(convert(e));
             }
 
             return res;
@@ -49,14 +53,14 @@ namespace api.Controllers {
 
         // GET: api/Entreprise/12345678912345
         [HttpGet("{id}")]
-        public async Task<ActionResult<Entreprise>> GetEntreprise(string id) {
+        public async Task<ActionResult<ApiResEntreprise>> GetEntreprise(string id) {
             var entreprise = await _context.Entreprise.Where(x => x.Siret == id).FirstOrDefaultAsync();
 
             if (entreprise == null) {
                 return NotFound();
             }
 
-            return entreprise;
+            return convert(entreprise);
         }
 
         // GET: api/Entreprise/12345678912345/Comments?Source=www.trustpilot.com&AFNOR=true

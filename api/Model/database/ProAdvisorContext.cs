@@ -20,7 +20,7 @@ namespace api.Model {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<APourServiceEntr>(entity => {
-                entity.HasKey(e => e.Nom)
+                entity.HasKey(e => new { e.Nom, e.Siret })
                     .HasName("PRIMARY");
 
                 entity.ToTable("a_pour_service_entr");
@@ -35,15 +35,14 @@ namespace api.Model {
                     .HasCollation("latin1_swedish_ci");
 
                 entity.Property(e => e.Siret)
-                    .IsRequired()
                     .HasColumnName("siret")
                     .HasColumnType("varchar(14)")
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
                 entity.HasOne(d => d.NomNavigation)
-                    .WithOne(p => p.APourServiceEntr)
-                    .HasForeignKey<APourServiceEntr>(d => d.Nom)
+                    .WithMany(p => p.APourServiceEntr)
+                    .HasForeignKey(d => d.Nom)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_serv_serv");
 
@@ -55,7 +54,7 @@ namespace api.Model {
             });
 
             modelBuilder.Entity<APourServiceSite>(entity => {
-                entity.HasKey(e => e.Nom)
+                entity.HasKey(e => new { e.Nom, e.Url })
                     .HasName("PRIMARY");
 
                 entity.ToTable("a_pour_service_site");
@@ -70,15 +69,14 @@ namespace api.Model {
                     .HasCollation("latin1_swedish_ci");
 
                 entity.Property(e => e.Url)
-                    .IsRequired()
                     .HasColumnName("url")
                     .HasColumnType("varchar(128)")
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
                 entity.HasOne(d => d.NomNavigation)
-                    .WithOne(p => p.APourServiceSite)
-                    .HasForeignKey<APourServiceSite>(d => d.Nom)
+                    .WithMany(p => p.APourServiceSite)
+                    .HasForeignKey(d => d.Nom)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Fk_site");
 
@@ -110,7 +108,9 @@ namespace api.Model {
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
-                entity.Property(e => e.IsAnonyme).HasColumnName("is_anonyme");
+                entity.Property(e => e.IsAnonyme)
+                    .HasColumnName("is_anonyme")
+                    .HasColumnType("tinyint(4)");
 
                 entity.HasOne(d => d.UrlNavigation)
                     .WithMany(p => p.Auteur)
@@ -142,13 +142,17 @@ namespace api.Model {
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
+                entity.Property(e => e.Commentaire1)
+                    .HasColumnName("commentaire")
+                    .HasColumnType("varchar(2000)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_unicode_ci");
+
                 entity.Property(e => e.Date)
                     .HasColumnName("date")
                     .HasColumnType("date");
 
-                entity.Property(e => e.Note)
-                    .HasColumnName("note")
-                    .HasColumnType("int(2)");
+                entity.Property(e => e.Note).HasColumnName("note");
 
                 entity.Property(e => e.Siret)
                     .HasColumnName("siret")
@@ -199,7 +203,6 @@ namespace api.Model {
                     .HasCollation("latin1_swedish_ci");
 
                 entity.Property(e => e.Adresse)
-                    .IsRequired()
                     .HasColumnName("adresse")
                     .HasColumnType("varchar(128)")
                     .HasCharSet("utf8")
@@ -225,7 +228,6 @@ namespace api.Model {
                     .HasCollation("latin1_swedish_ci");
 
                 entity.Property(e => e.Nom)
-                    .IsRequired()
                     .HasColumnName("nom")
                     .HasColumnType("varchar(128)")
                     .HasCharSet("latin1")
@@ -240,7 +242,7 @@ namespace api.Model {
                 entity.Property(e => e.Siren)
                     .IsRequired()
                     .HasColumnName("siren")
-                    .HasColumnType("varchar(8)")
+                    .HasColumnType("varchar(9)")
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
@@ -250,8 +252,13 @@ namespace api.Model {
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
+                entity.Property(e => e.Url)
+                    .HasColumnName("url")
+                    .HasColumnType("varchar(128)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_unicode_ci");
+
                 entity.Property(e => e.Ville)
-                    .IsRequired()
                     .HasColumnName("ville")
                     .HasColumnType("varchar(128)")
                     .HasCharSet("latin1")
@@ -283,12 +290,48 @@ namespace api.Model {
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
+                entity.Property(e => e.Adresse)
+                    .HasColumnName("adresse")
+                    .HasColumnType("varchar(128)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_unicode_ci");
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasColumnType("varchar(1000)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_unicode_ci");
+
+                entity.Property(e => e.Email)
+                    .HasColumnName("email")
+                    .HasColumnType("varchar(128)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_unicode_ci");
+
                 entity.Property(e => e.Nom)
                     .IsRequired()
                     .HasColumnName("nom")
                     .HasColumnType("varchar(128)")
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
+
+                entity.Property(e => e.NumRegistre)
+                    .HasColumnName("num_registre")
+                    .HasColumnType("varchar(128)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_unicode_ci");
+
+                entity.Property(e => e.Representant)
+                    .HasColumnName("representant")
+                    .HasColumnType("varchar(128)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_unicode_ci");
+
+                entity.Property(e => e.Telephone)
+                    .HasColumnName("telephone")
+                    .HasColumnType("varchar(128)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_unicode_ci");
             });
 
             modelBuilder.Entity<Source>(entity => {
