@@ -94,6 +94,7 @@ namespace ProAdvisor.app {
             bots.Add(new PagesJaunesScrapper());
             bots.Add(new TrustPilotScrapper());
             bots.Add(new TrustedShopsScrapper());
+            bots.Add(new SocAvisGarentisScrapper());
 
             List<string> recherches = new List<string>() {
                 "plombier",
