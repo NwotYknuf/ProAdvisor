@@ -18,7 +18,7 @@ namespace ProAdvisor.app {
                     try {
                         entreprises.AddRange(scrapper.findEntreprise(quoi, ou.lat, ou.lon).Result);
                     } catch (AggregateException ae) {
-                        throw ae.InnerException;
+                        Console.WriteLine(ae.InnerException.Message + ae.InnerException.StackTrace);
                     }
                 }
 

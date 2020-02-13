@@ -40,7 +40,7 @@ namespace ProAdvisor.app {
       ChromeOptions options = new ChromeOptions();
       //headless pour ne pas ouvrir une fenetre navigateur
       options.AddArgument("headless");
-      //Log level 3 pour ignorer les sorties consoles
+      options.AddArgument("--no-sandbox");
       options.AddArgument("log-level=3");
       driver = new ChromeDriver(options);
     }

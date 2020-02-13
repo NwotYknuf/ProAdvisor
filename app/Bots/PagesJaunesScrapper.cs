@@ -25,8 +25,8 @@ namespace ProAdvisor.app {
 
             ChromeOptions options = new ChromeOptions();
             //headless pour ne pas ouvrir une fenetre navigateur
-            //options.AddArgument("headless ");
-            //Log level 3 pour ignorer les sorties consoles
+            options.AddArgument("headless ");
+            options.AddArgument("--no-sandbox");
             options.AddArgument("log-level=3");
             driver = new ChromeDriver(options);
 
@@ -136,6 +136,10 @@ namespace ProAdvisor.app {
                         }
 
                         res.Add(new Entreprise(siret, nom, siteWeb, adresse, prestations, zones));
+
+                        //On attend un peu pour eviter de se faire flag comme bot
+                        Random rnd = new Random();
+                        await Task.Delay(rnd.Next(1000, 2000));
                     }
 
                 }
