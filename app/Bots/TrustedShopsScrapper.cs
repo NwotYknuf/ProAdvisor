@@ -154,7 +154,6 @@ namespace ProAdvisor.app {
           stop = true;
         }
       }
-      driver.Close();
       return res;
 
     }

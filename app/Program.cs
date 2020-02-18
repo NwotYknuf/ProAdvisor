@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
 namespace ProAdvisor.app {
@@ -28,20 +31,47 @@ namespace ProAdvisor.app {
 
         }
 
-        public static DateTime findLastComment(Bot bot, Entite entite) {
-            return new DateTime(2010, 1, 1); //TODO
+        public static DateTime trouverDernierCommentaire(Bot bot, Entite entite, string connectionString) {
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+
+            MySqlCommand cmd = connection.CreateCommand();
+
+            if (entite is Service) {
+                cmd.CommandText = @"
+                SELECT max(date) from commentaire 
+                where source like('" + bot.source + "') and url_service like('" + entite.id + "')";
+            } else {
+                cmd.CommandText = @"
+                SELECT max(date) from commentaire
+                where source like('" + bot.source + "') and siret like('" + entite.id + "')";
+            }
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            reader.Read();
+
+            DateTime res = new DateTime(2010, 1, 1);
+
+            if (!reader.IsDBNull(0)) {
+                res = reader.GetDateTime(0);
+            }
+
+            connection.Close();
+
+            return res;
         }
 
-        public static List<Review> trouverReviews(List<Bot> bots, Entite entite) {
+        public static List<Review> trouverReviews(List<Bot> bots, Entite entite, string connectionString) {
 
             List<Review> reviews = new List<Review>();
-            DateTime dateLimite;
 
             foreach (Bot bot in bots) {
 
                 if (bot is ISourceInfo) {
 
-                    dateLimite = findLastComment(bot, entite);
+                    DateTime dateLimite = trouverDernierCommentaire(bot, entite, connectionString);
 
                     try {
                         reviews.AddRange((bot as ISourceReview).findReviews(entite, dateLimite).Result);
@@ -83,56 +113,151 @@ namespace ProAdvisor.app {
             return infos;
         }
 
-        public static List<Entite> getEntites() {
-            return new List<Entite>(); //TODO
+        public static List<Entite> getEntites(string connectionString) {
+            List<Entite> entites = new List<Entite>();
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            MySqlCommand cmd = connection.CreateCommand();
+            cmd.CommandText = "Select * from entreprise";
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read()) {
+                string siret = reader.GetString("siret");
+                string nom = reader.GetString("nom");
+                string url = reader.GetString("url");
+                string adresse = reader.GetString("adresse");
+
+                Entreprise e = new Entreprise(siret, nom, url, adresse, null, null);
+                entites.Add(e);
+            }
+            reader.Close();
+
+            cmd = connection.CreateCommand();
+            cmd.CommandText = "Select * from service_web";
+
+            reader = cmd.ExecuteReader();
+
+            while (reader.Read()) {
+                string url = reader.GetString("url_service");
+                string nom = reader.GetString("nom");
+                Service s = new Service(url, nom);
+                entites.Add(s);
+            }
+            reader.Close();
+
+            connection.Close();
+
+            return entites;
         }
 
-        public static void Main(string[] args) {
+        public static void test() {
+            HttpClient client = new HttpClient();
 
-            List<Bot> bots = new List<Bot>();
+            HttpResponseMessage response = client.GetAsync("https://www.pagesjaunes.fr").Result;
 
-            bots.Add(new PagesJaunesScrapper());
-            bots.Add(new TrustPilotScrapper());
-            bots.Add(new TrustedShopsScrapper());
-            bots.Add(new SocAvisGarentisScrapper());
+            if (response.StatusCode == HttpStatusCode.Forbidden) {
+                Console.WriteLine("Acces à PagesJaunes impossible");
+            }
 
-            List<string> recherches = new List<string>() {
-                "plombier",
-                "maçon",
-                "carreleur"
-            };
+            if (response.StatusCode == HttpStatusCode.OK) {
+                Console.WriteLine("Acces à PagesJaunes ok");
+            }
 
-            List < (double lat, double lon) > positions = new List < (double lat, double lon) > () {
-                (49.1149772, 6.1824283),
-                (44.841225, -0.5800364)
-            };
+        }
+
+        public static void entreprise(string inputFolder, string outputFolder) {
+
+            List<Bot> bots = new List<Bot>(ChildClassEnumerator.GetEnumerableOfType<Bot>());
 
             List<Entreprise> entreprises = new List<Entreprise>();
 
-            foreach (string recherche in recherches) {
-                foreach (var pos in positions) {
-                    entreprises.AddRange(trouverEntreprises(bots, recherche, pos));
-                }
+            List<string> typesEntreprise = new List<string>();
+            StreamReader sr = new StreamReader(inputFolder + "TypesEntreprises.txt");
+            string line;
+            while ((line = sr.ReadLine()) != null) {
+                typesEntreprise.Add(line);
             }
+            sr.Close();
 
-            StreamWriter sw = new StreamWriter("entreprises.json");
-            sw.Write(JsonConvert.SerializeObject(entreprises));
-            sw.Close();
+            List < (double lat, double lon) > positions = new List < (double lat, double lon) > ();
+            sr = new StreamReader(inputFolder + "Coordonnees.txt");
+            while ((line = sr.ReadLine()) != null) {
+                string[] pos = line.Split(",");
+                positions.Add((Double.Parse(pos[0]), Double.Parse(pos[1])));
+            }
+            sr.Close();
 
-            List<Entite> entites = getEntites();
-
-            List<Info> infos = new List<Info>();
-            List<Review> reviews = new List<Review>();
-
-            foreach (Entite entite in entites) {
-                infos.AddRange(trouverInfos(bots, entite));
-                reviews.AddRange(trouverReviews(bots, entite));
+            foreach (string typeEntreprise in typesEntreprise) {
+                foreach ((double lat, double lon)pos in positions) {
+                    entreprises.AddRange(trouverEntreprises(bots, typeEntreprise, pos));
+                }
             }
 
             foreach (Bot bot in bots) {
                 bot.destroy();
             }
 
+        }
+
+        public static void saveJson(string folder, string filename, object obj) {
+            if (!Directory.Exists(folder)) {
+                Directory.CreateDirectory(folder);
+            }
+
+            StreamWriter sw = new StreamWriter(folder + filename);
+            sw.Write(JsonConvert.SerializeObject(obj));
+            sw.Close();
+        }
+
+        public static void commentaires(string outputFolder, string connectionString) {
+
+            List<Bot> bots = new List<Bot>(ChildClassEnumerator.GetEnumerableOfType<Bot>());
+
+            List<Entite> entites = getEntites(connectionString);
+            List<Review> reviews = new List<Review>();
+
+            foreach (Entite entite in entites) {
+                reviews.AddRange(trouverReviews(bots, entite, connectionString));
+            }
+
+            saveJson(outputFolder, "Commentaires.json", reviews);
+
+            foreach (Bot bot in bots) {
+                bot.destroy();
+            }
+
+        }
+
+        public static void Main(string[] args) {
+
+            if (args.Length > 0) {
+
+                string inputFolder;
+                string outputFolder;
+                string connectionString;
+
+                switch (args[0]) {
+                    case "entreprises":
+                        inputFolder = args[1];
+                        outputFolder = args[2];
+                        entreprise(inputFolder, outputFolder);
+                        break;
+                    case "commentaires":
+                        outputFolder = args[1];
+                        connectionString = args[2];
+                        commentaires(outputFolder, connectionString);
+                        break;
+                    case "test":
+                        test();
+                        break;
+                    default:
+                        Console.WriteLine("Mode inconnu");
+                        break;
+                }
+            } else {
+                Console.WriteLine("Pas d'arguments donnés");
+            }
         }
     }
 }
