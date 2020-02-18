@@ -3,3 +3,4 @@
 **/obj/*
 app/*.json
 *.log
+app/Prog2.cs

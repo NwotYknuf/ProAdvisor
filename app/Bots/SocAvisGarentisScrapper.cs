@@ -35,7 +35,7 @@ namespace ProAdvisor.app {
 
             try {
                 research = entite.getResearchString();
-            } catch (PasDeSiteWebException e) {
+            } catch (PasDeSiteWebException) {
                 throw new EntrepriseInconnueException();
             } catch (Exception e) {
                 throw e;
@@ -49,12 +49,8 @@ namespace ProAdvisor.app {
                 doc.LoadHtml(reponse.Content.ReadAsStringAsync().Result);
             } else {
 
-                //Match uniquement le nom du site pour se débarasser des www et .xyz
-                Regex extract = new Regex(@"(?:([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]");
-                Match match = extract.Match(research);
-
-                if (match.Groups.Count > 1) {
-                    research = match.Groups[1].Value;
+                try {
+                    research = ManipUrl.trimedUrl(research);
                     url = "https://www.societe-des-avis-garantis.fr/" + research;
                     reponse = await client.GetAsync(url);
                     if (reponse.IsSuccessStatusCode) {
@@ -63,7 +59,10 @@ namespace ProAdvisor.app {
                     } else {
                         throw new EntrepriseInconnueException();
                     }
+                } catch (Exception) {
+                    throw new EntrepriseInconnueException();
                 }
+
             }
 
             HtmlNode erreur404 = doc.DocumentNode.SelectSingleNode("//div[@class='thememount-big-icon']");
