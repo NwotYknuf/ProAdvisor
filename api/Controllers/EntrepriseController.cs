@@ -65,7 +65,7 @@ namespace api.Controllers {
 
         // GET: api/Entreprise/12345678912345/Comments?Source=www.trustpilot.com&AFNOR=true
         [HttpGet("{id}/Comments")]
-        public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetEntrepriseComments(string id, string Source = null, bool? estAFNOR = null) {
+        public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetEntrepriseComments(string id, string Source = null, bool? AFNOR = null) {
             var entreprise = await _context.Entreprise.Where(x => x.Siret == id).FirstOrDefaultAsync();
 
             if (entreprise == null) {
@@ -76,15 +76,16 @@ namespace api.Controllers {
 
             var filteredComments = _context.Commentaire.Where(x => x.Siret == entreprise.Siret).
             Where(x => Source == null ? true : x.Source.ToLower() == Source.ToLower()).ToList();
+            //Where(x => estAFNOR == null ? true : x.AuteurNavigation.UrlNavigation.RespecteAfnor == estAFNOR).ToList();
 
             foreach (Commentaire commentaire in filteredComments) {
-                bool AFNOR = _context.Source.Where(x => x.Url == commentaire.Source).Select(x => x.RespecteAfnor).FirstOrDefault();
-                if (estAFNOR != null) {
-                    if (estAFNOR == AFNOR) {
-                        res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, AFNOR, commentaire.Commentaire1));
+                bool estAFNOR = _context.Source.Where(x => x.Url == commentaire.Source).Select(x => x.RespecteAfnor).FirstOrDefault();
+                if (AFNOR != null) {
+                    if (AFNOR == estAFNOR) {
+                        res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, estAFNOR, commentaire.Commentaire1));
                     }
                 } else {
-                    res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, AFNOR, commentaire.Commentaire1));
+                    res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, estAFNOR, commentaire.Commentaire1));
                 }
             }
 

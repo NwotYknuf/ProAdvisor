@@ -58,7 +58,7 @@ namespace api.Controllers {
 
         // GET: api/Service/www.pimkie.fr/Comments?Source=www.trustpilot.com&AFNOR=true
         [HttpGet("{url}/Comments")]
-        public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetServiceComments(string url, string Source = null, bool? estAFNOR = null) {
+        public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetServiceComments(string url, string Source = null, bool? AFNOR = null) {
             var service = await _context.ServiceWeb.Where(x => x.UrlService == url).FirstOrDefaultAsync();
 
             if (service == null) {
@@ -71,13 +71,13 @@ namespace api.Controllers {
             Where(x => Source == null ? true : x.Source.ToLower() == Source.ToLower()).ToList();
 
             foreach (Commentaire commentaire in filteredComments) {
-                bool AFNOR = _context.Source.Where(x => x.Url == commentaire.Source).Select(x => x.RespecteAfnor).FirstOrDefault();
-                if (estAFNOR != null) {
-                    if (estAFNOR == AFNOR) {
-                        res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, AFNOR, commentaire.Commentaire1));
+                bool estAFNOR = _context.Source.Where(x => x.Url == commentaire.Source).Select(x => x.RespecteAfnor).FirstOrDefault();
+                if (AFNOR != null) {
+                    if (AFNOR == estAFNOR) {
+                        res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, estAFNOR, commentaire.Commentaire1));
                     }
                 } else {
-                    res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, AFNOR, commentaire.Commentaire1));
+                    res.Add(new ApiResCommentaire(commentaire.Note, commentaire.Date, commentaire.Siret, commentaire.Source, commentaire.Auteur, estAFNOR, commentaire.Commentaire1));
                 }
             }
 
