@@ -28,12 +28,14 @@ namespace api.Controllers {
             return new ApiResServiceWeb(s.UrlService, s.Nom, s.Description, s.Adresse, s.Telephone, s.Email, s.NumRegistre, s.Representant, services);
         }
 
-        // GET: api/Service?Ville=Metz&Zone=Borgny&Service=Plomberie
+        // GET: api/Service?Service=Plomberie&Gratuit=true&NbCommMin=3
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ApiResServiceWeb>>> GetServices(string Service = null) {
+        public async Task<ActionResult<IEnumerable<ApiResServiceWeb>>> GetServices(string Service = null, bool? Gratuit = null, int? NbCommMin = null) {
 
             var services = await _context.ServiceWeb.
-            Where(x => Service == null ? true : x.APourServiceSite.Select(x => x.Nom.ToLower()).Contains(Service.ToLower())).ToListAsync();
+            Where(x => Service == null ? true : x.APourServiceSite.Select(x => x.Nom.ToLower()).Any(x => x.Contains(Service.ToLower()))).
+            Where(x => Gratuit == null ? true : x.APourServiceSite.Select(x => x.Nom.ToLower()).Any(x => x.Contains("gratuit"))).
+            Where(x => NbCommMin == null ? true : x.Commentaire.Count() >= NbCommMin).ToListAsync();
 
             List<ApiResServiceWeb> res = new List<ApiResServiceWeb>();
 
@@ -58,7 +60,7 @@ namespace api.Controllers {
 
         // GET: api/Service/www.pimkie.fr/Comments?Source=www.trustpilot.com&AFNOR=true
         [HttpGet("{url}/Comments")]
-        public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetServiceComments(string url, string Source = null, bool? AFNOR = null) {
+        public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetServiceComments(string url, string Source = null, bool? AFNOR = null, int ? Note = null) {
             var service = await _context.ServiceWeb.Where(x => x.UrlService == url).FirstOrDefaultAsync();
 
             if (service == null) {
@@ -68,7 +70,8 @@ namespace api.Controllers {
             List<ApiResCommentaire> res = new List<ApiResCommentaire>();
 
             var filteredComments = _context.Commentaire.Where(x => x.UrlService == service.UrlService).
-            Where(x => Source == null ? true : x.Source.ToLower() == Source.ToLower()).ToList();
+            Where(x => Source == null ? true : x.Source.ToLower() == Source.ToLower()).
+            Where(x => Note == null ? true : x.Note == Note).ToList();
 
             foreach (Commentaire commentaire in filteredComments) {
                 bool estAFNOR = _context.Source.Where(x => x.Url == commentaire.Source).Select(x => x.RespecteAfnor).FirstOrDefault();
