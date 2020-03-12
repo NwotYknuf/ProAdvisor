@@ -3,8 +3,13 @@ using System.Text.RegularExpressions;
 
 public static class ManipUrl {
 
+    /*
+     * Ne garde que le nom du site
+     * ex : www.pimkie.fr devient pimkie
+     *      https://www.pimkie.fr/truc?bidule=lazkeaze devient pimkie
+     */
     public static string trimedUrl(string url) {
-        //Match uniquement le nom du site pour se débarasser des www et .xyz
+
         Regex extract = new Regex(@"(?:([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]");
         Match match = extract.Match(url);
 

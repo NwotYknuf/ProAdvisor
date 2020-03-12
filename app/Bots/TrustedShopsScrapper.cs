@@ -33,10 +33,6 @@ namespace ProAdvisor.app {
       client = new HttpClient();
       Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
-      /*
-       * On initialise un navigateur Selenium
-       * L'option headless permet de ne pas ouvrir de fenetre
-       */
       ChromeOptions options = new ChromeOptions();
       //headless pour ne pas ouvrir une fenetre navigateur
       options.AddArgument("headless");
@@ -68,9 +64,7 @@ namespace ProAdvisor.app {
 
       while (!stop) { //On itère sur les pages de commentaire
 
-        /*
-         * On attend une seconde que la page charge
-         */
+        //On attend une seconde que la page charge 
         await Task.Delay(1000);
 
         try {
@@ -85,7 +79,7 @@ namespace ProAdvisor.app {
         foreach (IWebElement review in dates) {
 
           /*
-           * La date n'est disponible que si on met la sourie sur un certain composant dans la balise <review>
+           * La date n'est disponible que si on passe la souris sur un certain composant dans la balise <review>
            * on exécute donc un script qui simule le mouse over puis le mouse out
            */
           string xpath = "/html/body/presentation-frame/main/shop-profile/div[2]/div/div/div[1]/div[2]/ratings/div[3]/div/async-list/review[" + i.ToString() + "]/div/div[1]/div[3]/loading-line/div/div/div[2]/span";
@@ -109,10 +103,8 @@ namespace ProAdvisor.app {
 
           /*
            * Cet élément contient un style qui définit le nombre d'étoiles colorées en jaune
-           * "
-          max - width : 100 % " : 5 étoiles
-           * "
-          max - width : 20 % " : 1 étoile
+           * "max - width : 100 % " : 5 étoiles
+           * "max - width : 20 % " : 1 étoile
            * On peut donc en déduire la note (width/20) pour la ramener sur 5
            */
           IWebElement star_rating = review.FindElement(By.XPath("//review[1]//div[@class='stars-active']"));
@@ -146,7 +138,7 @@ namespace ProAdvisor.app {
 
         }
 
-        try {
+        try { //On essaie de cliquer sur le bouton suivant
           IWebElement btn_suivant = driver.FindElement(By.XPath("//div[@class='col-auto pr-0 pl-0 next ng-star-inserted']"));
           Actions action = new Actions(driver).MoveToElement(btn_suivant).Click();
           action.Build().Perform();

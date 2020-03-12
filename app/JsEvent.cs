@@ -18,7 +18,9 @@ namespace ProAdvisor.app {
     public static class JsEvent {
 
         /*
-         * Renvoit le code javascript qui va déclancher l'evenement eventType sur l'élément pointé par le Xpath
+         * Renvoit le code javascript qui va déclancher l'evenement eventType sur l'élément pointé par le Xpath sous forme de string
+         * Ce string permet de déclancher des évenements sur la page. On utilise cette méthode pour déclancher des clicks et over.
+         * Selenium offre cette possibilité nativement mais elle n'est pas fiable à 100% contrairement à cette méthode.
          */
         public static string getEvent(string elementXpath, string eventType) {
 

@@ -1,19 +1,23 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace ProAdvisor.app {
+
+    /*
+     * Bot qui cherche des informations sur PagesJaunes.fr
+     * Cette classe nous sert à recolter des entreprises pour nourir la base de données
+     * La classe utilise Selenium pour nous permetre de simuler des interractions avec la page
+     * qui sont necessaires pour acceder aux informations que l'on souaite récuperer.
+     * voir : https://www.selenium.dev/
+     */
+
     class PagesJaunesScrapper : Bot, ISourceEntreprise {
 
         private HttpClient httpClient;
@@ -60,14 +64,15 @@ namespace ProAdvisor.app {
                 var filter = By.XPath(" //a[@class='denomination-links pj-lb pj-link'] | //a[@class='denomination-links pj-link']");
                 wait.Until(ExpectedConditions.ElementExists(filter));
                 var entrepriseNodes = driver.FindElements(filter);
-                await Task.Delay(1000);
+                await Task.Delay(1000); //Attendre un peu pour que les éléments chargent les infos
 
                 foreach (IWebElement node in entrepriseNodes) {
+                    //Ajouter les url vers les pages d'entreprises qu'on a trouvé
                     hrefs.Add(node.GetAttribute("href"));
                 }
 
                 try {
-                    if (!cookies) {
+                    if (!cookies) { //Fermer le message de confirmation des cookies
                         filter = By.XPath("//button[@id='toutAccepter']");
                         wait.Until(ExpectedConditions.ElementExists(filter));
                         var cookiesBtn = driver.FindElement(filter);
@@ -75,6 +80,7 @@ namespace ProAdvisor.app {
                         cookies = true;
                     }
 
+                    //Clicker sur le boutton suivant
                     filter = By.XPath("//a[@class='link_pagination next pj-lb pj-link']");
                     wait.Until(ExpectedConditions.ElementExists(filter));
                     var button = driver.FindElement(filter);
@@ -99,7 +105,7 @@ namespace ProAdvisor.app {
 
                     HtmlNode siretNode = doc.DocumentNode.SelectSingleNode("//div[@class='row siret']/span");
 
-                    if (siretNode != null) {
+                    if (siretNode != null) { //On ne prend que les entreprises pour lesquelles un numéro de SIRET est affiché
                         string siret = siretNode.InnerText;
 
                         HtmlNode nomNode = doc.DocumentNode.SelectSingleNode("//h1[@class='noTrad no-margin']");

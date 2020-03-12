@@ -56,11 +56,7 @@ namespace ProAdvisor.app {
              * Besoin des www. dans l'url
              * Pas oublier de gérer pour les https://
              */
-            /*
-            if (!research.StartsWith("www.")) {
-                research = "www." + research;
-            }
-            */
+
             string url = "https://fr.trustpilot.com/review/" + research + "?page=1";
             HttpResponseMessage reponse = await client.GetAsync(url);
             if (reponse.IsSuccessStatusCode) {

@@ -5,7 +5,7 @@ using System.Reflection;
 
 /*
  * Retourne une liste d'objets contenant toutes les classes filles de <T>
- * Utilisé pour instancier tous les bots
+ * Utilisée dans le main pour instancier tous les descendants de Bot
  */
 
 public static class ChildClassEnumerator {

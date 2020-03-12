@@ -1,19 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using HtmlAgilityPack;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 
 namespace ProAdvisor.app {
 
@@ -49,7 +41,7 @@ namespace ProAdvisor.app {
                 doc.LoadHtml(reponse.Content.ReadAsStringAsync().Result);
             } else {
 
-                try {
+                try { //On essaye avec juste le nom du site
                     research = ManipUrl.trimedUrl(research);
                     url = "https://www.societe-des-avis-garantis.fr/" + research;
                     reponse = await client.GetAsync(url);
@@ -81,7 +73,7 @@ namespace ProAdvisor.app {
 
             List<Review> reviews = new List<Review>();
 
-            foreach (string option in options) {
+            foreach (string option in options) { //Obligé d'itérer sur les options, par défault le site n'affiche que les avis positifs
 
                 bool stop = false;
 
@@ -103,8 +95,8 @@ namespace ProAdvisor.app {
                             HtmlNode comment_node = review_node.SelectSingleNode(".//span[@class='reviewOnlyContent']");
                             string comment = comment_node.InnerText;
 
-                            Regex date_reg = new Regex(@"publié le (\d\d\/\d\d\/\d\d) à");
-                            string fullText = Regex.Replace(review_node.InnerText, @"\t|\n|\r", "");
+                            Regex date_reg = new Regex(@"publié le (\d\d\/\d\d\/\d\d) à"); //On capture la date dans un groupe
+                            string fullText = Regex.Replace(review_node.InnerText, @"\t|\n|\r", ""); //On supprime tous les espaces
                             Match match = date_reg.Match(fullText);
                             string date_str = match.Groups[1].Value;
                             DateTime date = DateTime.ParseExact(date_str, "dd/MM/yy", CultureInfo.InvariantCulture);
