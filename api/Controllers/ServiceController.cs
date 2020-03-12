@@ -32,7 +32,7 @@ namespace api.Controllers {
             return new ApiResServiceWeb(s.UrlService, s.Nom, s.Description, s.Adresse, s.Telephone, s.Email, s.NumRegistre, s.Representant, services);
         }
 
-        // GET: api/Service?Service=Plomberie&Gratuit=true&NbCommMin=3
+        // GET: Service?Service=Plomberie&Gratuit=true&NbCommMin=3
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApiResServiceWeb>>> GetServices(string Service = null, bool? Gratuit = null, int? NbCommMin = null) {
 
@@ -50,7 +50,7 @@ namespace api.Controllers {
             return res;
         }
 
-        // GET: api/Service/www.pimkie.fr
+        // GET: Service/www.pimkie.fr
         [HttpGet("{url}")]
         public async Task<ActionResult<ApiResServiceWeb>> GetService(string url) {
             var service = await _context.ServiceWeb.Where(x => x.UrlService.ToLower() == url.ToLower()).FirstOrDefaultAsync();
@@ -62,7 +62,7 @@ namespace api.Controllers {
             return convert(service);
         }
 
-        // GET: api/Service/www.pimkie.fr/Comments?Source=www.trustpilot.com&AFNOR=true
+        // GET: Service/www.pimkie.fr/Comments?Source=www.trustpilot.com&AFNOR=true&Note=3&DateMin=01/01/2018&DateMax=01/01/2019
         [HttpGet("{url}/Comments")]
         public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetServiceComments(string url, string Source = null, bool? AFNOR = null, int ? Note = null, string DateMin = null, string DateMax = null) {
             var service = await _context.ServiceWeb.Where(x => x.UrlService == url).FirstOrDefaultAsync();
