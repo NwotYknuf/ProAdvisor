@@ -60,18 +60,31 @@ namespace api.Controllers {
 
         // GET: api/Service/www.pimkie.fr/Comments?Source=www.trustpilot.com&AFNOR=true
         [HttpGet("{url}/Comments")]
-        public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetServiceComments(string url, string Source = null, bool? AFNOR = null, int ? Note = null) {
+        public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetServiceComments(string url, string Source = null, bool? AFNOR = null, int ? Note = null, string DateMin = null, string DateMax = null) {
             var service = await _context.ServiceWeb.Where(x => x.UrlService == url).FirstOrDefaultAsync();
 
             if (service == null) {
                 return NotFound();
             }
 
+            DateTime? min = null;
+            DateTime? max = null;
+
+            if (DateMin != null) {
+                min = DateTime.ParseExact(DateMin, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            }
+
+            if (DateMax != null) {
+                max = DateTime.ParseExact(DateMax, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            }
+
             List<ApiResCommentaire> res = new List<ApiResCommentaire>();
 
             var filteredComments = _context.Commentaire.Where(x => x.UrlService == service.UrlService).
             Where(x => Source == null ? true : x.Source.ToLower() == Source.ToLower()).
-            Where(x => Note == null ? true : x.Note == Note).ToList();
+            Where(x => Note == null ? true : x.Note == Note).
+            Where(x => min == null ? true : x.Date >= min).
+            Where(x => max == null ? true : x.Date <= max).ToList();
 
             foreach (Commentaire commentaire in filteredComments) {
                 bool estAFNOR = _context.Source.Where(x => x.Url == commentaire.Source).Select(x => x.RespecteAfnor).FirstOrDefault();
