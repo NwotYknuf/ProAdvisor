@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers {
+
+    /*
+     * Controller qui gère les requêtes sur les entreprises
+     */
     [Route("[controller]")]
     [ApiController]
     public class EntrepriseController : ControllerBase {
@@ -32,7 +36,7 @@ namespace api.Controllers {
 
         }
 
-        // GET: api/Entreprise?Ville=Metz&Zone=Borgny&Service=Plomberie&Gratuit=true&NbCommMin=3
+        // GET: Entreprise?Ville=Metz&Zone=Borgny&Service=Plomberie&Gratuit=true&NbCommMin=3
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApiResEntreprise>>> GetEntreprise(string Ville = null, string Zone = null, string Service = null, bool? Gratuit = null, int ? NbCommMin = null) {
 
@@ -52,7 +56,7 @@ namespace api.Controllers {
             return res;
         }
 
-        // GET: api/Entreprise/12345678912345
+        // GET: Entreprise/12345678912345
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResEntreprise>> GetEntreprise(string id) {
             var entreprise = await _context.Entreprise.Where(x => x.Siret == id).FirstOrDefaultAsync();
@@ -64,7 +68,7 @@ namespace api.Controllers {
             return convert(entreprise);
         }
 
-        // GET: api/Entreprise/12345678912345/Comments?Source=www.trustpilot.com&AFNOR=true&Note=3&DateMin=01/01/2018&DateMax=01/01/2019
+        // GET: Entreprise/12345678912345/Comments?Source=www.trustpilot.com&AFNOR=true&Note=3&DateMin=01/01/2018&DateMax=01/01/2019
         [HttpGet("{id}/Comments")]
         public async Task<ActionResult<IEnumerable<ApiResCommentaire>>> GetEntrepriseComments(string id, string Source = null, bool? AFNOR = null, int ? Note = null, string DateMin = null, string DateMax = null) {
             var entreprise = await _context.Entreprise.Where(x => x.Siret == id).FirstOrDefaultAsync();

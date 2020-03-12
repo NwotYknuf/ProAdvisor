@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers {
+
+    /*
+     * Controller qui gère les requêtes sur les services web
+     */
+
     [Route("[controller]")]
     [ApiController]
     public class ServiceController : ControllerBase {
