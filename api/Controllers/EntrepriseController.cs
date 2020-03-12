@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using api.Model;
 using Microsoft.AspNetCore.Http;
@@ -33,14 +34,15 @@ namespace api.Controllers {
 
         }
 
-        // GET: api/Entreprise?Ville=Metz&Zone=Borgny&Service=Plomberie
+        // GET: api/Entreprise?Ville=Metz&Zone=Borgny&Service=Plomberie&Gratuit=true
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ApiResEntreprise>>> GetEntreprise(string Ville = null, string Zone = null, string Service = null) {
+        public async Task<ActionResult<IEnumerable<ApiResEntreprise>>> GetEntreprise(string Ville = null, string Zone = null, string Service = null, bool? Gratuit = null) {
 
             var entreprises = await _context.Entreprise.
-            Where(x => Ville == null ? true : x.Ville == Ville).
-            Where(x => Zone == null ? true : x.ZoneIntervention.Select(x => x.NomVille.ToLower()).Contains(Zone.ToLower())).
-            Where(x => Service == null ? true : x.APourServiceEntr.Select(x => x.Nom.ToLower()).Contains(Service.ToLower())).ToListAsync();
+            Where(x => Ville == null ? true : x.Ville.ToLower().Contains(Ville.ToLower())).
+            Where(x => Zone == null ? true : x.ZoneIntervention.Select(x => x.NomVille.ToLower()).Any(x => x.Contains(Zone.ToLower()))).
+            Where(x => Service == null ? true : x.APourServiceEntr.Select(x => x.Nom.ToLower()).Any(x => x.Contains(Service.ToLower()))).
+            Where(x => Gratuit == null ? true : x.APourServiceEntr.Select(x => x.Nom.ToLower()).Any(x => x.Contains("gratuit"))).ToListAsync();
 
             List<ApiResEntreprise> res = new List<ApiResEntreprise>();
 
