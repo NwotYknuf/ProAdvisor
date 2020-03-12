@@ -34,15 +34,16 @@ namespace api.Controllers {
 
         }
 
-        // GET: api/Entreprise?Ville=Metz&Zone=Borgny&Service=Plomberie&Gratuit=true
+        // GET: api/Entreprise?Ville=Metz&Zone=Borgny&Service=Plomberie&Gratuit=true&NbCommMin=3
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ApiResEntreprise>>> GetEntreprise(string Ville = null, string Zone = null, string Service = null, bool? Gratuit = null) {
+        public async Task<ActionResult<IEnumerable<ApiResEntreprise>>> GetEntreprise(string Ville = null, string Zone = null, string Service = null, bool? Gratuit = null, int ? NbCommMin = null) {
 
             var entreprises = await _context.Entreprise.
             Where(x => Ville == null ? true : x.Ville.ToLower().Contains(Ville.ToLower())).
             Where(x => Zone == null ? true : x.ZoneIntervention.Select(x => x.NomVille.ToLower()).Any(x => x.Contains(Zone.ToLower()))).
             Where(x => Service == null ? true : x.APourServiceEntr.Select(x => x.Nom.ToLower()).Any(x => x.Contains(Service.ToLower()))).
-            Where(x => Gratuit == null ? true : x.APourServiceEntr.Select(x => x.Nom.ToLower()).Any(x => x.Contains("gratuit"))).ToListAsync();
+            Where(x => Gratuit == null ? true : x.APourServiceEntr.Select(x => x.Nom.ToLower()).Any(x => x.Contains("gratuit"))).
+            Where(x => NbCommMin == null ? true : x.Commentaire.Count() >= NbCommMin).ToListAsync();
 
             List<ApiResEntreprise> res = new List<ApiResEntreprise>();
 
