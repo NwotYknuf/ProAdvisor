@@ -90,29 +90,6 @@ namespace ProAdvisor.app {
 
         }
 
-        public static List<Info> trouverInfos(List<Bot> bots, Entite entite) {
-
-            List<Info> infos = new List<Info>();
-
-            foreach (Bot bot in bots) {
-
-                if (bot is ISourceInfo) {
-
-                    try {
-                        infos.Add((bot as ISourceInfo).findInfos(entite).Result);
-                    } catch (AggregateException ae) {
-
-                        if (!(ae.InnerException is EntrepriseInconnueException)) {
-                            Console.WriteLine(ae.InnerException.Message + ae.InnerException.StackTrace);
-                        }
-                    }
-
-                }
-            }
-
-            return infos;
-        }
-
         public static List<Entite> getEntites(string connectionString) {
             List<Entite> entites = new List<Entite>();
             MySqlConnection connection = new MySqlConnection(connectionString);
@@ -229,6 +206,41 @@ namespace ProAdvisor.app {
 
         }
 
+        public static void infos(string outputFolder, string connectionString) {
+
+            List<Bot> bots = new List<Bot>(ChildClassEnumerator.GetEnumerableOfType<Bot>());
+
+            List<Entite> entites = getEntites(connectionString);
+
+            Dictionary<string, List<Info>> infos = new Dictionary<string, List<Info>>();
+
+            foreach (Bot bot in bots) {
+
+                if (bot is ISourceInfo) {
+
+                    foreach (Entite entite in entites) {
+
+                        try {
+                            if (!infos.ContainsKey(bot.source)) {
+                                infos[bot.source] = new List<Info>();
+                            }
+                            infos[bot.source].Add((bot as ISourceInfo).findInfos(entite).Result);
+                        } catch (AggregateException ae) {
+
+                            if (!(ae.InnerException is EntrepriseInconnueException)) {
+                                Console.WriteLine(ae.InnerException.Message + ae.InnerException.StackTrace);
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var pair in infos) {
+                saveJson(outputFolder, pair.Key + "_info.json", pair.Value);
+            }
+
+        }
+
         public static void Main(string[] args) {
 
             if (args.Length > 0) {
@@ -247,6 +259,11 @@ namespace ProAdvisor.app {
                         outputFolder = args[1];
                         connectionString = args[2];
                         commentaires(outputFolder, connectionString);
+                        break;
+                    case "infos":
+                        outputFolder = args[1];
+                        connectionString = args[2];
+                        infos(outputFolder, connectionString);
                         break;
                     case "test":
                         test();
