@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendJSON="http://www.talend.org/json" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendJSON:JSONFileConnection xmi:id="_TYvQcUKKEeqIq9064FFEPA" name="ExtractionPageJaune" dataPackage="_TYvQeUKKEeqIq9064FFEPA" JSONFilePath="D:/Projet synthèse/New/entreprises.json" Encoding="UTF-8" readbyMode="JSONPATH">
+    <schema xmi:id="_TYvQckKKEeqIq9064FFEPA" LimitBoucle="0" AbsoluteXPathQuery="$[*]">
+      <schemaTargets xmi:id="_TYvQc0KKEeqIq9064FFEPA" RelativeXPathQuery="nom" TagName="nom"/>
+      <schemaTargets xmi:id="_TYvQdEKKEeqIq9064FFEPA" RelativeXPathQuery="url" TagName="url"/>
+      <schemaTargets xmi:id="_TYvQdUKKEeqIq9064FFEPA" RelativeXPathQuery="adresse" TagName="adresse"/>
+      <schemaTargets xmi:id="_TYvQdkKKEeqIq9064FFEPA" RelativeXPathQuery="prestations[*]" TagName="prestations___"/>
+      <schemaTargets xmi:id="_TYvQd0KKEeqIq9064FFEPA" RelativeXPathQuery="zonesIntervention[*]" TagName="zonesIntervention___"/>
+      <schemaTargets xmi:id="_TYvQeEKKEeqIq9064FFEPA" RelativeXPathQuery="id" TagName="id"/>
+    </schema>
+  </TalendJSON:JSONFileConnection>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="_TYvQeUKKEeqIq9064FFEPA" name="default" dataManager="_TYvQcUKKEeqIq9064FFEPA">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_TYvQekKKEeqIq9064FFEPA" id="_E0hZEEKKEeqIq9064FFEPA" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_TYvQe0KKEeqIq9064FFEPA" label="nom" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_TYvQfEKKEeqIq9064FFEPA" label="url" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_TYvQfUKKEeqIq9064FFEPA" label="adresse" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_TYvQfkKKEeqIq9064FFEPA" label="prestations___" length="-1" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_TYvQf0KKEeqIq9064FFEPA" label="zonesIntervention___" length="-1" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_TYvQgEKKEeqIq9064FFEPA" label="id" length="17" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>

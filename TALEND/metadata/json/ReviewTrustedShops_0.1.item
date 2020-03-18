@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendJSON="http://www.talend.org/json" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendJSON:JSONFileConnection xmi:id="_HYFe0UKGEeqIq9064FFEPA" name="ReviewTrustedShops" dataPackage="_HYFe2UKGEeqIq9064FFEPA" JSONFilePath="D:/Projet synthèse/New/reviewsTrustedShops.com.json" Encoding="UTF-8" readbyMode="JSONPATH">
+    <schema xmi:id="_HYFe0kKGEeqIq9064FFEPA" LimitBoucle="0" AbsoluteXPathQuery="$[*]">
+      <schemaTargets xmi:id="_HYFe00KGEeqIq9064FFEPA" RelativeXPathQuery="auteur" TagName="auteur"/>
+      <schemaTargets xmi:id="_HYFe1EKGEeqIq9064FFEPA" RelativeXPathQuery="date" TagName="date"/>
+      <schemaTargets xmi:id="_HYFe1UKGEeqIq9064FFEPA" RelativeXPathQuery="note" TagName="note"/>
+      <schemaTargets xmi:id="_HYFe1kKGEeqIq9064FFEPA" RelativeXPathQuery="commentaire" TagName="commentaire"/>
+      <schemaTargets xmi:id="_HYFe10KGEeqIq9064FFEPA" RelativeXPathQuery="idEntite" TagName="idEntite"/>
+      <schemaTargets xmi:id="_HYFe2EKGEeqIq9064FFEPA" RelativeXPathQuery="source" TagName="source"/>
+    </schema>
+  </TalendJSON:JSONFileConnection>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="_HYFe2UKGEeqIq9064FFEPA" name="default" dataManager="_HYFe0UKGEeqIq9064FFEPA">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_HYFe2kKGEeqIq9064FFEPA" id="_uC70cEKFEeqIq9064FFEPA" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_HYFe20KGEeqIq9064FFEPA" label="auteur" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_HYFe3EKGEeqIq9064FFEPA" label="date" length="19" talendType="id_Date" pattern="&quot;yyyy-MM-dd'T'HH:mm:ss&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_HYFe3UKGEeqIq9064FFEPA" label="note" length="3" precision="2" talendType="id_Float" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_HYFe3kKGEeqIq9064FFEPA" label="commentaire" length="398" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_HYFe30KGEeqIq9064FFEPA" label="idEntite" length="19" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_HYFe4EKGEeqIq9064FFEPA" label="source" length="16" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>
