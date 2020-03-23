@@ -171,6 +171,8 @@ namespace ProAdvisor.app {
                 }
             }
 
+            saveJson(outputFolder, "entreprises.json", entreprises);
+
             foreach (Bot bot in bots) {
                 bot.destroy();
             }
