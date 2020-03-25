@@ -14,7 +14,7 @@
     <contextParameter xmi:id="_8kTJNxEOEeqSVsL8WijBMw" comment="" name="BDD_name" prompt="BDD_name?" promptNeeded="false" type="id_String" value="&quot;projetsynthese&quot;"/>
     <contextParameter xmi:id="_zKivEhEPEeqSVsL8WijBMw" comment="" name="BDD_Password" prompt="BDD_Password?" promptNeeded="false" type="id_String" value="&quot;HdntL3T8Wnsuasp6&quot;"/>
     <contextParameter xmi:id="_zKivExEPEeqSVsL8WijBMw" comment="" name="BDD_User" prompt="BDD_User?" promptNeeded="false" type="id_String" value="&quot;root&quot;"/>
-    <contextParameter xmi:id="_e2SN8VmYEeqr19FRpLjL0A" comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" type="id_String" value="&quot;&quot;"/>
+    <contextParameter xmi:id="_e2SN8VmYEeqr19FRpLjL0A" comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" type="id_String" value="&quot;D:/Projet synthèse/New&quot;"/>
   </talendfile:ContextType>
   <talendfile:ContextType xmi:id="_8kTJOBEOEeqSVsL8WijBMw" confirmationNeeded="false" name="Test">
     <contextParameter xmi:id="_8kTJOREOEeqSVsL8WijBMw" comment="" name="BDD_Host" prompt="BDD_Host?" promptNeeded="false" type="id_String" value="&quot;r-pro-advisor.gq&quot;"/>
@@ -22,6 +22,6 @@
     <contextParameter xmi:id="_8kTJOxEOEeqSVsL8WijBMw" comment="" name="BDD_name" prompt="BDD_name?" promptNeeded="false" type="id_String" value="&quot;projetsynthese&quot;"/>
     <contextParameter xmi:id="_zKivFBEPEeqSVsL8WijBMw" comment="" name="BDD_Password" prompt="BDD_Password?" promptNeeded="false" type="id_String" value="&quot;HdntL3T8Wnsuasp6&quot;"/>
     <contextParameter xmi:id="_zKivFREPEeqSVsL8WijBMw" comment="" name="BDD_User" prompt="BDD_User?" promptNeeded="false" type="id_String" value="&quot;root&quot;"/>
-    <contextParameter xmi:id="_e2SN8lmYEeqr19FRpLjL0A" comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" type="id_String" value="&quot;&quot;"/>
+    <contextParameter xmi:id="_e2SN8lmYEeqr19FRpLjL0A" comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" type="id_String" value="&quot;D:/Projet synthèse/New&quot;"/>
   </talendfile:ContextType>
 </xmi:XMI>

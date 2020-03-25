@@ -14,7 +14,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package local_project.job_extractiontrustedshops_0_1;
 
 import routines.Numeric;
@@ -41,31 +40,26 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.util.Comparator;
- 
-
-
-
-
 
 @SuppressWarnings("unused")
 
 /**
  * Job: job_extractionTrustedShops Purpose: <br>
- * Description:  <br>
- * @author 
+ * Description: <br>
+ * 
+ * @author
  * @version 7.2.1.20190620_1446
- * @status 
+ * @status
  */
 public class job_extractionTrustedShops implements TalendJob {
 
-protected static void logIgnoredError(String message, Throwable cause) {
-       System.err.println(message);
-       if (cause != null) {
-               cause.printStackTrace();
-       }
+	protected static void logIgnoredError(String message, Throwable cause) {
+		System.err.println(message);
+		if (cause != null) {
+			cause.printStackTrace();
+		}
 
-}
-
+	}
 
 	public final Object obj = new Object();
 
@@ -79,2937 +73,2646 @@ protected static void logIgnoredError(String message, Throwable cause) {
 	public void setValueObject(Object valueObject) {
 		this.valueObject = valueObject;
 	}
-	
+
 	private final static String defaultCharset = java.nio.charset.Charset.defaultCharset().name();
 
-	
 	private final static String utf8Charset = "UTF-8";
-	//contains type for every context property
+
+	// contains type for every context property
 	public class PropertiesWithType extends java.util.Properties {
 		private static final long serialVersionUID = 1L;
-		private java.util.Map<String,String> propertyTypes = new java.util.HashMap<>();
-		
-		public PropertiesWithType(java.util.Properties properties){
+		private java.util.Map<String, String> propertyTypes = new java.util.HashMap<>();
+
+		public PropertiesWithType(java.util.Properties properties) {
 			super(properties);
 		}
-		public PropertiesWithType(){
+
+		public PropertiesWithType() {
 			super();
 		}
-		
+
 		public void setContextType(String key, String type) {
-			propertyTypes.put(key,type);
+			propertyTypes.put(key, type);
 		}
-	
+
 		public String getContextType(String key) {
 			return propertyTypes.get(key);
 		}
 	}
-	
+
 	// create and load default properties
 	private java.util.Properties defaultProps = new java.util.Properties();
+
 	// create application properties with default
 	public class ContextProperties extends PropertiesWithType {
 
 		private static final long serialVersionUID = 1L;
 
-		public ContextProperties(java.util.Properties properties){
+		public ContextProperties(java.util.Properties properties) {
 			super(properties);
 		}
-		public ContextProperties(){
+
+		public ContextProperties() {
 			super();
 		}
 
-		public void synchronizeContext(){
-			
-			if(BDD_Host != null){
-				
-					this.setProperty("BDD_Host", BDD_Host.toString());
-				
+		public void synchronizeContext() {
+
+			if (BDD_Host != null) {
+
+				this.setProperty("BDD_Host", BDD_Host.toString());
+
 			}
-			
-			if(BDD_name != null){
-				
-					this.setProperty("BDD_name", BDD_name.toString());
-				
+
+			if (BDD_name != null) {
+
+				this.setProperty("BDD_name", BDD_name.toString());
+
 			}
-			
-			if(BDD_Password != null){
-				
-					this.setProperty("BDD_Password", BDD_Password.toString());
-				
+
+			if (BDD_Password != null) {
+
+				this.setProperty("BDD_Password", BDD_Password.toString());
+
 			}
-			
-			if(BDD_Port != null){
-				
-					this.setProperty("BDD_Port", BDD_Port.toString());
-				
+
+			if (BDD_Port != null) {
+
+				this.setProperty("BDD_Port", BDD_Port.toString());
+
 			}
-			
-			if(BDD_User != null){
-				
-					this.setProperty("BDD_User", BDD_User.toString());
-				
+
+			if (BDD_User != null) {
+
+				this.setProperty("BDD_User", BDD_User.toString());
+
 			}
-			
-			if(FILE_path != null){
-				
-					this.setProperty("FILE_path", FILE_path.toString());
-				
+
+			if (FILE_path != null) {
+
+				this.setProperty("FILE_path", FILE_path.toString());
+
 			}
-			
+
 		}
 
-public String BDD_Host;
-public String getBDD_Host(){
-	return this.BDD_Host;
-}
-public String BDD_name;
-public String getBDD_name(){
-	return this.BDD_name;
-}
-public String BDD_Password;
-public String getBDD_Password(){
-	return this.BDD_Password;
-}
-public String BDD_Port;
-public String getBDD_Port(){
-	return this.BDD_Port;
-}
-public String BDD_User;
-public String getBDD_User(){
-	return this.BDD_User;
-}
-public String FILE_path;
-public String getFILE_path(){
-	return this.FILE_path;
-}
+		public String BDD_Host;
+
+		public String getBDD_Host() {
+			return this.BDD_Host;
+		}
+
+		public String BDD_name;
+
+		public String getBDD_name() {
+			return this.BDD_name;
+		}
+
+		public String BDD_Password;
+
+		public String getBDD_Password() {
+			return this.BDD_Password;
+		}
+
+		public String BDD_Port;
+
+		public String getBDD_Port() {
+			return this.BDD_Port;
+		}
+
+		public String BDD_User;
+
+		public String getBDD_User() {
+			return this.BDD_User;
+		}
+
+		public String FILE_path;
+
+		public String getFILE_path() {
+			return this.FILE_path;
+		}
 	}
+
 	protected ContextProperties context = new ContextProperties(); // will be instanciated by MS.
+
 	public ContextProperties getContext() {
 		return this.context;
 	}
+
 	private final String jobVersion = "0.1";
 	private final String jobName = "job_extractionTrustedShops";
 	private final String projectName = "LOCAL_PROJECT";
 	public Integer errorCode = null;
 	private String currentComponent = "";
-	
-		private final java.util.Map<String, Object> globalMap = new java.util.HashMap<String, Object>();
-        private final static java.util.Map<String, Object> junitGlobalMap = new java.util.HashMap<String, Object>();
-	
-		private final java.util.Map<String, Long> start_Hash = new java.util.HashMap<String, Long>();
-		private final java.util.Map<String, Long> end_Hash = new java.util.HashMap<String, Long>();
-		private final java.util.Map<String, Boolean> ok_Hash = new java.util.HashMap<String, Boolean>();
-		public  final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
-	
 
-private RunStat runStat = new RunStat();
+	private final java.util.Map<String, Object> globalMap = new java.util.HashMap<String, Object>();
+	private final static java.util.Map<String, Object> junitGlobalMap = new java.util.HashMap<String, Object>();
+
+	private final java.util.Map<String, Long> start_Hash = new java.util.HashMap<String, Long>();
+	private final java.util.Map<String, Long> end_Hash = new java.util.HashMap<String, Long>();
+	private final java.util.Map<String, Boolean> ok_Hash = new java.util.HashMap<String, Boolean>();
+	public final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
+
+	private RunStat runStat = new RunStat();
 
 	// OSGi DataSource
 	private final static String KEY_DB_DATASOURCES = "KEY_DB_DATASOURCES";
-	
+
 	private final static String KEY_DB_DATASOURCES_RAW = "KEY_DB_DATASOURCES_RAW";
 
 	public void setDataSources(java.util.Map<String, javax.sql.DataSource> dataSources) {
 		java.util.Map<String, routines.system.TalendDataSource> talendDataSources = new java.util.HashMap<String, routines.system.TalendDataSource>();
 		for (java.util.Map.Entry<String, javax.sql.DataSource> dataSourceEntry : dataSources.entrySet()) {
-			talendDataSources.put(dataSourceEntry.getKey(), new routines.system.TalendDataSource(dataSourceEntry.getValue()));
+			talendDataSources.put(dataSourceEntry.getKey(),
+					new routines.system.TalendDataSource(dataSourceEntry.getValue()));
 		}
 		globalMap.put(KEY_DB_DATASOURCES, talendDataSources);
 		globalMap.put(KEY_DB_DATASOURCES_RAW, new java.util.HashMap<String, javax.sql.DataSource>(dataSources));
 	}
 
+	private final java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+	private final java.io.PrintStream errorMessagePS = new java.io.PrintStream(new java.io.BufferedOutputStream(baos));
 
-private final java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
-private final java.io.PrintStream errorMessagePS = new java.io.PrintStream(new java.io.BufferedOutputStream(baos));
-
-public String getExceptionStackTrace() {
-	if ("failure".equals(this.getStatus())) {
-		errorMessagePS.flush();
-		return baos.toString();
-	}
-	return null;
-}
-
-private Exception exception;
-
-public Exception getException() {
-	if ("failure".equals(this.getStatus())) {
-		return this.exception;
-	}
-	return null;
-}
-
-private class TalendException extends Exception {
-
-	private static final long serialVersionUID = 1L;
-
-	private java.util.Map<String, Object> globalMap = null;
-	private Exception e = null;
-	private String currentComponent = null;
-	private String virtualComponentName = null;
-	
-	public void setVirtualComponentName (String virtualComponentName){
-		this.virtualComponentName = virtualComponentName;
+	public String getExceptionStackTrace() {
+		if ("failure".equals(this.getStatus())) {
+			errorMessagePS.flush();
+			return baos.toString();
+		}
+		return null;
 	}
 
-	private TalendException(Exception e, String errorComponent, final java.util.Map<String, Object> globalMap) {
-		this.currentComponent= errorComponent;
-		this.globalMap = globalMap;
-		this.e = e;
-	}
+	private Exception exception;
 
 	public Exception getException() {
-		return this.e;
+		if ("failure".equals(this.getStatus())) {
+			return this.exception;
+		}
+		return null;
 	}
 
-	public String getCurrentComponent() {
-		return this.currentComponent;
-	}
+	private class TalendException extends Exception {
 
-	
-    public String getExceptionCauseMessage(Exception e){
-        Throwable cause = e;
-        String message = null;
-        int i = 10;
-        while (null != cause && 0 < i--) {
-            message = cause.getMessage();
-            if (null == message) {
-                cause = cause.getCause();
-            } else {
-                break;          
-            }
-        }
-        if (null == message) {
-            message = e.getClass().getName();
-        }   
-        return message;
-    }
+		private static final long serialVersionUID = 1L;
 
-	@Override
-	public void printStackTrace() {
-		if (!(e instanceof TalendException || e instanceof TDieException)) {
-			if(virtualComponentName!=null && currentComponent.indexOf(virtualComponentName+"_")==0){
-				globalMap.put(virtualComponentName+"_ERROR_MESSAGE",getExceptionCauseMessage(e));
-			}
-			globalMap.put(currentComponent+"_ERROR_MESSAGE",getExceptionCauseMessage(e));
-			System.err.println("Exception in component " + currentComponent + " (" + jobName + ")");
+		private java.util.Map<String, Object> globalMap = null;
+		private Exception e = null;
+		private String currentComponent = null;
+		private String virtualComponentName = null;
+
+		public void setVirtualComponentName(String virtualComponentName) {
+			this.virtualComponentName = virtualComponentName;
 		}
-		if (!(e instanceof TDieException)) {
-			if(e instanceof TalendException){
-				e.printStackTrace();
-			} else {
-				e.printStackTrace();
-				e.printStackTrace(errorMessagePS);
-				job_extractionTrustedShops.this.exception = e;
-			}
+
+		private TalendException(Exception e, String errorComponent, final java.util.Map<String, Object> globalMap) {
+			this.currentComponent = errorComponent;
+			this.globalMap = globalMap;
+			this.e = e;
 		}
-		if (!(e instanceof TalendException)) {
-		try {
-			for (java.lang.reflect.Method m : this.getClass().getEnclosingClass().getMethods()) {
-				if (m.getName().compareTo(currentComponent + "_error") == 0) {
-					m.invoke(job_extractionTrustedShops.this, new Object[] { e , currentComponent, globalMap});
+
+		public Exception getException() {
+			return this.e;
+		}
+
+		public String getCurrentComponent() {
+			return this.currentComponent;
+		}
+
+		public String getExceptionCauseMessage(Exception e) {
+			Throwable cause = e;
+			String message = null;
+			int i = 10;
+			while (null != cause && 0 < i--) {
+				message = cause.getMessage();
+				if (null == message) {
+					cause = cause.getCause();
+				} else {
 					break;
 				}
 			}
-
-			if(!(e instanceof TDieException)){
+			if (null == message) {
+				message = e.getClass().getName();
 			}
-		} catch (Exception e) {
-			this.e.printStackTrace();
+			return message;
 		}
-		}
-	}
-}
 
-			public void tFileInputJSON_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+		@Override
+		public void printStackTrace() {
+			if (!(e instanceof TalendException || e instanceof TDieException)) {
+				if (virtualComponentName != null && currentComponent.indexOf(virtualComponentName + "_") == 0) {
+					globalMap.put(virtualComponentName + "_ERROR_MESSAGE", getExceptionCauseMessage(e));
+				}
+				globalMap.put(currentComponent + "_ERROR_MESSAGE", getExceptionCauseMessage(e));
+				System.err.println("Exception in component " + currentComponent + " (" + jobName + ")");
 			}
-			
-			public void tMap_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+			if (!(e instanceof TDieException)) {
+				if (e instanceof TalendException) {
+					e.printStackTrace();
+				} else {
+					e.printStackTrace();
+					e.printStackTrace(errorMessagePS);
+					job_extractionTrustedShops.this.exception = e;
+				}
 			}
-			
-			public void tDBOutput_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tNormalize_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tFilterRow_2_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tDBOutput_2_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tNormalize_2_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tFilterRow_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tDBOutput_3_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tPrejob_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tPrejob_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tDBConnection_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tDBConnection_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tAggregateRow_1_AGGOUT_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-							tAggregateRow_1_AGGIN_error(exception, errorComponent, globalMap);
-						
+			if (!(e instanceof TalendException)) {
+				try {
+					for (java.lang.reflect.Method m : this.getClass().getEnclosingClass().getMethods()) {
+						if (m.getName().compareTo(currentComponent + "_error") == 0) {
+							m.invoke(job_extractionTrustedShops.this, new Object[] { e, currentComponent, globalMap });
+							break;
 						}
-					
-			public void tAggregateRow_1_AGGIN_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tAggregateRow_2_AGGOUT_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-							tAggregateRow_2_AGGIN_error(exception, errorComponent, globalMap);
-						
-						}
-					
-			public void tAggregateRow_2_AGGIN_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-				
-				end_Hash.put(errorComponent, System.currentTimeMillis());
-				
-				status = "failure";
-				
-					tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
-			}
-			
-			public void tFileInputJSON_1_onSubJobError(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+					}
 
-resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThread().getId()+ "", "FATAL", "", exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception),"");
-
-			}
-			public void tPrejob_1_onSubJobError(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-
-resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThread().getId()+ "", "FATAL", "", exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception),"");
-
-			}
-			public void tDBConnection_1_onSubJobError(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
-
-resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThread().getId()+ "", "FATAL", "", exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception),"");
-
-			}
-	
-
-
-
-
-
-
-public static class row7Struct implements routines.system.IPersistableRow<row7Struct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom;
-
-				public String getNom () {
-					return this.nom;
+					if (!(e instanceof TDieException)) {
+					}
+				} catch (Exception e) {
+					this.e.printStackTrace();
 				}
-				
-			    public String url;
-
-				public String getUrl () {
-					return this.url;
-				}
-				
-
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
 		}
-		return strReturn;
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public void tFileInputJSON_1_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
 
-    public void readData(ObjectInputStream dis) {
+		end_Hash.put(errorComponent, System.currentTimeMillis());
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		status = "failure";
 
-        	try {
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
 
-        		int length = 0;
-		
+	public void tMap_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap)
+			throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tDBOutput_1_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tNormalize_1_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tFilterRow_2_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tDBOutput_2_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tNormalize_2_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tFilterRow_1_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tDBOutput_3_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tPrejob_1_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tPrejob_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tDBConnection_1_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tDBConnection_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tAggregateRow_1_AGGOUT_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		tAggregateRow_1_AGGIN_error(exception, errorComponent, globalMap);
+
+	}
+
+	public void tAggregateRow_1_AGGIN_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tAggregateRow_2_AGGOUT_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		tAggregateRow_2_AGGIN_error(exception, errorComponent, globalMap);
+
+	}
+
+	public void tAggregateRow_2_AGGIN_error(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		end_Hash.put(errorComponent, System.currentTimeMillis());
+
+		status = "failure";
+
+		tFileInputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+	}
+
+	public void tFileInputJSON_1_onSubJobError(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		resumeUtil.addLog("SYSTEM_LOG", "NODE:" + errorComponent, "", Thread.currentThread().getId() + "", "FATAL", "",
+				exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception), "");
+
+	}
+
+	public void tPrejob_1_onSubJobError(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		resumeUtil.addLog("SYSTEM_LOG", "NODE:" + errorComponent, "", Thread.currentThread().getId() + "", "FATAL", "",
+				exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception), "");
+
+	}
+
+	public void tDBConnection_1_onSubJobError(Exception exception, String errorComponent,
+			final java.util.Map<String, Object> globalMap) throws TalendException {
+
+		resumeUtil.addLog("SYSTEM_LOG", "NODE:" + errorComponent, "", Thread.currentThread().getId() + "", "FATAL", "",
+				exception.getMessage(), ResumeUtil.getExceptionStackTrace(exception), "");
+
+	}
+
+	public static class row7Struct implements routines.system.IPersistableRow<row7Struct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+
+		public String nom;
+
+		public String getNom() {
+			return this.nom;
+		}
+
+		public String url;
+
+		public String getUrl() {
+			return this.url;
+		}
+
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
+
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom = readString(dis);
-					
+
 					this.url = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom,dos);
-					
-					// String
-				
-						writeString(this.url,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom="+nom);
-		sb.append(",url="+url);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(row7Struct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class OnRowsEndStructtAggregateRow_2 implements routines.system.IPersistableRow<OnRowsEndStructtAggregateRow_2> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom;
-
-				public String getNom () {
-					return this.nom;
 				}
-				
-			    public String url;
 
-				public String getUrl () {
-					return this.url;
-				}
-				
-
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom, dos);
+
+				// String
+
+				writeString(this.url, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom=" + nom);
+			sb.append(",url=" + url);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row7Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class OnRowsEndStructtAggregateRow_2
+			implements routines.system.IPersistableRow<OnRowsEndStructtAggregateRow_2> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String nom;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getNom() {
+			return this.nom;
+		}
 
-        	try {
+		public String url;
 
-        		int length = 0;
-		
+		public String getUrl() {
+			return this.url;
+		}
+
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
+
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom = readString(dis);
-					
+
 					this.url = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom,dos);
-					
-					// String
-				
-						writeString(this.url,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom="+nom);
-		sb.append(",url="+url);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(OnRowsEndStructtAggregateRow_2 other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class row4Struct implements routines.system.IPersistableRow<row4Struct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom;
-
-				public String getNom () {
-					return this.nom;
 				}
-				
-			    public String url;
 
-				public String getUrl () {
-					return this.url;
-				}
-				
-
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom, dos);
+
+				// String
+
+				writeString(this.url, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom=" + nom);
+			sb.append(",url=" + url);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(OnRowsEndStructtAggregateRow_2 other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class row4Struct implements routines.system.IPersistableRow<row4Struct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String nom;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getNom() {
+			return this.nom;
+		}
 
-        	try {
+		public String url;
 
-        		int length = 0;
-		
+		public String getUrl() {
+			return this.url;
+		}
+
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
+
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom = readString(dis);
-					
+
 					this.url = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom,dos);
-					
-					// String
-				
-						writeString(this.url,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom="+nom);
-		sb.append(",url="+url);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(row4Struct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class row3Struct implements routines.system.IPersistableRow<row3Struct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom;
-
-				public String getNom () {
-					return this.nom;
 				}
-				
-			    public String url;
 
-				public String getUrl () {
-					return this.url;
-				}
-				
-
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom, dos);
+
+				// String
+
+				writeString(this.url, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom=" + nom);
+			sb.append(",url=" + url);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row4Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class row3Struct implements routines.system.IPersistableRow<row3Struct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String nom;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getNom() {
+			return this.nom;
+		}
 
-        	try {
+		public String url;
 
-        		int length = 0;
-		
+		public String getUrl() {
+			return this.url;
+		}
+
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
+
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom = readString(dis);
-					
+
 					this.url = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom,dos);
-					
-					// String
-				
-						writeString(this.url,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom="+nom);
-		sb.append(",url="+url);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(row3Struct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class row6Struct implements routines.system.IPersistableRow<row6Struct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom_service;
-
-				public String getNom_service () {
-					return this.nom_service;
 				}
-				
 
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom, dos);
+
+				// String
+
+				writeString(this.url, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom=" + nom);
+			sb.append(",url=" + url);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row3Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class row6Struct implements routines.system.IPersistableRow<row6Struct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String nom_service;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getNom_service() {
+			return this.nom_service;
+		}
 
-        	try {
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
 
-        		int length = 0;
-		
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom_service = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom_service,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom_service="+nom_service);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(row6Struct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class OnRowsEndStructtAggregateRow_1 implements routines.system.IPersistableRow<OnRowsEndStructtAggregateRow_1> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom_service;
-
-				public String getNom_service () {
-					return this.nom_service;
 				}
-				
 
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom_service, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom_service=" + nom_service);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row6Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class OnRowsEndStructtAggregateRow_1
+			implements routines.system.IPersistableRow<OnRowsEndStructtAggregateRow_1> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String nom_service;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getNom_service() {
+			return this.nom_service;
+		}
 
-        	try {
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
 
-        		int length = 0;
-		
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom_service = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom_service,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom_service="+nom_service);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(OnRowsEndStructtAggregateRow_1 other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class row5Struct implements routines.system.IPersistableRow<row5Struct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom_service;
-
-				public String getNom_service () {
-					return this.nom_service;
 				}
-				
 
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom_service, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom_service=" + nom_service);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(OnRowsEndStructtAggregateRow_1 other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class row5Struct implements routines.system.IPersistableRow<row5Struct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String nom_service;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getNom_service() {
+			return this.nom_service;
+		}
 
-        	try {
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
 
-        		int length = 0;
-		
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom_service = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom_service,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom_service="+nom_service);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(row5Struct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class row2Struct implements routines.system.IPersistableRow<row2Struct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom_service;
-
-				public String getNom_service () {
-					return this.nom_service;
 				}
-				
 
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom_service, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom_service=" + nom_service);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row5Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class row2Struct implements routines.system.IPersistableRow<row2Struct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String nom_service;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getNom_service() {
+			return this.nom_service;
+		}
 
-        	try {
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
 
-        		int length = 0;
-		
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom_service = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom_service,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom_service="+nom_service);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(row2Struct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class service_wStruct implements routines.system.IPersistableRow<service_wStruct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-	protected static final int DEFAULT_HASHCODE = 1;
-    protected static final int PRIME = 31;
-    protected int hashCode = DEFAULT_HASHCODE;
-    public boolean hashCodeDirty = true;
-
-    public String loopKey;
-
-
-
-	
-			    public String url_service;
-
-				public String getUrl_service () {
-					return this.url_service;
 				}
-				
-			    public String nom;
 
-				public String getNom () {
-					return this.nom;
-				}
-				
-			    public String description;
-
-				public String getDescription () {
-					return this.description;
-				}
-				
-			    public String adresse;
-
-				public String getAdresse () {
-					return this.adresse;
-				}
-				
-			    public String telephone;
-
-				public String getTelephone () {
-					return this.telephone;
-				}
-				
-			    public String email;
-
-				public String getEmail () {
-					return this.email;
-				}
-				
-			    public String num_registre;
-
-				public String getNum_registre () {
-					return this.num_registre;
-				}
-				
-			    public String representant;
-
-				public String getRepresentant () {
-					return this.representant;
-				}
-				
-
-
-	@Override
-	public int hashCode() {
-		if (this.hashCodeDirty) {
-			final int prime = PRIME;
-			int result = DEFAULT_HASHCODE;
-	
-						result = prime * result + ((this.url_service == null) ? 0 : this.url_service.hashCode());
-					
-    		this.hashCode = result;
-    		this.hashCodeDirty = false;
-		}
-		return this.hashCode;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
-		final service_wStruct other = (service_wStruct) obj;
-		
-						if (this.url_service == null) {
-							if (other.url_service != null)
-								return false;
-						
-						} else if (!this.url_service.equals(other.url_service))
-						
-							return false;
-					
-
-		return true;
-    }
-
-	public void copyDataTo(service_wStruct other) {
-
-		other.url_service = this.url_service;
-	            other.nom = this.nom;
-	            other.description = this.description;
-	            other.adresse = this.adresse;
-	            other.telephone = this.telephone;
-	            other.email = this.email;
-	            other.num_registre = this.num_registre;
-	            other.representant = this.representant;
-	            
-	}
-
-	public void copyKeysDataTo(service_wStruct other) {
-
-		other.url_service = this.url_service;
-	            	
-	}
-
-
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom_service, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom_service=" + nom_service);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row2Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class service_wStruct implements routines.system.IPersistableRow<service_wStruct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		protected static final int DEFAULT_HASHCODE = 1;
+		protected static final int PRIME = 31;
+		protected int hashCode = DEFAULT_HASHCODE;
+		public boolean hashCodeDirty = true;
 
-    public void readData(ObjectInputStream dis) {
+		public String loopKey;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String url_service;
 
-        	try {
+		public String getUrl_service() {
+			return this.url_service;
+		}
 
-        		int length = 0;
-		
+		public String nom;
+
+		public String getNom() {
+			return this.nom;
+		}
+
+		public String description;
+
+		public String getDescription() {
+			return this.description;
+		}
+
+		public String adresse;
+
+		public String getAdresse() {
+			return this.adresse;
+		}
+
+		public String telephone;
+
+		public String getTelephone() {
+			return this.telephone;
+		}
+
+		public String email;
+
+		public String getEmail() {
+			return this.email;
+		}
+
+		public String num_registre;
+
+		public String getNum_registre() {
+			return this.num_registre;
+		}
+
+		public String representant;
+
+		public String getRepresentant() {
+			return this.representant;
+		}
+
+		@Override
+		public int hashCode() {
+			if (this.hashCodeDirty) {
+				final int prime = PRIME;
+				int result = DEFAULT_HASHCODE;
+
+				result = prime * result + ((this.url_service == null) ? 0 : this.url_service.hashCode());
+
+				this.hashCode = result;
+				this.hashCodeDirty = false;
+			}
+			return this.hashCode;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			final service_wStruct other = (service_wStruct) obj;
+
+			if (this.url_service == null) {
+				if (other.url_service != null)
+					return false;
+
+			} else if (!this.url_service.equals(other.url_service))
+
+				return false;
+
+			return true;
+		}
+
+		public void copyDataTo(service_wStruct other) {
+
+			other.url_service = this.url_service;
+			other.nom = this.nom;
+			other.description = this.description;
+			other.adresse = this.adresse;
+			other.telephone = this.telephone;
+			other.email = this.email;
+			other.num_registre = this.num_registre;
+			other.representant = this.representant;
+
+		}
+
+		public void copyKeysDataTo(service_wStruct other) {
+
+			other.url_service = this.url_service;
+
+		}
+
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
+
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.url_service = readString(dis);
-					
+
 					this.nom = readString(dis);
-					
+
 					this.description = readString(dis);
-					
+
 					this.adresse = readString(dis);
-					
+
 					this.telephone = readString(dis);
-					
+
 					this.email = readString(dis);
-					
+
 					this.num_registre = readString(dis);
-					
+
 					this.representant = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.url_service,dos);
-					
-					// String
-				
-						writeString(this.nom,dos);
-					
-					// String
-				
-						writeString(this.description,dos);
-					
-					// String
-				
-						writeString(this.adresse,dos);
-					
-					// String
-				
-						writeString(this.telephone,dos);
-					
-					// String
-				
-						writeString(this.email,dos);
-					
-					// String
-				
-						writeString(this.num_registre,dos);
-					
-					// String
-				
-						writeString(this.representant,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("url_service="+url_service);
-		sb.append(",nom="+nom);
-		sb.append(",description="+description);
-		sb.append(",adresse="+adresse);
-		sb.append(",telephone="+telephone);
-		sb.append(",email="+email);
-		sb.append(",num_registre="+num_registre);
-		sb.append(",representant="+representant);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(service_wStruct other) {
-
-		int returnValue = -1;
-		
-						returnValue = checkNullsAndCompare(this.url_service, other.url_service);
-						if(returnValue != 0) {
-							return returnValue;
-						}
-
-					
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class ListeServiceStruct implements routines.system.IPersistableRow<ListeServiceStruct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom_service;
-
-				public String getNom_service () {
-					return this.nom_service;
 				}
-				
 
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.url_service, dos);
+
+				// String
+
+				writeString(this.nom, dos);
+
+				// String
+
+				writeString(this.description, dos);
+
+				// String
+
+				writeString(this.adresse, dos);
+
+				// String
+
+				writeString(this.telephone, dos);
+
+				// String
+
+				writeString(this.email, dos);
+
+				// String
+
+				writeString(this.num_registre, dos);
+
+				// String
+
+				writeString(this.representant, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("url_service=" + url_service);
+			sb.append(",nom=" + nom);
+			sb.append(",description=" + description);
+			sb.append(",adresse=" + adresse);
+			sb.append(",telephone=" + telephone);
+			sb.append(",email=" + email);
+			sb.append(",num_registre=" + num_registre);
+			sb.append(",representant=" + representant);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(service_wStruct other) {
+
+			int returnValue = -1;
+
+			returnValue = checkNullsAndCompare(this.url_service, other.url_service);
+			if (returnValue != 0) {
+				return returnValue;
+			}
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class ListeServiceStruct implements routines.system.IPersistableRow<ListeServiceStruct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String nom_service;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getNom_service() {
+			return this.nom_service;
+		}
 
-        	try {
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
 
-        		int length = 0;
-		
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom_service = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom_service,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom_service="+nom_service);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(ListeServiceStruct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class a_pour_servStruct implements routines.system.IPersistableRow<a_pour_servStruct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String nom;
-
-				public String getNom () {
-					return this.nom;
 				}
-				
-			    public String url;
 
-				public String getUrl () {
-					return this.url;
-				}
-				
-
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom_service, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom_service=" + nom_service);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(ListeServiceStruct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class a_pour_servStruct implements routines.system.IPersistableRow<a_pour_servStruct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String nom;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getNom() {
+			return this.nom;
+		}
 
-        	try {
+		public String url;
 
-        		int length = 0;
-		
+		public String getUrl() {
+			return this.url;
+		}
+
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
+
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.nom = readString(dis);
-					
+
 					this.url = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
-
-		
-
-      }
-
-
-    }
-
-    public void writeData(ObjectOutputStream dos) {
-        try {
-
-		
-					// String
-				
-						writeString(this.nom,dos);
-					
-					// String
-				
-						writeString(this.url,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
-    public String toString() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("nom="+nom);
-		sb.append(",url="+url);
-	    sb.append("]");
-
-	    return sb.toString();
-    }
-
-    /**
-     * Compare keys
-     */
-    public int compareTo(a_pour_servStruct other) {
-
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
-
-
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
-
-        return returnValue;
-    }
-
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
-
-
-}
-
-public static class row1Struct implements routines.system.IPersistableRow<row1Struct> {
-    final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-    static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
-
-	
-			    public String id_entite;
-
-				public String getId_entite () {
-					return this.id_entite;
 				}
-				
-			    public String nom;
 
-				public String getNom () {
-					return this.nom;
-				}
-				
-			    public String description;
-
-				public String getDescription () {
-					return this.description;
-				}
-				
-			    public String adresse;
-
-				public String getAdresse () {
-					return this.adresse;
-				}
-				
-			    public String telephone;
-
-				public String getTelephone () {
-					return this.telephone;
-				}
-				
-			    public String email;
-
-				public String getEmail () {
-					return this.email;
-				}
-				
-			    public String categories;
-
-				public String getCategories () {
-					return this.categories;
-				}
-				
-			    public String num_registre;
-
-				public String getNum_registre () {
-					return this.num_registre;
-				}
-				
-			    public String representant;
-
-				public String getRepresentant () {
-					return this.representant;
-				}
-				
-
-
-
-	private String readString(ObjectInputStream dis) throws IOException{
-		String strReturn = null;
-		int length = 0;
-        length = dis.readInt();
-		if (length == -1) {
-			strReturn = null;
-		} else {
-			if(length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
-				if(length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
-				} else {
-   					commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
-   				}
 			}
-			dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
-			strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length, utf8Charset);
+
 		}
-		return strReturn;
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				writeString(this.nom, dos);
+
+				// String
+
+				writeString(this.url, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("nom=" + nom);
+			sb.append(",url=" + url);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(a_pour_servStruct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
 	}
 
-    private void writeString(String str, ObjectOutputStream dos) throws IOException{
-		if(str == null) {
-            dos.writeInt(-1);
-		} else {
-            byte[] byteArray = str.getBytes(utf8Charset);
-	    	dos.writeInt(byteArray.length);
-			dos.write(byteArray);
-    	}
-    }
+	public static class row1Struct implements routines.system.IPersistableRow<row1Struct> {
+		final static byte[] commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
+		static byte[] commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[0];
 
-    public void readData(ObjectInputStream dis) {
+		public String id_entite;
 
-		synchronized(commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+		public String getId_entite() {
+			return this.id_entite;
+		}
 
-        	try {
+		public String nom;
 
-        		int length = 0;
-		
+		public String getNom() {
+			return this.nom;
+		}
+
+		public String description;
+
+		public String getDescription() {
+			return this.description;
+		}
+
+		public String adresse;
+
+		public String getAdresse() {
+			return this.adresse;
+		}
+
+		public String telephone;
+
+		public String getTelephone() {
+			return this.telephone;
+		}
+
+		public String email;
+
+		public String getEmail() {
+			return this.email;
+		}
+
+		public String categories;
+
+		public String getCategories() {
+			return this.categories;
+		}
+
+		public String num_registre;
+
+		public String getNum_registre() {
+			return this.num_registre;
+		}
+
+		public String representant;
+
+		public String getRepresentant() {
+			return this.representant;
+		}
+
+		private String readString(ObjectInputStream dis) throws IOException {
+			String strReturn = null;
+			int length = 0;
+			length = dis.readInt();
+			if (length == -1) {
+				strReturn = null;
+			} else {
+				if (length > commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length) {
+					if (length < 1024 && commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops.length == 0) {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[1024];
+					} else {
+						commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops = new byte[2 * length];
+					}
+				}
+				dis.readFully(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length);
+				strReturn = new String(commonByteArray_LOCAL_PROJECT_job_extractionTrustedShops, 0, length,
+						utf8Charset);
+			}
+			return strReturn;
+		}
+
+		private void writeString(String str, ObjectOutputStream dos) throws IOException {
+			if (str == null) {
+				dos.writeInt(-1);
+			} else {
+				byte[] byteArray = str.getBytes(utf8Charset);
+				dos.writeInt(byteArray.length);
+				dos.write(byteArray);
+			}
+		}
+
+		public void readData(ObjectInputStream dis) {
+
+			synchronized (commonByteArrayLock_LOCAL_PROJECT_job_extractionTrustedShops) {
+
+				try {
+
+					int length = 0;
+
 					this.id_entite = readString(dis);
-					
+
 					this.nom = readString(dis);
-					
+
 					this.description = readString(dis);
-					
+
 					this.adresse = readString(dis);
-					
+
 					this.telephone = readString(dis);
-					
+
 					this.email = readString(dis);
-					
+
 					this.categories = readString(dis);
-					
+
 					this.num_registre = readString(dis);
-					
+
 					this.representant = readString(dis);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
 
-		
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 
-        }
+				}
 
-		
+			}
 
-      }
+		}
 
+		public void writeData(ObjectOutputStream dos) {
+			try {
 
-    }
+				// String
 
-    public void writeData(ObjectOutputStream dos) {
-        try {
+				writeString(this.id_entite, dos);
 
-		
-					// String
-				
-						writeString(this.id_entite,dos);
-					
-					// String
-				
-						writeString(this.nom,dos);
-					
-					// String
-				
-						writeString(this.description,dos);
-					
-					// String
-				
-						writeString(this.adresse,dos);
-					
-					// String
-				
-						writeString(this.telephone,dos);
-					
-					// String
-				
-						writeString(this.email,dos);
-					
-					// String
-				
-						writeString(this.categories,dos);
-					
-					// String
-				
-						writeString(this.num_registre,dos);
-					
-					// String
-				
-						writeString(this.representant,dos);
-					
-        	} catch (IOException e) {
-	            throw new RuntimeException(e);
-        }
+				// String
 
+				writeString(this.nom, dos);
 
-    }
+				// String
 
+				writeString(this.description, dos);
 
-    public String toString() {
+				// String
 
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append("[");
-		sb.append("id_entite="+id_entite);
-		sb.append(",nom="+nom);
-		sb.append(",description="+description);
-		sb.append(",adresse="+adresse);
-		sb.append(",telephone="+telephone);
-		sb.append(",email="+email);
-		sb.append(",categories="+categories);
-		sb.append(",num_registre="+num_registre);
-		sb.append(",representant="+representant);
-	    sb.append("]");
+				writeString(this.adresse, dos);
 
-	    return sb.toString();
-    }
+				// String
 
-    /**
-     * Compare keys
-     */
-    public int compareTo(row1Struct other) {
+				writeString(this.telephone, dos);
 
-		int returnValue = -1;
-		
-	    return returnValue;
-    }
+				// String
 
+				writeString(this.email, dos);
 
-    private int checkNullsAndCompare(Object object1, Object object2) {
-        int returnValue = 0;
-		if (object1 instanceof Comparable && object2 instanceof Comparable) {
-            returnValue = ((Comparable) object1).compareTo(object2);
-        } else if (object1 != null && object2 != null) {
-            returnValue = compareStrings(object1.toString(), object2.toString());
-        } else if (object1 == null && object2 != null) {
-            returnValue = 1;
-        } else if (object1 != null && object2 == null) {
-            returnValue = -1;
-        } else {
-            returnValue = 0;
-        }
+				// String
 
-        return returnValue;
-    }
+				writeString(this.categories, dos);
 
-    private int compareStrings(String string1, String string2) {
-        return string1.compareTo(string2);
-    }
+				// String
 
+				writeString(this.num_registre, dos);
 
-}
-public void tFileInputJSON_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
-	globalMap.put("tFileInputJSON_1_SUBPROCESS_STATE", 0);
+				// String
 
- final boolean execStat = this.execStat;
+				writeString(this.representant, dos);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+			sb.append("id_entite=" + id_entite);
+			sb.append(",nom=" + nom);
+			sb.append(",description=" + description);
+			sb.append(",adresse=" + adresse);
+			sb.append(",telephone=" + telephone);
+			sb.append(",email=" + email);
+			sb.append(",categories=" + categories);
+			sb.append(",num_registre=" + num_registre);
+			sb.append(",representant=" + representant);
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row1Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			return string1.compareTo(string2);
+		}
+
+	}
+
+	public void tFileInputJSON_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
+		globalMap.put("tFileInputJSON_1_SUBPROCESS_STATE", 0);
+
+		final boolean execStat = this.execStat;
 		String currentVirtualComponent = null;
-	
-		String iterateId = "";
-	
-	
-	String currentComponent = "";
-	java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
 
-	try {
+		String iterateId = "";
+
+		String currentComponent = "";
+		java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
+
+		try {
 			// TDI-39566 avoid throwing an useless Exception
 			boolean resumeIt = true;
 			if (globalResumeTicket == false && resumeEntryMethodName != null) {
 				String currentMethodName = new java.lang.Exception().getStackTrace()[0].getMethodName();
 				resumeIt = resumeEntryMethodName.equals(currentMethodName);
 			}
-			if (resumeIt || globalResumeTicket) { //start the resume
+			if (resumeIt || globalResumeTicket) { // start the resume
 				globalResumeTicket = true;
 
+				row1Struct row1 = new row1Struct();
+				service_wStruct service_w = new service_wStruct();
+				ListeServiceStruct ListeService = new ListeServiceStruct();
+				row2Struct row2 = new row2Struct();
+				row5Struct row5 = new row5Struct();
+				row6Struct row6 = new row6Struct();
+				a_pour_servStruct a_pour_serv = new a_pour_servStruct();
+				row3Struct row3 = new row3Struct();
+				row4Struct row4 = new row4Struct();
+				row7Struct row7 = new row7Struct();
 
+				/**
+				 * [tDBOutput_1 begin ] start
+				 */
 
-		row1Struct row1 = new row1Struct();
-service_wStruct service_w = new service_wStruct();
-ListeServiceStruct ListeService = new ListeServiceStruct();
-row2Struct row2 = new row2Struct();
-row5Struct row5 = new row5Struct();
-row6Struct row6 = new row6Struct();
-a_pour_servStruct a_pour_serv = new a_pour_servStruct();
-row3Struct row3 = new row3Struct();
-row4Struct row4 = new row4Struct();
-row7Struct row7 = new row7Struct();
+				ok_Hash.put("tDBOutput_1", false);
+				start_Hash.put("tDBOutput_1", System.currentTimeMillis());
 
+				currentComponent = "tDBOutput_1";
 
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
 
-
-
-	
-	/**
-	 * [tDBOutput_1 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tDBOutput_1", false);
-		start_Hash.put("tDBOutput_1", System.currentTimeMillis());
-		
-	
-	currentComponent="tDBOutput_1";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("service_w"+iterateId, 0, 0);
+						if (execStat) {
+							runStat.updateStatOnConnection("service_w" + iterateId, 0, 0);
 						}
-						
-						
-						
-					
+
+					}
 				}
-			} 
 
-		
-		int tos_count_tDBOutput_1 = 0;
-		
+				int tos_count_tDBOutput_1 = 0;
 
+				int nb_line_tDBOutput_1 = 0;
+				int nb_line_update_tDBOutput_1 = 0;
+				int nb_line_inserted_tDBOutput_1 = 0;
+				int nb_line_deleted_tDBOutput_1 = 0;
+				int nb_line_rejected_tDBOutput_1 = 0;
 
+				int deletedCount_tDBOutput_1 = 0;
+				int updatedCount_tDBOutput_1 = 0;
+				int insertedCount_tDBOutput_1 = 0;
 
+				int rejectedCount_tDBOutput_1 = 0;
 
+				String tableName_tDBOutput_1 = "service_web";
+				boolean whetherReject_tDBOutput_1 = false;
 
+				java.util.Calendar calendar_tDBOutput_1 = java.util.Calendar.getInstance();
+				calendar_tDBOutput_1.set(1, 0, 1, 0, 0, 0);
+				long year1_tDBOutput_1 = calendar_tDBOutput_1.getTime().getTime();
+				calendar_tDBOutput_1.set(10000, 0, 1, 0, 0, 0);
+				long year10000_tDBOutput_1 = calendar_tDBOutput_1.getTime().getTime();
+				long date_tDBOutput_1;
 
-int nb_line_tDBOutput_1 = 0;
-int nb_line_update_tDBOutput_1 = 0;
-int nb_line_inserted_tDBOutput_1 = 0;
-int nb_line_deleted_tDBOutput_1 = 0;
-int nb_line_rejected_tDBOutput_1 = 0;
+				java.sql.Connection conn_tDBOutput_1 = null;
+				conn_tDBOutput_1 = (java.sql.Connection) globalMap.get("conn_tDBConnection_1");
 
-int deletedCount_tDBOutput_1=0;
-int updatedCount_tDBOutput_1=0;
-int insertedCount_tDBOutput_1=0;
+				int count_tDBOutput_1 = 0;
 
-int rejectedCount_tDBOutput_1=0;
+				String insertIgnore_tDBOutput_1 = "INSERT IGNORE INTO `" + "service_web"
+						+ "` (`url_service`,`nom`,`description`,`adresse`,`telephone`,`email`,`num_registre`,`representant`) VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE `nom` = ?,`description` = ?,`adresse` = ?,`telephone` = ?,`email` = ?,`num_registre` = ?,`representant` = ?";
+				java.sql.PreparedStatement pstmt_tDBOutput_1 = conn_tDBOutput_1
+						.prepareStatement(insertIgnore_tDBOutput_1);
+				resourceMap.put("pstmt_tDBOutput_1", pstmt_tDBOutput_1);
 
-String tableName_tDBOutput_1 = "service_web";
-boolean whetherReject_tDBOutput_1 = false;
+				/**
+				 * [tDBOutput_1 begin ] stop
+				 */
 
-java.util.Calendar calendar_tDBOutput_1 = java.util.Calendar.getInstance();
-calendar_tDBOutput_1.set(1, 0, 1, 0, 0, 0);
-long year1_tDBOutput_1 = calendar_tDBOutput_1.getTime().getTime();
-calendar_tDBOutput_1.set(10000, 0, 1, 0, 0, 0);
-long year10000_tDBOutput_1 = calendar_tDBOutput_1.getTime().getTime();
-long date_tDBOutput_1;
+				/**
+				 * [tAggregateRow_1_AGGOUT begin ] start
+				 */
 
-java.sql.Connection conn_tDBOutput_1 = null;
-	conn_tDBOutput_1 = (java.sql.Connection)globalMap.get("conn_tDBConnection_1");
-	
+				ok_Hash.put("tAggregateRow_1_AGGOUT", false);
+				start_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
 
-int count_tDBOutput_1=0;
-    	
-	    String insertIgnore_tDBOutput_1 = "INSERT IGNORE INTO `" + "service_web" + "` (`url_service`,`nom`,`description`,`adresse`,`telephone`,`email`,`num_registre`,`representant`) VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE `nom` = ?,`description` = ?,`adresse` = ?,`telephone` = ?,`email` = ?,`num_registre` = ?,`representant` = ?";
-	    java.sql.PreparedStatement pstmt_tDBOutput_1 = conn_tDBOutput_1.prepareStatement(insertIgnore_tDBOutput_1);
-	    resourceMap.put("pstmt_tDBOutput_1", pstmt_tDBOutput_1);
-	    
+				currentVirtualComponent = "tAggregateRow_1";
 
- 
+				currentComponent = "tAggregateRow_1_AGGOUT";
 
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
 
-
-/**
- * [tDBOutput_1 begin ] stop
- */
-
-
-
-
-
-
-	
-	/**
-	 * [tAggregateRow_1_AGGOUT begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tAggregateRow_1_AGGOUT", false);
-		start_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
-		
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGOUT";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("row5"+iterateId, 0, 0);
+						if (execStat) {
+							runStat.updateStatOnConnection("row5" + iterateId, 0, 0);
 						}
-						
-						
-						
-					
-				}
-			} 
 
-		
-		int tos_count_tAggregateRow_1_AGGOUT = 0;
-		
+					}
+				}
+
+				int tos_count_tAggregateRow_1_AGGOUT = 0;
 
 // ------------ Seems it is not used
 
-java.util.Map hashAggreg_tAggregateRow_1 = new java.util.HashMap(); 
+				java.util.Map hashAggreg_tAggregateRow_1 = new java.util.HashMap();
 
 // ------------
-	class AggOperationStruct_tAggregateRow_1 { // G_OutBegin_AggR_100
+				class AggOperationStruct_tAggregateRow_1 { // G_OutBegin_AggR_100
 
-		private static final int DEFAULT_HASHCODE = 1;
-	    private static final int PRIME = 31;
-	    private int hashCode = DEFAULT_HASHCODE;
-	    public boolean hashCodeDirty = true;
+					private static final int DEFAULT_HASHCODE = 1;
+					private static final int PRIME = 31;
+					private int hashCode = DEFAULT_HASHCODE;
+					public boolean hashCodeDirty = true;
 
-    				String nom_service;
-        
-	    @Override
-		public int hashCode() {
-			if (this.hashCodeDirty) {
-				final int prime = PRIME;
-				int result = DEFAULT_HASHCODE;
-		
+					String nom_service;
+
+					@Override
+					public int hashCode() {
+						if (this.hashCodeDirty) {
+							final int prime = PRIME;
+							int result = DEFAULT_HASHCODE;
+
 							result = prime * result + ((this.nom_service == null) ? 0 : this.nom_service.hashCode());
-							
-	    		this.hashCode = result;
-	    		this.hashCodeDirty = false;		
-			}
-			return this.hashCode;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) return true;
-			if (obj == null) return false;
-			if (getClass() != obj.getClass()) return false;
-			final AggOperationStruct_tAggregateRow_1 other = (AggOperationStruct_tAggregateRow_1) obj;
-			
-							if (this.nom_service == null) {
-								if (other.nom_service != null) 
-									return false;
-							} else if (!this.nom_service.equals(other.nom_service)) 
+
+							this.hashCode = result;
+							this.hashCodeDirty = false;
+						}
+						return this.hashCode;
+					}
+
+					@Override
+					public boolean equals(Object obj) {
+						if (this == obj)
+							return true;
+						if (obj == null)
+							return false;
+						if (getClass() != obj.getClass())
+							return false;
+						final AggOperationStruct_tAggregateRow_1 other = (AggOperationStruct_tAggregateRow_1) obj;
+
+						if (this.nom_service == null) {
+							if (other.nom_service != null)
 								return false;
-						
-			
-			return true;
-		}
-  
-        
-	} // G_OutBegin_AggR_100
+						} else if (!this.nom_service.equals(other.nom_service))
+							return false;
 
-	AggOperationStruct_tAggregateRow_1 operation_result_tAggregateRow_1 = null;
-	AggOperationStruct_tAggregateRow_1 operation_finder_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
-	java.util.Map<AggOperationStruct_tAggregateRow_1,AggOperationStruct_tAggregateRow_1> hash_tAggregateRow_1 = new java.util.HashMap<AggOperationStruct_tAggregateRow_1,AggOperationStruct_tAggregateRow_1>();
-	
+						return true;
+					}
 
- 
+				} // G_OutBegin_AggR_100
 
+				AggOperationStruct_tAggregateRow_1 operation_result_tAggregateRow_1 = null;
+				AggOperationStruct_tAggregateRow_1 operation_finder_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
+				java.util.Map<AggOperationStruct_tAggregateRow_1, AggOperationStruct_tAggregateRow_1> hash_tAggregateRow_1 = new java.util.HashMap<AggOperationStruct_tAggregateRow_1, AggOperationStruct_tAggregateRow_1>();
 
+				/**
+				 * [tAggregateRow_1_AGGOUT begin ] stop
+				 */
 
-/**
- * [tAggregateRow_1_AGGOUT begin ] stop
- */
+				/**
+				 * [tFilterRow_2 begin ] start
+				 */
 
+				ok_Hash.put("tFilterRow_2", false);
+				start_Hash.put("tFilterRow_2", System.currentTimeMillis());
 
+				currentComponent = "tFilterRow_2";
 
-	
-	/**
-	 * [tFilterRow_2 begin ] start
-	 */
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
 
-	
-
-	
-		
-		ok_Hash.put("tFilterRow_2", false);
-		start_Hash.put("tFilterRow_2", System.currentTimeMillis());
-		
-	
-	currentComponent="tFilterRow_2";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("row2"+iterateId, 0, 0);
+						if (execStat) {
+							runStat.updateStatOnConnection("row2" + iterateId, 0, 0);
 						}
-						
-						
-						
-					
+
+					}
 				}
-			} 
 
-		
-		int tos_count_tFilterRow_2 = 0;
-		
-    int nb_line_tFilterRow_2 = 0;
-    int nb_line_ok_tFilterRow_2 = 0;
-    int nb_line_reject_tFilterRow_2 = 0;
+				int tos_count_tFilterRow_2 = 0;
 
-    class Operator_tFilterRow_2 {
-      private String sErrorMsg = "";
-      private boolean bMatchFlag = true;
-      private String sUnionFlag = "&&";
+				int nb_line_tFilterRow_2 = 0;
+				int nb_line_ok_tFilterRow_2 = 0;
+				int nb_line_reject_tFilterRow_2 = 0;
 
-      public Operator_tFilterRow_2(String unionFlag){
-        sUnionFlag = unionFlag;
-        bMatchFlag =  "||".equals(unionFlag) ? false : true;
-      }
+				class Operator_tFilterRow_2 {
+					private String sErrorMsg = "";
+					private boolean bMatchFlag = true;
+					private String sUnionFlag = "&&";
 
-      public String getErrorMsg() {
-        if (sErrorMsg != null && sErrorMsg.length() > 1)
-          return sErrorMsg.substring(1);
-        else 
-          return null;
-      }
+					public Operator_tFilterRow_2(String unionFlag) {
+						sUnionFlag = unionFlag;
+						bMatchFlag = "||".equals(unionFlag) ? false : true;
+					}
 
-      public boolean getMatchFlag() {
-        return bMatchFlag;
-      }
+					public String getErrorMsg() {
+						if (sErrorMsg != null && sErrorMsg.length() > 1)
+							return sErrorMsg.substring(1);
+						else
+							return null;
+					}
 
-      public void matches(boolean partMatched, String reason) {
-        // no need to care about the next judgement
-        if ("||".equals(sUnionFlag) && bMatchFlag){
-          return;
-        }
+					public boolean getMatchFlag() {
+						return bMatchFlag;
+					}
 
-        if (!partMatched) {
-          sErrorMsg += "|" + reason;
-        }
-
-        if ("||".equals(sUnionFlag))
-          bMatchFlag = bMatchFlag || partMatched;
-        else
-          bMatchFlag = bMatchFlag && partMatched;
-      }
-    }
-
- 
-
-
-
-/**
- * [tFilterRow_2 begin ] stop
- */
-
-
-
-	
-	/**
-	 * [tNormalize_1 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tNormalize_1", false);
-		start_Hash.put("tNormalize_1", System.currentTimeMillis());
-		
-	
-	currentComponent="tNormalize_1";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("ListeService"+iterateId, 0, 0);
+					public void matches(boolean partMatched, String reason) {
+						// no need to care about the next judgement
+						if ("||".equals(sUnionFlag) && bMatchFlag) {
+							return;
 						}
-						
-						
-						
-					
-				}
-			} 
 
-		
-		int tos_count_tNormalize_1 = 0;
-		
-
-    int nb_line_tNormalize_1 = 0;
-        String tmp_tNormalize_1 = null;
-        StringBuilder currentRecord_tNormalize_1 = null;
-        String [] normalizeRecord_tNormalize_1 = null;
-        java.util.Set<String> recordSet_tNormalize_1 = new java.util.HashSet<String>();
-        
-				if ( ((String)";").length() == 0 ){
-					throw new IllegalArgumentException("Field Separator must be assigned a char."); 
-				}
-				
-
- 
-
-
-
-/**
- * [tNormalize_1 begin ] stop
- */
-
-
-
-
-
-
-	
-	/**
-	 * [tAggregateRow_2_AGGOUT begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tAggregateRow_2_AGGOUT", false);
-		start_Hash.put("tAggregateRow_2_AGGOUT", System.currentTimeMillis());
-		
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGOUT";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("row4"+iterateId, 0, 0);
+						if (!partMatched) {
+							sErrorMsg += "|" + reason;
 						}
-						
-						
-						
-					
-				}
-			} 
 
-		
-		int tos_count_tAggregateRow_2_AGGOUT = 0;
-		
+						if ("||".equals(sUnionFlag))
+							bMatchFlag = bMatchFlag || partMatched;
+						else
+							bMatchFlag = bMatchFlag && partMatched;
+					}
+				}
+
+				/**
+				 * [tFilterRow_2 begin ] stop
+				 */
+
+				/**
+				 * [tNormalize_1 begin ] start
+				 */
+
+				ok_Hash.put("tNormalize_1", false);
+				start_Hash.put("tNormalize_1", System.currentTimeMillis());
+
+				currentComponent = "tNormalize_1";
+
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
+
+						if (execStat) {
+							runStat.updateStatOnConnection("ListeService" + iterateId, 0, 0);
+						}
+
+					}
+				}
+
+				int tos_count_tNormalize_1 = 0;
+
+				int nb_line_tNormalize_1 = 0;
+				String tmp_tNormalize_1 = null;
+				StringBuilder currentRecord_tNormalize_1 = null;
+				String[] normalizeRecord_tNormalize_1 = null;
+				java.util.Set<String> recordSet_tNormalize_1 = new java.util.HashSet<String>();
+
+				if (((String) ";").length() == 0) {
+					throw new IllegalArgumentException("Field Separator must be assigned a char.");
+				}
+
+				/**
+				 * [tNormalize_1 begin ] stop
+				 */
+
+				/**
+				 * [tAggregateRow_2_AGGOUT begin ] start
+				 */
+
+				ok_Hash.put("tAggregateRow_2_AGGOUT", false);
+				start_Hash.put("tAggregateRow_2_AGGOUT", System.currentTimeMillis());
+
+				currentVirtualComponent = "tAggregateRow_2";
+
+				currentComponent = "tAggregateRow_2_AGGOUT";
+
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
+
+						if (execStat) {
+							runStat.updateStatOnConnection("row4" + iterateId, 0, 0);
+						}
+
+					}
+				}
+
+				int tos_count_tAggregateRow_2_AGGOUT = 0;
 
 // ------------ Seems it is not used
 
-java.util.Map hashAggreg_tAggregateRow_2 = new java.util.HashMap(); 
+				java.util.Map hashAggreg_tAggregateRow_2 = new java.util.HashMap();
 
 // ------------
-	class AggOperationStruct_tAggregateRow_2 { // G_OutBegin_AggR_100
+				class AggOperationStruct_tAggregateRow_2 { // G_OutBegin_AggR_100
 
-		private static final int DEFAULT_HASHCODE = 1;
-	    private static final int PRIME = 31;
-	    private int hashCode = DEFAULT_HASHCODE;
-	    public boolean hashCodeDirty = true;
+					private static final int DEFAULT_HASHCODE = 1;
+					private static final int PRIME = 31;
+					private int hashCode = DEFAULT_HASHCODE;
+					public boolean hashCodeDirty = true;
 
-    				String nom;
-    				String url;
-        
-	    @Override
-		public int hashCode() {
-			if (this.hashCodeDirty) {
-				final int prime = PRIME;
-				int result = DEFAULT_HASHCODE;
-		
+					String nom;
+					String url;
+
+					@Override
+					public int hashCode() {
+						if (this.hashCodeDirty) {
+							final int prime = PRIME;
+							int result = DEFAULT_HASHCODE;
+
 							result = prime * result + ((this.nom == null) ? 0 : this.nom.hashCode());
-							
+
 							result = prime * result + ((this.url == null) ? 0 : this.url.hashCode());
-							
-	    		this.hashCode = result;
-	    		this.hashCodeDirty = false;		
-			}
-			return this.hashCode;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) return true;
-			if (obj == null) return false;
-			if (getClass() != obj.getClass()) return false;
-			final AggOperationStruct_tAggregateRow_2 other = (AggOperationStruct_tAggregateRow_2) obj;
-			
-							if (this.nom == null) {
-								if (other.nom != null) 
-									return false;
-							} else if (!this.nom.equals(other.nom)) 
+
+							this.hashCode = result;
+							this.hashCodeDirty = false;
+						}
+						return this.hashCode;
+					}
+
+					@Override
+					public boolean equals(Object obj) {
+						if (this == obj)
+							return true;
+						if (obj == null)
+							return false;
+						if (getClass() != obj.getClass())
+							return false;
+						final AggOperationStruct_tAggregateRow_2 other = (AggOperationStruct_tAggregateRow_2) obj;
+
+						if (this.nom == null) {
+							if (other.nom != null)
 								return false;
-						
-							if (this.url == null) {
-								if (other.url != null) 
-									return false;
-							} else if (!this.url.equals(other.url)) 
+						} else if (!this.nom.equals(other.nom))
+							return false;
+
+						if (this.url == null) {
+							if (other.url != null)
 								return false;
-						
-			
-			return true;
-		}
-  
-        
-	} // G_OutBegin_AggR_100
+						} else if (!this.url.equals(other.url))
+							return false;
 
-	AggOperationStruct_tAggregateRow_2 operation_result_tAggregateRow_2 = null;
-	AggOperationStruct_tAggregateRow_2 operation_finder_tAggregateRow_2 = new AggOperationStruct_tAggregateRow_2();
-	java.util.Map<AggOperationStruct_tAggregateRow_2,AggOperationStruct_tAggregateRow_2> hash_tAggregateRow_2 = new java.util.HashMap<AggOperationStruct_tAggregateRow_2,AggOperationStruct_tAggregateRow_2>();
-	
+						return true;
+					}
 
- 
+				} // G_OutBegin_AggR_100
 
+				AggOperationStruct_tAggregateRow_2 operation_result_tAggregateRow_2 = null;
+				AggOperationStruct_tAggregateRow_2 operation_finder_tAggregateRow_2 = new AggOperationStruct_tAggregateRow_2();
+				java.util.Map<AggOperationStruct_tAggregateRow_2, AggOperationStruct_tAggregateRow_2> hash_tAggregateRow_2 = new java.util.HashMap<AggOperationStruct_tAggregateRow_2, AggOperationStruct_tAggregateRow_2>();
 
+				/**
+				 * [tAggregateRow_2_AGGOUT begin ] stop
+				 */
 
-/**
- * [tAggregateRow_2_AGGOUT begin ] stop
- */
+				/**
+				 * [tFilterRow_1 begin ] start
+				 */
 
+				ok_Hash.put("tFilterRow_1", false);
+				start_Hash.put("tFilterRow_1", System.currentTimeMillis());
 
+				currentComponent = "tFilterRow_1";
 
-	
-	/**
-	 * [tFilterRow_1 begin ] start
-	 */
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
 
-	
-
-	
-		
-		ok_Hash.put("tFilterRow_1", false);
-		start_Hash.put("tFilterRow_1", System.currentTimeMillis());
-		
-	
-	currentComponent="tFilterRow_1";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("row3"+iterateId, 0, 0);
+						if (execStat) {
+							runStat.updateStatOnConnection("row3" + iterateId, 0, 0);
 						}
-						
-						
-						
-					
+
+					}
 				}
-			} 
 
-		
-		int tos_count_tFilterRow_1 = 0;
-		
-    int nb_line_tFilterRow_1 = 0;
-    int nb_line_ok_tFilterRow_1 = 0;
-    int nb_line_reject_tFilterRow_1 = 0;
+				int tos_count_tFilterRow_1 = 0;
 
-    class Operator_tFilterRow_1 {
-      private String sErrorMsg = "";
-      private boolean bMatchFlag = true;
-      private String sUnionFlag = "&&";
+				int nb_line_tFilterRow_1 = 0;
+				int nb_line_ok_tFilterRow_1 = 0;
+				int nb_line_reject_tFilterRow_1 = 0;
 
-      public Operator_tFilterRow_1(String unionFlag){
-        sUnionFlag = unionFlag;
-        bMatchFlag =  "||".equals(unionFlag) ? false : true;
-      }
+				class Operator_tFilterRow_1 {
+					private String sErrorMsg = "";
+					private boolean bMatchFlag = true;
+					private String sUnionFlag = "&&";
 
-      public String getErrorMsg() {
-        if (sErrorMsg != null && sErrorMsg.length() > 1)
-          return sErrorMsg.substring(1);
-        else 
-          return null;
-      }
+					public Operator_tFilterRow_1(String unionFlag) {
+						sUnionFlag = unionFlag;
+						bMatchFlag = "||".equals(unionFlag) ? false : true;
+					}
 
-      public boolean getMatchFlag() {
-        return bMatchFlag;
-      }
+					public String getErrorMsg() {
+						if (sErrorMsg != null && sErrorMsg.length() > 1)
+							return sErrorMsg.substring(1);
+						else
+							return null;
+					}
 
-      public void matches(boolean partMatched, String reason) {
-        // no need to care about the next judgement
-        if ("||".equals(sUnionFlag) && bMatchFlag){
-          return;
-        }
+					public boolean getMatchFlag() {
+						return bMatchFlag;
+					}
 
-        if (!partMatched) {
-          sErrorMsg += "|" + reason;
-        }
-
-        if ("||".equals(sUnionFlag))
-          bMatchFlag = bMatchFlag || partMatched;
-        else
-          bMatchFlag = bMatchFlag && partMatched;
-      }
-    }
-
- 
-
-
-
-/**
- * [tFilterRow_1 begin ] stop
- */
-
-
-
-	
-	/**
-	 * [tNormalize_2 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tNormalize_2", false);
-		start_Hash.put("tNormalize_2", System.currentTimeMillis());
-		
-	
-	currentComponent="tNormalize_2";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("a_pour_serv"+iterateId, 0, 0);
+					public void matches(boolean partMatched, String reason) {
+						// no need to care about the next judgement
+						if ("||".equals(sUnionFlag) && bMatchFlag) {
+							return;
 						}
-						
-						
-						
-					
-				}
-			} 
 
-		
-		int tos_count_tNormalize_2 = 0;
-		
-
-    int nb_line_tNormalize_2 = 0;
-        String tmp_tNormalize_2 = null;
-        StringBuilder currentRecord_tNormalize_2 = null;
-        String [] normalizeRecord_tNormalize_2 = null;
-        java.util.Set<String> recordSet_tNormalize_2 = new java.util.HashSet<String>();
-        
-				if ( ((String)";").length() == 0 ){
-					throw new IllegalArgumentException("Field Separator must be assigned a char."); 
-				}
-				
-
- 
-
-
-
-/**
- * [tNormalize_2 begin ] stop
- */
-
-
-
-	
-	/**
-	 * [tMap_1 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tMap_1", false);
-		start_Hash.put("tMap_1", System.currentTimeMillis());
-		
-	
-	currentComponent="tMap_1";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("row1"+iterateId, 0, 0);
+						if (!partMatched) {
+							sErrorMsg += "|" + reason;
 						}
-						
-						
-						
-					
+
+						if ("||".equals(sUnionFlag))
+							bMatchFlag = bMatchFlag || partMatched;
+						else
+							bMatchFlag = bMatchFlag && partMatched;
+					}
 				}
-			} 
 
-		
-		int tos_count_tMap_1 = 0;
-		
+				/**
+				 * [tFilterRow_1 begin ] stop
+				 */
 
+				/**
+				 * [tNormalize_2 begin ] start
+				 */
 
+				ok_Hash.put("tNormalize_2", false);
+				start_Hash.put("tNormalize_2", System.currentTimeMillis());
 
+				currentComponent = "tNormalize_2";
+
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
+
+						if (execStat) {
+							runStat.updateStatOnConnection("a_pour_serv" + iterateId, 0, 0);
+						}
+
+					}
+				}
+
+				int tos_count_tNormalize_2 = 0;
+
+				int nb_line_tNormalize_2 = 0;
+				String tmp_tNormalize_2 = null;
+				StringBuilder currentRecord_tNormalize_2 = null;
+				String[] normalizeRecord_tNormalize_2 = null;
+				java.util.Set<String> recordSet_tNormalize_2 = new java.util.HashSet<String>();
+
+				if (((String) ";").length() == 0) {
+					throw new IllegalArgumentException("Field Separator must be assigned a char.");
+				}
+
+				/**
+				 * [tNormalize_2 begin ] stop
+				 */
+
+				/**
+				 * [tMap_1 begin ] start
+				 */
+
+				ok_Hash.put("tMap_1", false);
+				start_Hash.put("tMap_1", System.currentTimeMillis());
+
+				currentComponent = "tMap_1";
+
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
+
+						if (execStat) {
+							runStat.updateStatOnConnection("row1" + iterateId, 0, 0);
+						}
+
+					}
+				}
+
+				int tos_count_tMap_1 = 0;
 
 // ###############################
 // # Lookup's keys initialization
@@ -3017,3760 +2720,2505 @@ java.util.Map hashAggreg_tAggregateRow_2 = new java.util.HashMap();
 
 // ###############################
 // # Vars initialization
-class  Var__tMap_1__Struct  {
-	String categories;
-}
-Var__tMap_1__Struct Var__tMap_1 = new Var__tMap_1__Struct();
+				class Var__tMap_1__Struct {
+					String categories;
+				}
+				Var__tMap_1__Struct Var__tMap_1 = new Var__tMap_1__Struct();
 // ###############################
 
 // ###############################
 // # Outputs initialization
-service_wStruct service_w_tmp = new service_wStruct();
-ListeServiceStruct ListeService_tmp = new ListeServiceStruct();
-a_pour_servStruct a_pour_serv_tmp = new a_pour_servStruct();
+				service_wStruct service_w_tmp = new service_wStruct();
+				ListeServiceStruct ListeService_tmp = new ListeServiceStruct();
+				a_pour_servStruct a_pour_serv_tmp = new a_pour_servStruct();
 // ###############################
 
-        
-        
+				/**
+				 * [tMap_1 begin ] stop
+				 */
 
+				/**
+				 * [tFileInputJSON_1 begin ] start
+				 */
 
+				ok_Hash.put("tFileInputJSON_1", false);
+				start_Hash.put("tFileInputJSON_1", System.currentTimeMillis());
 
-        
+				currentComponent = "tFileInputJSON_1";
 
+				int tos_count_tFileInputJSON_1 = 0;
 
+				class JsonPathCache_tFileInputJSON_1 {
+					final java.util.Map<String, com.jayway.jsonpath.JsonPath> jsonPathString2compiledJsonPath = new java.util.HashMap<String, com.jayway.jsonpath.JsonPath>();
 
+					public com.jayway.jsonpath.JsonPath getCompiledJsonPath(String jsonPath) {
+						if (jsonPathString2compiledJsonPath.containsKey(jsonPath)) {
+							return jsonPathString2compiledJsonPath.get(jsonPath);
+						} else {
+							com.jayway.jsonpath.JsonPath compiledLoopPath = com.jayway.jsonpath.JsonPath
+									.compile(jsonPath);
+							jsonPathString2compiledJsonPath.put(jsonPath, compiledLoopPath);
+							return compiledLoopPath;
+						}
+					}
+				}
 
+				int nb_line_tFileInputJSON_1 = 0;
 
+				JsonPathCache_tFileInputJSON_1 jsonPathCache_tFileInputJSON_1 = new JsonPathCache_tFileInputJSON_1();
 
+				String loopPath_tFileInputJSON_1 = "$[*]";
+				java.util.List<Object> resultset_tFileInputJSON_1 = new java.util.ArrayList<Object>();
 
-
-
- 
-
-
-
-/**
- * [tMap_1 begin ] stop
- */
-
-
-
-	
-	/**
-	 * [tFileInputJSON_1 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tFileInputJSON_1", false);
-		start_Hash.put("tFileInputJSON_1", System.currentTimeMillis());
-		
-	
-	currentComponent="tFileInputJSON_1";
-
-	
-		int tos_count_tFileInputJSON_1 = 0;
-		
-
-	
-class JsonPathCache_tFileInputJSON_1 {
-	final java.util.Map<String,com.jayway.jsonpath.JsonPath> jsonPathString2compiledJsonPath = new java.util.HashMap<String,com.jayway.jsonpath.JsonPath>();
-	
-	public com.jayway.jsonpath.JsonPath getCompiledJsonPath(String jsonPath) {
-		if(jsonPathString2compiledJsonPath.containsKey(jsonPath)) {
-			return jsonPathString2compiledJsonPath.get(jsonPath);
-		} else {
-			com.jayway.jsonpath.JsonPath compiledLoopPath = com.jayway.jsonpath.JsonPath.compile(jsonPath);
-			jsonPathString2compiledJsonPath.put(jsonPath,compiledLoopPath);
-			return compiledLoopPath;
-		}
-	}
-}
-
-int nb_line_tFileInputJSON_1 = 0;
-
-JsonPathCache_tFileInputJSON_1 jsonPathCache_tFileInputJSON_1 = new JsonPathCache_tFileInputJSON_1();
-
-String loopPath_tFileInputJSON_1 = "$[*]";
-java.util.List<Object> resultset_tFileInputJSON_1 = new java.util.ArrayList<Object>();
-
-java.io.InputStream is_tFileInputJSON_1 = null;
-com.jayway.jsonpath.ParseContext parseContext_tFileInputJSON_1 = com.jayway.jsonpath.JsonPath.using(com.jayway.jsonpath.Configuration.defaultConfiguration());
-Object filenameOrStream_tFileInputJSON_1 = null;
-        try {
-            filenameOrStream_tFileInputJSON_1 = context.FILE_path+"/infosTrustedShops.com.json";
-        } catch(java.lang.Exception e_tFileInputJSON_1) {
-				
-	            System.err.println(e_tFileInputJSON_1.getMessage());
-        }
-        
-com.jayway.jsonpath.ReadContext document_tFileInputJSON_1 = null;
-try {
-     if(filenameOrStream_tFileInputJSON_1 instanceof java.io.InputStream){
-         is_tFileInputJSON_1 = (java.io.InputStream)filenameOrStream_tFileInputJSON_1;
-     }else{
-	    
-	        is_tFileInputJSON_1 = new java.io.FileInputStream((String)filenameOrStream_tFileInputJSON_1);
-	    
-	 }
-	
-	
-	document_tFileInputJSON_1 = parseContext_tFileInputJSON_1.parse(is_tFileInputJSON_1,"UTF-8");
-	com.jayway.jsonpath.JsonPath compiledLoopPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(loopPath_tFileInputJSON_1);
-	Object result_tFileInputJSON_1 = document_tFileInputJSON_1.read(compiledLoopPath_tFileInputJSON_1,net.minidev.json.JSONObject.class);
-	if (result_tFileInputJSON_1 instanceof net.minidev.json.JSONArray) {
-		resultset_tFileInputJSON_1 = (net.minidev.json.JSONArray) result_tFileInputJSON_1;
-	} else {
-		resultset_tFileInputJSON_1.add(result_tFileInputJSON_1);
-	}
-} catch (java.lang.Exception e_tFileInputJSON_1) {
-	System.err.println(e_tFileInputJSON_1.getMessage());
-} finally {
-	if(is_tFileInputJSON_1 != null) {
-		is_tFileInputJSON_1.close();
-	}
-}
-
-String jsonPath_tFileInputJSON_1 = null;
-com.jayway.jsonpath.JsonPath compiledJsonPath_tFileInputJSON_1 = null;
-
-Object value_tFileInputJSON_1 = null;
-Object root_tFileInputJSON_1 = null;
-for(Object row_tFileInputJSON_1 : resultset_tFileInputJSON_1) {
-	nb_line_tFileInputJSON_1++;
-			row1 = null;			
-	boolean whetherReject_tFileInputJSON_1 = false;
-	row1 = new row1Struct();
-	
-	try{
-				jsonPath_tFileInputJSON_1 = "id_entite";
-				compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
-				
+				java.io.InputStream is_tFileInputJSON_1 = null;
+				com.jayway.jsonpath.ParseContext parseContext_tFileInputJSON_1 = com.jayway.jsonpath.JsonPath
+						.using(com.jayway.jsonpath.Configuration.defaultConfiguration());
+				Object filenameOrStream_tFileInputJSON_1 = null;
 				try {
-				   
-					    if(jsonPath_tFileInputJSON_1.startsWith("$")){
-					        if(root_tFileInputJSON_1 == null){
-					            root_tFileInputJSON_1 = document_tFileInputJSON_1.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
-					        }
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
-				       }else{
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
-				       }
-						row1.id_entite = value_tFileInputJSON_1 == null ? 
+					filenameOrStream_tFileInputJSON_1 = context.FILE_path + "/infosTrustedShops.com.json";
+				} catch (java.lang.Exception e_tFileInputJSON_1) {
 
-		null
- : value_tFileInputJSON_1.toString();
-				} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
-					row1.id_entite = 
+					System.err.println(e_tFileInputJSON_1.getMessage());
+				}
 
-		null
-;
-				}				
-				jsonPath_tFileInputJSON_1 = "nom";
-				compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
-				
+				com.jayway.jsonpath.ReadContext document_tFileInputJSON_1 = null;
 				try {
-				   
-					    if(jsonPath_tFileInputJSON_1.startsWith("$")){
-					        if(root_tFileInputJSON_1 == null){
-					            root_tFileInputJSON_1 = document_tFileInputJSON_1.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
-					        }
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
-				       }else{
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
-				       }
-						row1.nom = value_tFileInputJSON_1 == null ? 
+					if (filenameOrStream_tFileInputJSON_1 instanceof java.io.InputStream) {
+						is_tFileInputJSON_1 = (java.io.InputStream) filenameOrStream_tFileInputJSON_1;
+					} else {
 
-		null
- : value_tFileInputJSON_1.toString();
-				} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
-					row1.nom = 
+						is_tFileInputJSON_1 = new java.io.FileInputStream((String) filenameOrStream_tFileInputJSON_1);
 
-		null
-;
-				}				
-				jsonPath_tFileInputJSON_1 = "description";
-				compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
-				
-				try {
-				   
-					    if(jsonPath_tFileInputJSON_1.startsWith("$")){
-					        if(root_tFileInputJSON_1 == null){
-					            root_tFileInputJSON_1 = document_tFileInputJSON_1.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
-					        }
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
-				       }else{
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
-				       }
-						row1.description = value_tFileInputJSON_1 == null ? 
+					}
 
-		null
- : value_tFileInputJSON_1.toString();
-				} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
-					row1.description = 
+					document_tFileInputJSON_1 = parseContext_tFileInputJSON_1.parse(is_tFileInputJSON_1, "UTF-8");
+					com.jayway.jsonpath.JsonPath compiledLoopPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+							.getCompiledJsonPath(loopPath_tFileInputJSON_1);
+					Object result_tFileInputJSON_1 = document_tFileInputJSON_1.read(compiledLoopPath_tFileInputJSON_1,
+							net.minidev.json.JSONObject.class);
+					if (result_tFileInputJSON_1 instanceof net.minidev.json.JSONArray) {
+						resultset_tFileInputJSON_1 = (net.minidev.json.JSONArray) result_tFileInputJSON_1;
+					} else {
+						resultset_tFileInputJSON_1.add(result_tFileInputJSON_1);
+					}
+				} catch (java.lang.Exception e_tFileInputJSON_1) {
+					System.err.println(e_tFileInputJSON_1.getMessage());
+				} finally {
+					if (is_tFileInputJSON_1 != null) {
+						is_tFileInputJSON_1.close();
+					}
+				}
 
-		null
-;
-				}				
-				jsonPath_tFileInputJSON_1 = "adresse";
-				compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
-				
-				try {
-				   
-					    if(jsonPath_tFileInputJSON_1.startsWith("$")){
-					        if(root_tFileInputJSON_1 == null){
-					            root_tFileInputJSON_1 = document_tFileInputJSON_1.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
-					        }
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
-				       }else{
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
-				       }
-						row1.adresse = value_tFileInputJSON_1 == null ? 
+				String jsonPath_tFileInputJSON_1 = null;
+				com.jayway.jsonpath.JsonPath compiledJsonPath_tFileInputJSON_1 = null;
 
-		null
- : value_tFileInputJSON_1.toString();
-				} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
-					row1.adresse = 
+				Object value_tFileInputJSON_1 = null;
+				Object root_tFileInputJSON_1 = null;
+				for (Object row_tFileInputJSON_1 : resultset_tFileInputJSON_1) {
+					nb_line_tFileInputJSON_1++;
+					row1 = null;
+					boolean whetherReject_tFileInputJSON_1 = false;
+					row1 = new row1Struct();
 
-		null
-;
-				}				
-				jsonPath_tFileInputJSON_1 = "telephone";
-				compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
-				
-				try {
-				   
-					    if(jsonPath_tFileInputJSON_1.startsWith("$")){
-					        if(root_tFileInputJSON_1 == null){
-					            root_tFileInputJSON_1 = document_tFileInputJSON_1.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
-					        }
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
-				       }else{
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
-				       }
-						row1.telephone = value_tFileInputJSON_1 == null ? 
+					try {
+						jsonPath_tFileInputJSON_1 = "id_entite";
+						compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+								.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
 
-		null
- : value_tFileInputJSON_1.toString();
-				} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
-					row1.telephone = 
+						try {
 
-		null
-;
-				}				
-				jsonPath_tFileInputJSON_1 = "email";
-				compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
-				
-				try {
-				   
-					    if(jsonPath_tFileInputJSON_1.startsWith("$")){
-					        if(root_tFileInputJSON_1 == null){
-					            root_tFileInputJSON_1 = document_tFileInputJSON_1.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
-					        }
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
-				       }else{
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
-				       }
-						row1.email = value_tFileInputJSON_1 == null ? 
+							if (jsonPath_tFileInputJSON_1.startsWith("$")) {
+								if (root_tFileInputJSON_1 == null) {
+									root_tFileInputJSON_1 = document_tFileInputJSON_1
+											.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
+								}
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
+							} else {
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
+							}
+							row1.id_entite = value_tFileInputJSON_1 == null ?
 
-		null
- : value_tFileInputJSON_1.toString();
-				} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
-					row1.email = 
+									null : value_tFileInputJSON_1.toString();
+						} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
+							row1.id_entite =
 
-		null
-;
-				}				
-				jsonPath_tFileInputJSON_1 = "categories";
-				compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
-				
-				try {
-				   
-					    if(jsonPath_tFileInputJSON_1.startsWith("$")){
-					        if(root_tFileInputJSON_1 == null){
-					            root_tFileInputJSON_1 = document_tFileInputJSON_1.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
-					        }
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
-				       }else{
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
-				       }
-						row1.categories = value_tFileInputJSON_1 == null ? 
+									null;
+						}
+						jsonPath_tFileInputJSON_1 = "nom";
+						compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+								.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
 
-		null
- : value_tFileInputJSON_1.toString();
-				} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
-					row1.categories = 
+						try {
 
-		null
-;
-				}				
-				jsonPath_tFileInputJSON_1 = "num_regisre";
-				compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
-				
-				try {
-				   
-					    if(jsonPath_tFileInputJSON_1.startsWith("$")){
-					        if(root_tFileInputJSON_1 == null){
-					            root_tFileInputJSON_1 = document_tFileInputJSON_1.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
-					        }
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
-				       }else{
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
-				       }
-						row1.num_registre = value_tFileInputJSON_1 == null ? 
+							if (jsonPath_tFileInputJSON_1.startsWith("$")) {
+								if (root_tFileInputJSON_1 == null) {
+									root_tFileInputJSON_1 = document_tFileInputJSON_1
+											.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
+								}
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
+							} else {
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
+							}
+							row1.nom = value_tFileInputJSON_1 == null ?
 
-		null
- : value_tFileInputJSON_1.toString();
-				} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
-					row1.num_registre = 
+									null : value_tFileInputJSON_1.toString();
+						} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
+							row1.nom =
 
-		null
-;
-				}				
-				jsonPath_tFileInputJSON_1 = "representant";
-				compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
-				
-				try {
-				   
-					    if(jsonPath_tFileInputJSON_1.startsWith("$")){
-					        if(root_tFileInputJSON_1 == null){
-					            root_tFileInputJSON_1 = document_tFileInputJSON_1.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
-					        }
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
-				       }else{
-				           value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
-				       }
-						row1.representant = value_tFileInputJSON_1 == null ? 
+									null;
+						}
+						jsonPath_tFileInputJSON_1 = "description";
+						compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+								.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
 
-		null
- : value_tFileInputJSON_1.toString();
-				} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
-					row1.representant = 
+						try {
 
-		null
-;
-				}				
-    } catch (java.lang.Exception e_tFileInputJSON_1) {
-        whetherReject_tFileInputJSON_1 = true;
-                System.err.println(e_tFileInputJSON_1.getMessage());
-                row1 = null;
-    }
+							if (jsonPath_tFileInputJSON_1.startsWith("$")) {
+								if (root_tFileInputJSON_1 == null) {
+									root_tFileInputJSON_1 = document_tFileInputJSON_1
+											.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
+								}
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
+							} else {
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
+							}
+							row1.description = value_tFileInputJSON_1 == null ?
+
+									null : value_tFileInputJSON_1.toString();
+						} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
+							row1.description =
+
+									null;
+						}
+						jsonPath_tFileInputJSON_1 = "adresse";
+						compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+								.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
+
+						try {
+
+							if (jsonPath_tFileInputJSON_1.startsWith("$")) {
+								if (root_tFileInputJSON_1 == null) {
+									root_tFileInputJSON_1 = document_tFileInputJSON_1
+											.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
+								}
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
+							} else {
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
+							}
+							row1.adresse = value_tFileInputJSON_1 == null ?
+
+									null : value_tFileInputJSON_1.toString();
+						} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
+							row1.adresse =
+
+									null;
+						}
+						jsonPath_tFileInputJSON_1 = "telephone";
+						compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+								.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
+
+						try {
+
+							if (jsonPath_tFileInputJSON_1.startsWith("$")) {
+								if (root_tFileInputJSON_1 == null) {
+									root_tFileInputJSON_1 = document_tFileInputJSON_1
+											.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
+								}
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
+							} else {
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
+							}
+							row1.telephone = value_tFileInputJSON_1 == null ?
+
+									null : value_tFileInputJSON_1.toString();
+						} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
+							row1.telephone =
+
+									null;
+						}
+						jsonPath_tFileInputJSON_1 = "email";
+						compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+								.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
+
+						try {
+
+							if (jsonPath_tFileInputJSON_1.startsWith("$")) {
+								if (root_tFileInputJSON_1 == null) {
+									root_tFileInputJSON_1 = document_tFileInputJSON_1
+											.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
+								}
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
+							} else {
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
+							}
+							row1.email = value_tFileInputJSON_1 == null ?
+
+									null : value_tFileInputJSON_1.toString();
+						} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
+							row1.email =
+
+									null;
+						}
+						jsonPath_tFileInputJSON_1 = "categories";
+						compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+								.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
+
+						try {
+
+							if (jsonPath_tFileInputJSON_1.startsWith("$")) {
+								if (root_tFileInputJSON_1 == null) {
+									root_tFileInputJSON_1 = document_tFileInputJSON_1
+											.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
+								}
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
+							} else {
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
+							}
+							row1.categories = value_tFileInputJSON_1 == null ?
+
+									null : value_tFileInputJSON_1.toString();
+						} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
+							row1.categories =
+
+									null;
+						}
+						jsonPath_tFileInputJSON_1 = "num_regisre";
+						compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+								.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
+
+						try {
+
+							if (jsonPath_tFileInputJSON_1.startsWith("$")) {
+								if (root_tFileInputJSON_1 == null) {
+									root_tFileInputJSON_1 = document_tFileInputJSON_1
+											.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
+								}
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
+							} else {
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
+							}
+							row1.num_registre = value_tFileInputJSON_1 == null ?
+
+									null : value_tFileInputJSON_1.toString();
+						} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
+							row1.num_registre =
+
+									null;
+						}
+						jsonPath_tFileInputJSON_1 = "representant";
+						compiledJsonPath_tFileInputJSON_1 = jsonPathCache_tFileInputJSON_1
+								.getCompiledJsonPath(jsonPath_tFileInputJSON_1);
+
+						try {
+
+							if (jsonPath_tFileInputJSON_1.startsWith("$")) {
+								if (root_tFileInputJSON_1 == null) {
+									root_tFileInputJSON_1 = document_tFileInputJSON_1
+											.read(jsonPathCache_tFileInputJSON_1.getCompiledJsonPath("$"));
+								}
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(root_tFileInputJSON_1);
+							} else {
+								value_tFileInputJSON_1 = compiledJsonPath_tFileInputJSON_1.read(row_tFileInputJSON_1);
+							}
+							row1.representant = value_tFileInputJSON_1 == null ?
+
+									null : value_tFileInputJSON_1.toString();
+						} catch (com.jayway.jsonpath.PathNotFoundException e_tFileInputJSON_1) {
+							row1.representant =
+
+									null;
+						}
+					} catch (java.lang.Exception e_tFileInputJSON_1) {
+						whetherReject_tFileInputJSON_1 = true;
+						System.err.println(e_tFileInputJSON_1.getMessage());
+						row1 = null;
+					}
 //}
 
- 
+					/**
+					 * [tFileInputJSON_1 begin ] stop
+					 */
 
+					/**
+					 * [tFileInputJSON_1 main ] start
+					 */
 
+					currentComponent = "tFileInputJSON_1";
 
-/**
- * [tFileInputJSON_1 begin ] stop
- */
-	
-	/**
-	 * [tFileInputJSON_1 main ] start
-	 */
+					tos_count_tFileInputJSON_1++;
 
-	
+					/**
+					 * [tFileInputJSON_1 main ] stop
+					 */
 
-	
-	
-	currentComponent="tFileInputJSON_1";
+					/**
+					 * [tFileInputJSON_1 process_data_begin ] start
+					 */
 
-	
+					currentComponent = "tFileInputJSON_1";
 
- 
-
-
-	tos_count_tFileInputJSON_1++;
-
-/**
- * [tFileInputJSON_1 main ] stop
- */
-	
-	/**
-	 * [tFileInputJSON_1 process_data_begin ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFileInputJSON_1";
-
-	
-
- 
-
-
-
-/**
- * [tFileInputJSON_1 process_data_begin ] stop
- */
+					/**
+					 * [tFileInputJSON_1 process_data_begin ] stop
+					 */
 // Start of branch "row1"
-if(row1 != null) { 
+					if (row1 != null) {
 
+						/**
+						 * [tMap_1 main ] start
+						 */
 
+						currentComponent = "tMap_1";
 
-	
-	/**
-	 * [tMap_1 main ] start
-	 */
+						// row1
+						// row1
 
-	
+						if (execStat) {
+							runStat.updateStatOnConnection("row1" + iterateId, 1, 1);
+						}
 
-	
-	
-	currentComponent="tMap_1";
+						boolean hasCasePrimitiveKeyWithNull_tMap_1 = false;
 
-	
+						// ###############################
+						// # Input tables (lookups)
+						boolean rejectedInnerJoin_tMap_1 = false;
+						boolean mainRowRejected_tMap_1 = false;
 
-			//row1
-			//row1
+						// ###############################
+						{ // start of Var scope
 
+							// ###############################
+							// # Vars tables
 
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("row1"+iterateId,1, 1);
-				}
-				
-				
-				
-			
+							Var__tMap_1__Struct Var = Var__tMap_1;
+							Var.categories = row1.categories.equals("") ? null : row1.categories;// ###############################
+							// ###############################
+							// # Output tables
 
-		
-
-		
-		
-		boolean hasCasePrimitiveKeyWithNull_tMap_1 = false;
-		
-        // ###############################
-        // # Input tables (lookups)
-		  boolean rejectedInnerJoin_tMap_1 = false;
-		  boolean mainRowRejected_tMap_1 = false;
-            				    								  
-		// ###############################
-        { // start of Var scope
-        
-	        // ###############################
-        	// # Vars tables
-        
-Var__tMap_1__Struct Var = Var__tMap_1;
-Var.categories = row1.categories.equals("") ? null : row1.categories ;// ###############################
-        // ###############################
-        // # Output tables
-
-service_w = null;
-ListeService = null;
-a_pour_serv = null;
-
+							service_w = null;
+							ListeService = null;
+							a_pour_serv = null;
 
 // # Output table : 'service_w'
-service_w_tmp.url_service = row1.id_entite ;
-service_w_tmp.nom = row1.nom ;
-service_w_tmp.description = row1.description ;
-service_w_tmp.adresse = row1.adresse ;
-service_w_tmp.telephone = row1.telephone ;
-service_w_tmp.email = row1.email ;
-service_w_tmp.num_registre = row1.num_registre ;
-service_w_tmp.representant = row1.representant ;
-service_w = service_w_tmp;
+							service_w_tmp.url_service = row1.id_entite;
+							service_w_tmp.nom = row1.nom;
+							service_w_tmp.description = row1.description;
+							service_w_tmp.adresse = row1.adresse;
+							service_w_tmp.telephone = row1.telephone;
+							service_w_tmp.email = row1.email;
+							service_w_tmp.num_registre = row1.num_registre;
+							service_w_tmp.representant = row1.representant;
+							service_w = service_w_tmp;
 
 // # Output table : 'ListeService'
 // # Filter conditions 
-if( 
+							if (
 
-Var.categories != null
+							Var.categories != null
 
- ) {
-ListeService_tmp.nom_service = row1.categories.replaceAll("\\[\"", "").replaceAll("\"\\]", "").replaceAll("&#039;", "'") ;
-ListeService = ListeService_tmp;
-} // closing filter/reject
+							) {
+								ListeService_tmp.nom_service = row1.categories.replaceAll("\\[\"", "")
+										.replaceAll("\"\\]", "").replaceAll("&#039;", "'");
+								ListeService = ListeService_tmp;
+							} // closing filter/reject
 
 // # Output table : 'a_pour_serv'
 // # Filter conditions 
-if( 
+							if (
 
-Var.categories != null
+							Var.categories != null
 
- ) {
-a_pour_serv_tmp.nom = row1.categories.replaceAll("\\[\"", "").replaceAll("\"\\]", "").replaceAll("&#039;", "'") ;
-a_pour_serv_tmp.url = row1.id_entite ;
-a_pour_serv = a_pour_serv_tmp;
-} // closing filter/reject
+							) {
+								a_pour_serv_tmp.nom = row1.categories.replaceAll("\\[\"", "").replaceAll("\"\\]", "")
+										.replaceAll("&#039;", "'");
+								a_pour_serv_tmp.url = row1.id_entite;
+								a_pour_serv = a_pour_serv_tmp;
+							} // closing filter/reject
 // ###############################
 
-} // end of Var scope
+						} // end of Var scope
 
-rejectedInnerJoin_tMap_1 = false;
+						rejectedInnerJoin_tMap_1 = false;
 
+						tos_count_tMap_1++;
 
+						/**
+						 * [tMap_1 main ] stop
+						 */
 
+						/**
+						 * [tMap_1 process_data_begin ] start
+						 */
 
+						currentComponent = "tMap_1";
 
-
-
-
-
-
- 
-
-
-	tos_count_tMap_1++;
-
-/**
- * [tMap_1 main ] stop
- */
-	
-	/**
-	 * [tMap_1 process_data_begin ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tMap_1";
-
-	
-
- 
-
-
-
-/**
- * [tMap_1 process_data_begin ] stop
- */
+						/**
+						 * [tMap_1 process_data_begin ] stop
+						 */
 // Start of branch "service_w"
-if(service_w != null) { 
+						if (service_w != null) {
 
+							/**
+							 * [tDBOutput_1 main ] start
+							 */
 
+							currentComponent = "tDBOutput_1";
 
-	
-	/**
-	 * [tDBOutput_1 main ] start
-	 */
+							// service_w
+							// service_w
 
-	
+							if (execStat) {
+								runStat.updateStatOnConnection("service_w" + iterateId, 1, 1);
+							}
 
-	
-	
-	currentComponent="tDBOutput_1";
+							whetherReject_tDBOutput_1 = false;
+							if (service_w.url_service == null) {
+								pstmt_tDBOutput_1.setNull(1, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(1, service_w.url_service);
+							}
 
-	
+							if (service_w.nom == null) {
+								pstmt_tDBOutput_1.setNull(2, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(2, service_w.nom);
+							}
 
-			//service_w
-			//service_w
+							if (service_w.description == null) {
+								pstmt_tDBOutput_1.setNull(3, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(3, service_w.description);
+							}
 
+							if (service_w.adresse == null) {
+								pstmt_tDBOutput_1.setNull(4, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(4, service_w.adresse);
+							}
 
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("service_w"+iterateId,1, 1);
-				}
-				
-				
-				
-			
+							if (service_w.telephone == null) {
+								pstmt_tDBOutput_1.setNull(5, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(5, service_w.telephone);
+							}
 
-		
+							if (service_w.email == null) {
+								pstmt_tDBOutput_1.setNull(6, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(6, service_w.email);
+							}
 
+							if (service_w.num_registre == null) {
+								pstmt_tDBOutput_1.setNull(7, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(7, service_w.num_registre);
+							}
 
+							if (service_w.representant == null) {
+								pstmt_tDBOutput_1.setNull(8, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(8, service_w.representant);
+							}
 
-        whetherReject_tDBOutput_1 = false;
-                    if(service_w.url_service == null) {
-pstmt_tDBOutput_1.setNull(1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(1, service_w.url_service);
-}
+							if (service_w.nom == null) {
+								pstmt_tDBOutput_1.setNull(9 + count_tDBOutput_1, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(9 + count_tDBOutput_1, service_w.nom);
+							}
 
-                    if(service_w.nom == null) {
-pstmt_tDBOutput_1.setNull(2, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(2, service_w.nom);
-}
+							if (service_w.description == null) {
+								pstmt_tDBOutput_1.setNull(10 + count_tDBOutput_1, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(10 + count_tDBOutput_1, service_w.description);
+							}
 
-                    if(service_w.description == null) {
-pstmt_tDBOutput_1.setNull(3, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(3, service_w.description);
-}
+							if (service_w.adresse == null) {
+								pstmt_tDBOutput_1.setNull(11 + count_tDBOutput_1, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(11 + count_tDBOutput_1, service_w.adresse);
+							}
 
-                    if(service_w.adresse == null) {
-pstmt_tDBOutput_1.setNull(4, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(4, service_w.adresse);
-}
+							if (service_w.telephone == null) {
+								pstmt_tDBOutput_1.setNull(12 + count_tDBOutput_1, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(12 + count_tDBOutput_1, service_w.telephone);
+							}
 
-                    if(service_w.telephone == null) {
-pstmt_tDBOutput_1.setNull(5, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(5, service_w.telephone);
-}
+							if (service_w.email == null) {
+								pstmt_tDBOutput_1.setNull(13 + count_tDBOutput_1, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(13 + count_tDBOutput_1, service_w.email);
+							}
 
-                    if(service_w.email == null) {
-pstmt_tDBOutput_1.setNull(6, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(6, service_w.email);
-}
+							if (service_w.num_registre == null) {
+								pstmt_tDBOutput_1.setNull(14 + count_tDBOutput_1, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(14 + count_tDBOutput_1, service_w.num_registre);
+							}
 
-                    if(service_w.num_registre == null) {
-pstmt_tDBOutput_1.setNull(7, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(7, service_w.num_registre);
-}
+							if (service_w.representant == null) {
+								pstmt_tDBOutput_1.setNull(15 + count_tDBOutput_1, java.sql.Types.VARCHAR);
+							} else {
+								pstmt_tDBOutput_1.setString(15 + count_tDBOutput_1, service_w.representant);
+							}
 
-                    if(service_w.representant == null) {
-pstmt_tDBOutput_1.setNull(8, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(8, service_w.representant);
-}
+							int count_on_duplicate_key_tDBOutput_1 = 0;
+							try {
+								count_on_duplicate_key_tDBOutput_1 = pstmt_tDBOutput_1.executeUpdate();
+							} catch (java.lang.Exception e) {
+								whetherReject_tDBOutput_1 = true;
+								System.err.print(e.getMessage());
+							}
+							if (count_on_duplicate_key_tDBOutput_1 == 1) {
+								insertedCount_tDBOutput_1 += count_on_duplicate_key_tDBOutput_1;
+							} else {
+								insertedCount_tDBOutput_1 += 1;
+								updatedCount_tDBOutput_1 += count_on_duplicate_key_tDBOutput_1 - 1;
+							}
 
-                    if(service_w.nom == null) {
-pstmt_tDBOutput_1.setNull(9 + count_tDBOutput_1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(9 + count_tDBOutput_1, service_w.nom);
-}
+							tos_count_tDBOutput_1++;
 
-                    if(service_w.description == null) {
-pstmt_tDBOutput_1.setNull(10 + count_tDBOutput_1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(10 + count_tDBOutput_1, service_w.description);
-}
+							/**
+							 * [tDBOutput_1 main ] stop
+							 */
 
-                    if(service_w.adresse == null) {
-pstmt_tDBOutput_1.setNull(11 + count_tDBOutput_1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(11 + count_tDBOutput_1, service_w.adresse);
-}
+							/**
+							 * [tDBOutput_1 process_data_begin ] start
+							 */
 
-                    if(service_w.telephone == null) {
-pstmt_tDBOutput_1.setNull(12 + count_tDBOutput_1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(12 + count_tDBOutput_1, service_w.telephone);
-}
+							currentComponent = "tDBOutput_1";
 
-                    if(service_w.email == null) {
-pstmt_tDBOutput_1.setNull(13 + count_tDBOutput_1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(13 + count_tDBOutput_1, service_w.email);
-}
+							/**
+							 * [tDBOutput_1 process_data_begin ] stop
+							 */
 
-                    if(service_w.num_registre == null) {
-pstmt_tDBOutput_1.setNull(14 + count_tDBOutput_1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(14 + count_tDBOutput_1, service_w.num_registre);
-}
+							/**
+							 * [tDBOutput_1 process_data_end ] start
+							 */
 
-                    if(service_w.representant == null) {
-pstmt_tDBOutput_1.setNull(15 + count_tDBOutput_1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_1.setString(15 + count_tDBOutput_1, service_w.representant);
-}
+							currentComponent = "tDBOutput_1";
 
-            int count_on_duplicate_key_tDBOutput_1 = 0;
-            try {
-                count_on_duplicate_key_tDBOutput_1 = pstmt_tDBOutput_1.executeUpdate();
-            } catch(java.lang.Exception e) {
-                whetherReject_tDBOutput_1 = true;
-                        System.err.print(e.getMessage());
-            }
-            if(count_on_duplicate_key_tDBOutput_1 == 1) {
-                insertedCount_tDBOutput_1 += count_on_duplicate_key_tDBOutput_1;
-            } else {
-                insertedCount_tDBOutput_1 += 1;
-                updatedCount_tDBOutput_1 += count_on_duplicate_key_tDBOutput_1 - 1;
-            }
+							/**
+							 * [tDBOutput_1 process_data_end ] stop
+							 */
 
- 
-
-
-	tos_count_tDBOutput_1++;
-
-/**
- * [tDBOutput_1 main ] stop
- */
-	
-	/**
-	 * [tDBOutput_1 process_data_begin ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBOutput_1";
-
-	
-
- 
-
-
-
-/**
- * [tDBOutput_1 process_data_begin ] stop
- */
-	
-	/**
-	 * [tDBOutput_1 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBOutput_1";
-
-	
-
- 
-
-
-
-/**
- * [tDBOutput_1 process_data_end ] stop
- */
-
-} // End of branch "service_w"
-
-
-
+						} // End of branch "service_w"
 
 // Start of branch "ListeService"
-if(ListeService != null) { 
+						if (ListeService != null) {
 
+							/**
+							 * [tNormalize_1 main ] start
+							 */
 
+							currentComponent = "tNormalize_1";
 
-	
-	/**
-	 * [tNormalize_1 main ] start
-	 */
+							// ListeService
+							// ListeService
 
-	
+							if (execStat) {
+								runStat.updateStatOnConnection("ListeService" + iterateId, 1, 1);
+							}
 
-	
-	
-	currentComponent="tNormalize_1";
+							normalizeRecord_tNormalize_1 = new String[1];
+							if (ListeService.nom_service != null) {
+								if ("".equals(ListeService.nom_service)) {
+									normalizeRecord_tNormalize_1[0] = "";
+								} else {
 
-	
+									normalizeRecord_tNormalize_1 = ListeService.nom_service.split(";", -1);
 
-			//ListeService
-			//ListeService
+								}
+							}
+							int lastNoEmptyIndex_tNormalize_1 = normalizeRecord_tNormalize_1.length;
 
+							for (int i_tNormalize_1 = 0; i_tNormalize_1 < lastNoEmptyIndex_tNormalize_1; i_tNormalize_1++) {
 
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("ListeService"+iterateId,1, 1);
-				}
-				
-				
-				
-			
+								currentRecord_tNormalize_1 = new StringBuilder();
+								nb_line_tNormalize_1++;
 
-		
+								row2.nom_service = normalizeRecord_tNormalize_1[i_tNormalize_1];
 
-            normalizeRecord_tNormalize_1 = new String[1];
-            if(ListeService.nom_service != null) {
-				if("".equals(ListeService.nom_service)){
-		        	normalizeRecord_tNormalize_1[0] = "";
-		        }else{
-	                
-	                		normalizeRecord_tNormalize_1 = ListeService.nom_service.split(";",-1);
-	                        
-                }           
-            }
-             		int lastNoEmptyIndex_tNormalize_1=normalizeRecord_tNormalize_1.length;
-	             	
-            	
-            	for(int i_tNormalize_1 = 0 ; i_tNormalize_1 < lastNoEmptyIndex_tNormalize_1 ; i_tNormalize_1++) {
-		  			
-	                currentRecord_tNormalize_1 = new StringBuilder();
-	                nb_line_tNormalize_1++;               
-	                
-	                        	row2.nom_service = normalizeRecord_tNormalize_1[i_tNormalize_1];
-		                    
+								tos_count_tNormalize_1++;
 
- 
+								/**
+								 * [tNormalize_1 main ] stop
+								 */
 
+								/**
+								 * [tNormalize_1 process_data_begin ] start
+								 */
 
-	tos_count_tNormalize_1++;
+								currentComponent = "tNormalize_1";
 
-/**
- * [tNormalize_1 main ] stop
- */
-	
-	/**
-	 * [tNormalize_1 process_data_begin ] start
-	 */
+								/**
+								 * [tNormalize_1 process_data_begin ] stop
+								 */
 
-	
+								/**
+								 * [tFilterRow_2 main ] start
+								 */
 
-	
-	
-	currentComponent="tNormalize_1";
+								currentComponent = "tFilterRow_2";
 
-	
+								// row2
+								// row2
 
- 
+								if (execStat) {
+									runStat.updateStatOnConnection("row2" + iterateId, 1, 1);
+								}
 
+								row5 = null;
+								Operator_tFilterRow_2 ope_tFilterRow_2 = new Operator_tFilterRow_2("&&");
+								ope_tFilterRow_2.matches(
+										(row2.nom_service == null ? false : row2.nom_service.length() > 0),
+										" nom_service.length() > 0 failed");
 
+								if (ope_tFilterRow_2.getMatchFlag()) {
+									if (row5 == null) {
+										row5 = new row5Struct();
+									}
+									row5.nom_service = row2.nom_service;
+									nb_line_ok_tFilterRow_2++;
+								} else {
+									nb_line_reject_tFilterRow_2++;
+								}
 
-/**
- * [tNormalize_1 process_data_begin ] stop
- */
+								nb_line_tFilterRow_2++;
 
-	
-	/**
-	 * [tFilterRow_2 main ] start
-	 */
+								tos_count_tFilterRow_2++;
 
-	
+								/**
+								 * [tFilterRow_2 main ] stop
+								 */
 
-	
-	
-	currentComponent="tFilterRow_2";
+								/**
+								 * [tFilterRow_2 process_data_begin ] start
+								 */
 
-	
+								currentComponent = "tFilterRow_2";
 
-			//row2
-			//row2
-
-
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("row2"+iterateId,1, 1);
-				}
-				
-				
-				
-			
-
-		
-
-          row5 = null;
-    Operator_tFilterRow_2 ope_tFilterRow_2 = new Operator_tFilterRow_2("&&");    
-        ope_tFilterRow_2.matches((row2.nom_service == null? false : row2.nom_service.length() > 0)
-                       , " nom_service.length() > 0 failed");
-    
-    if (ope_tFilterRow_2.getMatchFlag()) {
-              if(row5 == null){ 
-                row5 = new row5Struct();
-              }
-               row5.nom_service = row2.nom_service;    
-      nb_line_ok_tFilterRow_2++;
-    } else {
-      nb_line_reject_tFilterRow_2++;
-    }
-
-nb_line_tFilterRow_2++;
-
- 
-
-
-	tos_count_tFilterRow_2++;
-
-/**
- * [tFilterRow_2 main ] stop
- */
-	
-	/**
-	 * [tFilterRow_2 process_data_begin ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFilterRow_2";
-
-	
-
- 
-
-
-
-/**
- * [tFilterRow_2 process_data_begin ] stop
- */
+								/**
+								 * [tFilterRow_2 process_data_begin ] stop
+								 */
 // Start of branch "row5"
-if(row5 != null) { 
+								if (row5 != null) {
 
+									/**
+									 * [tAggregateRow_1_AGGOUT main ] start
+									 */
 
+									currentVirtualComponent = "tAggregateRow_1";
 
-	
-	/**
-	 * [tAggregateRow_1_AGGOUT main ] start
-	 */
+									currentComponent = "tAggregateRow_1_AGGOUT";
 
-	
+									// row5
+									// row5
 
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGOUT";
+									if (execStat) {
+										runStat.updateStatOnConnection("row5" + iterateId, 1, 1);
+									}
 
-	
+									operation_finder_tAggregateRow_1.nom_service = row5.nom_service;
 
-			//row5
-			//row5
+									operation_finder_tAggregateRow_1.hashCodeDirty = true;
 
+									operation_result_tAggregateRow_1 = hash_tAggregateRow_1
+											.get(operation_finder_tAggregateRow_1);
 
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("row5"+iterateId,1, 1);
-				}
-				
-				
-				
-			
+									if (operation_result_tAggregateRow_1 == null) { // G_OutMain_AggR_001
 
-		
-	
-operation_finder_tAggregateRow_1.nom_service = row5.nom_service;
-			
+										operation_result_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
 
-	operation_finder_tAggregateRow_1.hashCodeDirty = true;
-	
-	operation_result_tAggregateRow_1 = hash_tAggregateRow_1.get(operation_finder_tAggregateRow_1);
+										operation_result_tAggregateRow_1.nom_service = operation_finder_tAggregateRow_1.nom_service;
 
-	
+										hash_tAggregateRow_1.put(operation_result_tAggregateRow_1,
+												operation_result_tAggregateRow_1);
 
-	if(operation_result_tAggregateRow_1 == null) { // G_OutMain_AggR_001
+									} // G_OutMain_AggR_001
 
-		operation_result_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
+									tos_count_tAggregateRow_1_AGGOUT++;
 
-		operation_result_tAggregateRow_1.nom_service = operation_finder_tAggregateRow_1.nom_service;
-				
-		
-		
+									/**
+									 * [tAggregateRow_1_AGGOUT main ] stop
+									 */
 
-		hash_tAggregateRow_1.put(operation_result_tAggregateRow_1, operation_result_tAggregateRow_1);
-	
-	} // G_OutMain_AggR_001
+									/**
+									 * [tAggregateRow_1_AGGOUT process_data_begin ] start
+									 */
 
+									currentVirtualComponent = "tAggregateRow_1";
 
-	
+									currentComponent = "tAggregateRow_1_AGGOUT";
 
+									/**
+									 * [tAggregateRow_1_AGGOUT process_data_begin ] stop
+									 */
 
- 
+									/**
+									 * [tAggregateRow_1_AGGOUT process_data_end ] start
+									 */
 
+									currentVirtualComponent = "tAggregateRow_1";
 
-	tos_count_tAggregateRow_1_AGGOUT++;
+									currentComponent = "tAggregateRow_1_AGGOUT";
 
-/**
- * [tAggregateRow_1_AGGOUT main ] stop
- */
-	
-	/**
-	 * [tAggregateRow_1_AGGOUT process_data_begin ] start
-	 */
+									/**
+									 * [tAggregateRow_1_AGGOUT process_data_end ] stop
+									 */
 
-	
+								} // End of branch "row5"
 
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGOUT";
+								/**
+								 * [tFilterRow_2 process_data_end ] start
+								 */
 
-	
+								currentComponent = "tFilterRow_2";
 
- 
+								/**
+								 * [tFilterRow_2 process_data_end ] stop
+								 */
+								// end for
+							}
 
+							/**
+							 * [tNormalize_1 process_data_end ] start
+							 */
 
+							currentComponent = "tNormalize_1";
 
-/**
- * [tAggregateRow_1_AGGOUT process_data_begin ] stop
- */
-	
-	/**
-	 * [tAggregateRow_1_AGGOUT process_data_end ] start
-	 */
+							/**
+							 * [tNormalize_1 process_data_end ] stop
+							 */
 
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGOUT";
-
-	
-
- 
-
-
-
-/**
- * [tAggregateRow_1_AGGOUT process_data_end ] stop
- */
-
-} // End of branch "row5"
-
-
-
-
-	
-	/**
-	 * [tFilterRow_2 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFilterRow_2";
-
-	
-
- 
-
-
-
-/**
- * [tFilterRow_2 process_data_end ] stop
- */
-		// end for
-	}
-
-
-
-	
-	/**
-	 * [tNormalize_1 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tNormalize_1";
-
-	
-
- 
-
-
-
-/**
- * [tNormalize_1 process_data_end ] stop
- */
-
-} // End of branch "ListeService"
-
-
-
+						} // End of branch "ListeService"
 
 // Start of branch "a_pour_serv"
-if(a_pour_serv != null) { 
+						if (a_pour_serv != null) {
 
+							/**
+							 * [tNormalize_2 main ] start
+							 */
 
+							currentComponent = "tNormalize_2";
 
-	
-	/**
-	 * [tNormalize_2 main ] start
-	 */
+							// a_pour_serv
+							// a_pour_serv
 
-	
+							if (execStat) {
+								runStat.updateStatOnConnection("a_pour_serv" + iterateId, 1, 1);
+							}
 
-	
-	
-	currentComponent="tNormalize_2";
+							normalizeRecord_tNormalize_2 = new String[1];
+							if (a_pour_serv.nom != null) {
+								if ("".equals(a_pour_serv.nom)) {
+									normalizeRecord_tNormalize_2[0] = "";
+								} else {
 
-	
+									normalizeRecord_tNormalize_2 = a_pour_serv.nom.split(";", -1);
 
-			//a_pour_serv
-			//a_pour_serv
+								}
+							}
+							int lastNoEmptyIndex_tNormalize_2 = normalizeRecord_tNormalize_2.length;
 
+							for (int i_tNormalize_2 = 0; i_tNormalize_2 < lastNoEmptyIndex_tNormalize_2; i_tNormalize_2++) {
 
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("a_pour_serv"+iterateId,1, 1);
-				}
-				
-				
-				
-			
+								currentRecord_tNormalize_2 = new StringBuilder();
+								nb_line_tNormalize_2++;
 
-		
+								row3.nom = normalizeRecord_tNormalize_2[i_tNormalize_2];
 
-            normalizeRecord_tNormalize_2 = new String[1];
-            if(a_pour_serv.nom != null) {
-				if("".equals(a_pour_serv.nom)){
-		        	normalizeRecord_tNormalize_2[0] = "";
-		        }else{
-	                
-	                		normalizeRecord_tNormalize_2 = a_pour_serv.nom.split(";",-1);
-	                        
-                }           
-            }
-             		int lastNoEmptyIndex_tNormalize_2=normalizeRecord_tNormalize_2.length;
-	             	
-            	
-            	for(int i_tNormalize_2 = 0 ; i_tNormalize_2 < lastNoEmptyIndex_tNormalize_2 ; i_tNormalize_2++) {
-		  			
-	                currentRecord_tNormalize_2 = new StringBuilder();
-	                nb_line_tNormalize_2++;               
-	                
-	                        	row3.nom = normalizeRecord_tNormalize_2[i_tNormalize_2];
-		                    
-	                        	row3.url = a_pour_serv.url;
-	                        
+								row3.url = a_pour_serv.url;
 
- 
+								tos_count_tNormalize_2++;
 
+								/**
+								 * [tNormalize_2 main ] stop
+								 */
 
-	tos_count_tNormalize_2++;
+								/**
+								 * [tNormalize_2 process_data_begin ] start
+								 */
 
-/**
- * [tNormalize_2 main ] stop
- */
-	
-	/**
-	 * [tNormalize_2 process_data_begin ] start
-	 */
+								currentComponent = "tNormalize_2";
 
-	
+								/**
+								 * [tNormalize_2 process_data_begin ] stop
+								 */
 
-	
-	
-	currentComponent="tNormalize_2";
+								/**
+								 * [tFilterRow_1 main ] start
+								 */
 
-	
+								currentComponent = "tFilterRow_1";
 
- 
+								// row3
+								// row3
 
+								if (execStat) {
+									runStat.updateStatOnConnection("row3" + iterateId, 1, 1);
+								}
 
+								row4 = null;
+								Operator_tFilterRow_1 ope_tFilterRow_1 = new Operator_tFilterRow_1("&&");
+								ope_tFilterRow_1.matches((row3.nom == null ? false : row3.nom.length() > 0),
+										" nom.length() > 0 failed");
 
-/**
- * [tNormalize_2 process_data_begin ] stop
- */
+								if (ope_tFilterRow_1.getMatchFlag()) {
+									if (row4 == null) {
+										row4 = new row4Struct();
+									}
+									row4.nom = row3.nom;
+									row4.url = row3.url;
+									nb_line_ok_tFilterRow_1++;
+								} else {
+									nb_line_reject_tFilterRow_1++;
+								}
 
-	
-	/**
-	 * [tFilterRow_1 main ] start
-	 */
+								nb_line_tFilterRow_1++;
 
-	
+								tos_count_tFilterRow_1++;
 
-	
-	
-	currentComponent="tFilterRow_1";
+								/**
+								 * [tFilterRow_1 main ] stop
+								 */
 
-	
+								/**
+								 * [tFilterRow_1 process_data_begin ] start
+								 */
 
-			//row3
-			//row3
+								currentComponent = "tFilterRow_1";
 
-
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("row3"+iterateId,1, 1);
-				}
-				
-				
-				
-			
-
-		
-
-          row4 = null;
-    Operator_tFilterRow_1 ope_tFilterRow_1 = new Operator_tFilterRow_1("&&");    
-        ope_tFilterRow_1.matches((row3.nom == null? false : row3.nom.length() > 0)
-                       , " nom.length() > 0 failed");
-    
-    if (ope_tFilterRow_1.getMatchFlag()) {
-              if(row4 == null){ 
-                row4 = new row4Struct();
-              }
-               row4.nom = row3.nom;
-               row4.url = row3.url;    
-      nb_line_ok_tFilterRow_1++;
-    } else {
-      nb_line_reject_tFilterRow_1++;
-    }
-
-nb_line_tFilterRow_1++;
-
- 
-
-
-	tos_count_tFilterRow_1++;
-
-/**
- * [tFilterRow_1 main ] stop
- */
-	
-	/**
-	 * [tFilterRow_1 process_data_begin ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFilterRow_1";
-
-	
-
- 
-
-
-
-/**
- * [tFilterRow_1 process_data_begin ] stop
- */
+								/**
+								 * [tFilterRow_1 process_data_begin ] stop
+								 */
 // Start of branch "row4"
-if(row4 != null) { 
+								if (row4 != null) {
 
+									/**
+									 * [tAggregateRow_2_AGGOUT main ] start
+									 */
 
+									currentVirtualComponent = "tAggregateRow_2";
 
-	
-	/**
-	 * [tAggregateRow_2_AGGOUT main ] start
-	 */
+									currentComponent = "tAggregateRow_2_AGGOUT";
 
-	
+									// row4
+									// row4
 
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGOUT";
+									if (execStat) {
+										runStat.updateStatOnConnection("row4" + iterateId, 1, 1);
+									}
 
-	
+									operation_finder_tAggregateRow_2.nom = row4.nom;
+									operation_finder_tAggregateRow_2.url = row4.url;
 
-			//row4
-			//row4
+									operation_finder_tAggregateRow_2.hashCodeDirty = true;
 
+									operation_result_tAggregateRow_2 = hash_tAggregateRow_2
+											.get(operation_finder_tAggregateRow_2);
 
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("row4"+iterateId,1, 1);
+									if (operation_result_tAggregateRow_2 == null) { // G_OutMain_AggR_001
+
+										operation_result_tAggregateRow_2 = new AggOperationStruct_tAggregateRow_2();
+
+										operation_result_tAggregateRow_2.nom = operation_finder_tAggregateRow_2.nom;
+										operation_result_tAggregateRow_2.url = operation_finder_tAggregateRow_2.url;
+
+										hash_tAggregateRow_2.put(operation_result_tAggregateRow_2,
+												operation_result_tAggregateRow_2);
+
+									} // G_OutMain_AggR_001
+
+									tos_count_tAggregateRow_2_AGGOUT++;
+
+									/**
+									 * [tAggregateRow_2_AGGOUT main ] stop
+									 */
+
+									/**
+									 * [tAggregateRow_2_AGGOUT process_data_begin ] start
+									 */
+
+									currentVirtualComponent = "tAggregateRow_2";
+
+									currentComponent = "tAggregateRow_2_AGGOUT";
+
+									/**
+									 * [tAggregateRow_2_AGGOUT process_data_begin ] stop
+									 */
+
+									/**
+									 * [tAggregateRow_2_AGGOUT process_data_end ] start
+									 */
+
+									currentVirtualComponent = "tAggregateRow_2";
+
+									currentComponent = "tAggregateRow_2_AGGOUT";
+
+									/**
+									 * [tAggregateRow_2_AGGOUT process_data_end ] stop
+									 */
+
+								} // End of branch "row4"
+
+								/**
+								 * [tFilterRow_1 process_data_end ] start
+								 */
+
+								currentComponent = "tFilterRow_1";
+
+								/**
+								 * [tFilterRow_1 process_data_end ] stop
+								 */
+								// end for
+							}
+
+							/**
+							 * [tNormalize_2 process_data_end ] start
+							 */
+
+							currentComponent = "tNormalize_2";
+
+							/**
+							 * [tNormalize_2 process_data_end ] stop
+							 */
+
+						} // End of branch "a_pour_serv"
+
+						/**
+						 * [tMap_1 process_data_end ] start
+						 */
+
+						currentComponent = "tMap_1";
+
+						/**
+						 * [tMap_1 process_data_end ] stop
+						 */
+
+					} // End of branch "row1"
+
+					/**
+					 * [tFileInputJSON_1 process_data_end ] start
+					 */
+
+					currentComponent = "tFileInputJSON_1";
+
+					/**
+					 * [tFileInputJSON_1 process_data_end ] stop
+					 */
+
+					/**
+					 * [tFileInputJSON_1 end ] start
+					 */
+
+					currentComponent = "tFileInputJSON_1";
+
 				}
-				
-				
-				
-			
+				globalMap.put("tFileInputJSON_1_NB_LINE", nb_line_tFileInputJSON_1);
 
-		
-	
-operation_finder_tAggregateRow_2.nom = row4.nom;
-			operation_finder_tAggregateRow_2.url = row4.url;
-			
+				ok_Hash.put("tFileInputJSON_1", true);
+				end_Hash.put("tFileInputJSON_1", System.currentTimeMillis());
 
-	operation_finder_tAggregateRow_2.hashCodeDirty = true;
-	
-	operation_result_tAggregateRow_2 = hash_tAggregateRow_2.get(operation_finder_tAggregateRow_2);
+				/**
+				 * [tFileInputJSON_1 end ] stop
+				 */
 
-	
+				/**
+				 * [tMap_1 end ] start
+				 */
 
-	if(operation_result_tAggregateRow_2 == null) { // G_OutMain_AggR_001
-
-		operation_result_tAggregateRow_2 = new AggOperationStruct_tAggregateRow_2();
-
-		operation_result_tAggregateRow_2.nom = operation_finder_tAggregateRow_2.nom;
-				operation_result_tAggregateRow_2.url = operation_finder_tAggregateRow_2.url;
-				
-		
-		
-
-		hash_tAggregateRow_2.put(operation_result_tAggregateRow_2, operation_result_tAggregateRow_2);
-	
-	} // G_OutMain_AggR_001
-
-
-	
-
-
- 
-
-
-	tos_count_tAggregateRow_2_AGGOUT++;
-
-/**
- * [tAggregateRow_2_AGGOUT main ] stop
- */
-	
-	/**
-	 * [tAggregateRow_2_AGGOUT process_data_begin ] start
-	 */
-
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGOUT";
-
-	
-
- 
-
-
-
-/**
- * [tAggregateRow_2_AGGOUT process_data_begin ] stop
- */
-	
-	/**
-	 * [tAggregateRow_2_AGGOUT process_data_end ] start
-	 */
-
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGOUT";
-
-	
-
- 
-
-
-
-/**
- * [tAggregateRow_2_AGGOUT process_data_end ] stop
- */
-
-} // End of branch "row4"
-
-
-
-
-	
-	/**
-	 * [tFilterRow_1 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFilterRow_1";
-
-	
-
- 
-
-
-
-/**
- * [tFilterRow_1 process_data_end ] stop
- */
-		// end for
-	}
-
-
-
-	
-	/**
-	 * [tNormalize_2 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tNormalize_2";
-
-	
-
- 
-
-
-
-/**
- * [tNormalize_2 process_data_end ] stop
- */
-
-} // End of branch "a_pour_serv"
-
-
-
-
-	
-	/**
-	 * [tMap_1 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tMap_1";
-
-	
-
- 
-
-
-
-/**
- * [tMap_1 process_data_end ] stop
- */
-
-} // End of branch "row1"
-
-
-
-
-	
-	/**
-	 * [tFileInputJSON_1 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFileInputJSON_1";
-
-	
-
- 
-
-
-
-/**
- * [tFileInputJSON_1 process_data_end ] stop
- */
-	
-	/**
-	 * [tFileInputJSON_1 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFileInputJSON_1";
-
-	
-
-	}
-	globalMap.put("tFileInputJSON_1_NB_LINE",nb_line_tFileInputJSON_1);
- 
-
-ok_Hash.put("tFileInputJSON_1", true);
-end_Hash.put("tFileInputJSON_1", System.currentTimeMillis());
-
-
-
-
-/**
- * [tFileInputJSON_1 end ] stop
- */
-
-	
-	/**
-	 * [tMap_1 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tMap_1";
-
-	
-
+				currentComponent = "tMap_1";
 
 // ###############################
 // # Lookup hashes releasing
 // ###############################      
 
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("row1" + iterateId, 2, 0);
+					}
+				}
 
+				ok_Hash.put("tMap_1", true);
+				end_Hash.put("tMap_1", System.currentTimeMillis());
 
+				/**
+				 * [tMap_1 end ] stop
+				 */
 
+				/**
+				 * [tDBOutput_1 end ] start
+				 */
 
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("row1"+iterateId,2, 0);
-			 	}
-			}
-			
-			
-			
-		
- 
+				currentComponent = "tDBOutput_1";
 
-ok_Hash.put("tMap_1", true);
-end_Hash.put("tMap_1", System.currentTimeMillis());
+				if (pstmt_tDBOutput_1 != null) {
 
+					pstmt_tDBOutput_1.close();
+					resourceMap.remove("pstmt_tDBOutput_1");
 
+				}
+				resourceMap.put("statementClosed_tDBOutput_1", true);
 
+				nb_line_deleted_tDBOutput_1 = nb_line_deleted_tDBOutput_1 + deletedCount_tDBOutput_1;
+				nb_line_update_tDBOutput_1 = nb_line_update_tDBOutput_1 + updatedCount_tDBOutput_1;
+				nb_line_inserted_tDBOutput_1 = nb_line_inserted_tDBOutput_1 + insertedCount_tDBOutput_1;
+				nb_line_rejected_tDBOutput_1 = nb_line_rejected_tDBOutput_1 + rejectedCount_tDBOutput_1;
 
-/**
- * [tMap_1 end ] stop
- */
+				globalMap.put("tDBOutput_1_NB_LINE", nb_line_tDBOutput_1);
+				globalMap.put("tDBOutput_1_NB_LINE_UPDATED", nb_line_update_tDBOutput_1);
+				globalMap.put("tDBOutput_1_NB_LINE_INSERTED", nb_line_inserted_tDBOutput_1);
+				globalMap.put("tDBOutput_1_NB_LINE_DELETED", nb_line_deleted_tDBOutput_1);
+				globalMap.put("tDBOutput_1_NB_LINE_REJECTED", nb_line_rejected_tDBOutput_1);
 
-	
-	/**
-	 * [tDBOutput_1 end ] start
-	 */
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("service_w" + iterateId, 2, 0);
+					}
+				}
 
-	
+				ok_Hash.put("tDBOutput_1", true);
+				end_Hash.put("tDBOutput_1", System.currentTimeMillis());
 
-	
-	
-	currentComponent="tDBOutput_1";
+				/**
+				 * [tDBOutput_1 end ] stop
+				 */
 
-	
+				/**
+				 * [tNormalize_1 end ] start
+				 */
 
+				currentComponent = "tNormalize_1";
 
+				globalMap.put("tNormalize_1_NB_LINE", nb_line_tNormalize_1);
 
-	
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("ListeService" + iterateId, 2, 0);
+					}
+				}
 
-        if(pstmt_tDBOutput_1 != null) {
-			
-				pstmt_tDBOutput_1.close();
-				resourceMap.remove("pstmt_tDBOutput_1");
-			
-        }
-    resourceMap.put("statementClosed_tDBOutput_1", true);
+				ok_Hash.put("tNormalize_1", true);
+				end_Hash.put("tNormalize_1", System.currentTimeMillis());
 
-	nb_line_deleted_tDBOutput_1=nb_line_deleted_tDBOutput_1+ deletedCount_tDBOutput_1;
-	nb_line_update_tDBOutput_1=nb_line_update_tDBOutput_1 + updatedCount_tDBOutput_1;
-	nb_line_inserted_tDBOutput_1=nb_line_inserted_tDBOutput_1 + insertedCount_tDBOutput_1;
-	nb_line_rejected_tDBOutput_1=nb_line_rejected_tDBOutput_1 + rejectedCount_tDBOutput_1;
-	
-        globalMap.put("tDBOutput_1_NB_LINE",nb_line_tDBOutput_1);
-        globalMap.put("tDBOutput_1_NB_LINE_UPDATED",nb_line_update_tDBOutput_1);
-        globalMap.put("tDBOutput_1_NB_LINE_INSERTED",nb_line_inserted_tDBOutput_1);
-        globalMap.put("tDBOutput_1_NB_LINE_DELETED",nb_line_deleted_tDBOutput_1);
-        globalMap.put("tDBOutput_1_NB_LINE_REJECTED", nb_line_rejected_tDBOutput_1);
-    
-	
+				/**
+				 * [tNormalize_1 end ] stop
+				 */
 
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("service_w"+iterateId,2, 0);
-			 	}
-			}
-			
-			
-			
-		
- 
+				/**
+				 * [tFilterRow_2 end ] start
+				 */
 
-ok_Hash.put("tDBOutput_1", true);
-end_Hash.put("tDBOutput_1", System.currentTimeMillis());
+				currentComponent = "tFilterRow_2";
 
+				globalMap.put("tFilterRow_2_NB_LINE", nb_line_tFilterRow_2);
+				globalMap.put("tFilterRow_2_NB_LINE_OK", nb_line_ok_tFilterRow_2);
+				globalMap.put("tFilterRow_2_NB_LINE_REJECT", nb_line_reject_tFilterRow_2);
 
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("row2" + iterateId, 2, 0);
+					}
+				}
 
+				ok_Hash.put("tFilterRow_2", true);
+				end_Hash.put("tFilterRow_2", System.currentTimeMillis());
 
-/**
- * [tDBOutput_1 end ] stop
- */
+				/**
+				 * [tFilterRow_2 end ] stop
+				 */
 
+				/**
+				 * [tAggregateRow_1_AGGOUT end ] start
+				 */
 
+				currentVirtualComponent = "tAggregateRow_1";
 
+				currentComponent = "tAggregateRow_1_AGGOUT";
 
-	
-	/**
-	 * [tNormalize_1 end ] start
-	 */
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("row5" + iterateId, 2, 0);
+					}
+				}
 
-	
+				ok_Hash.put("tAggregateRow_1_AGGOUT", true);
+				end_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
 
-	
-	
-	currentComponent="tNormalize_1";
+				/**
+				 * [tAggregateRow_1_AGGOUT end ] stop
+				 */
 
-	
+				/**
+				 * [tDBOutput_2 begin ] start
+				 */
 
-    globalMap.put("tNormalize_1_NB_LINE", nb_line_tNormalize_1);
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("ListeService"+iterateId,2, 0);
-			 	}
-			}
-			
-			
-			
-		
- 
+				ok_Hash.put("tDBOutput_2", false);
+				start_Hash.put("tDBOutput_2", System.currentTimeMillis());
 
-ok_Hash.put("tNormalize_1", true);
-end_Hash.put("tNormalize_1", System.currentTimeMillis());
+				currentComponent = "tDBOutput_2";
 
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
 
-
-
-/**
- * [tNormalize_1 end ] stop
- */
-
-	
-	/**
-	 * [tFilterRow_2 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFilterRow_2";
-
-	
-    globalMap.put("tFilterRow_2_NB_LINE", nb_line_tFilterRow_2);
-    globalMap.put("tFilterRow_2_NB_LINE_OK", nb_line_ok_tFilterRow_2);
-    globalMap.put("tFilterRow_2_NB_LINE_REJECT", nb_line_reject_tFilterRow_2);
-    
-
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("row2"+iterateId,2, 0);
-			 	}
-			}
-			
-			
-			
-		
- 
-
-ok_Hash.put("tFilterRow_2", true);
-end_Hash.put("tFilterRow_2", System.currentTimeMillis());
-
-
-
-
-/**
- * [tFilterRow_2 end ] stop
- */
-
-	
-	/**
-	 * [tAggregateRow_1_AGGOUT end ] start
-	 */
-
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGOUT";
-
-	
-
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("row5"+iterateId,2, 0);
-			 	}
-			}
-			
-			
-			
-		
- 
-
-ok_Hash.put("tAggregateRow_1_AGGOUT", true);
-end_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
-
-
-
-
-/**
- * [tAggregateRow_1_AGGOUT end ] stop
- */
-
-
-	
-	/**
-	 * [tDBOutput_2 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tDBOutput_2", false);
-		start_Hash.put("tDBOutput_2", System.currentTimeMillis());
-		
-	
-	currentComponent="tDBOutput_2";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("row6"+iterateId, 0, 0);
+						if (execStat) {
+							runStat.updateStatOnConnection("row6" + iterateId, 0, 0);
 						}
-						
-						
-						
-					
+
+					}
 				}
-			} 
 
-		
-		int tos_count_tDBOutput_2 = 0;
-		
+				int tos_count_tDBOutput_2 = 0;
 
+				int nb_line_tDBOutput_2 = 0;
+				int nb_line_update_tDBOutput_2 = 0;
+				int nb_line_inserted_tDBOutput_2 = 0;
+				int nb_line_deleted_tDBOutput_2 = 0;
+				int nb_line_rejected_tDBOutput_2 = 0;
 
+				int deletedCount_tDBOutput_2 = 0;
+				int updatedCount_tDBOutput_2 = 0;
+				int insertedCount_tDBOutput_2 = 0;
 
+				int rejectedCount_tDBOutput_2 = 0;
 
+				String tableName_tDBOutput_2 = "service_propose";
+				boolean whetherReject_tDBOutput_2 = false;
 
+				java.util.Calendar calendar_tDBOutput_2 = java.util.Calendar.getInstance();
+				calendar_tDBOutput_2.set(1, 0, 1, 0, 0, 0);
+				long year1_tDBOutput_2 = calendar_tDBOutput_2.getTime().getTime();
+				calendar_tDBOutput_2.set(10000, 0, 1, 0, 0, 0);
+				long year10000_tDBOutput_2 = calendar_tDBOutput_2.getTime().getTime();
+				long date_tDBOutput_2;
 
-int nb_line_tDBOutput_2 = 0;
-int nb_line_update_tDBOutput_2 = 0;
-int nb_line_inserted_tDBOutput_2 = 0;
-int nb_line_deleted_tDBOutput_2 = 0;
-int nb_line_rejected_tDBOutput_2 = 0;
+				java.sql.Connection conn_tDBOutput_2 = null;
+				conn_tDBOutput_2 = (java.sql.Connection) globalMap.get("conn_tDBConnection_1");
 
-int deletedCount_tDBOutput_2=0;
-int updatedCount_tDBOutput_2=0;
-int insertedCount_tDBOutput_2=0;
+				int count_tDBOutput_2 = 0;
 
-int rejectedCount_tDBOutput_2=0;
+				String insert_tDBOutput_2 = "INSERT IGNORE INTO `" + "service_propose" + "` (`nom_service`) VALUES (?)";
 
-String tableName_tDBOutput_2 = "service_propose";
-boolean whetherReject_tDBOutput_2 = false;
+				java.sql.PreparedStatement pstmt_tDBOutput_2 = conn_tDBOutput_2.prepareStatement(insert_tDBOutput_2);
+				resourceMap.put("pstmt_tDBOutput_2", pstmt_tDBOutput_2);
 
-java.util.Calendar calendar_tDBOutput_2 = java.util.Calendar.getInstance();
-calendar_tDBOutput_2.set(1, 0, 1, 0, 0, 0);
-long year1_tDBOutput_2 = calendar_tDBOutput_2.getTime().getTime();
-calendar_tDBOutput_2.set(10000, 0, 1, 0, 0, 0);
-long year10000_tDBOutput_2 = calendar_tDBOutput_2.getTime().getTime();
-long date_tDBOutput_2;
+				/**
+				 * [tDBOutput_2 begin ] stop
+				 */
 
-java.sql.Connection conn_tDBOutput_2 = null;
-	conn_tDBOutput_2 = (java.sql.Connection)globalMap.get("conn_tDBConnection_1");
-	
+				/**
+				 * [tAggregateRow_1_AGGIN begin ] start
+				 */
 
-int count_tDBOutput_2=0;
-    	
-	    String insert_tDBOutput_2 = "INSERT IGNORE INTO `" + "service_propose" + "` (`nom_service`) VALUES (?)";
-	        
-	    java.sql.PreparedStatement pstmt_tDBOutput_2 = conn_tDBOutput_2.prepareStatement(insert_tDBOutput_2);
-	    resourceMap.put("pstmt_tDBOutput_2", pstmt_tDBOutput_2);
-	    
+				ok_Hash.put("tAggregateRow_1_AGGIN", false);
+				start_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
 
- 
+				currentVirtualComponent = "tAggregateRow_1";
 
+				currentComponent = "tAggregateRow_1_AGGIN";
 
+				int tos_count_tAggregateRow_1_AGGIN = 0;
 
-/**
- * [tDBOutput_2 begin ] stop
- */
+				java.util.Collection<AggOperationStruct_tAggregateRow_1> values_tAggregateRow_1 = hash_tAggregateRow_1
+						.values();
 
+				globalMap.put("tAggregateRow_1_NB_LINE", values_tAggregateRow_1.size());
 
+				for (AggOperationStruct_tAggregateRow_1 aggregated_row_tAggregateRow_1 : values_tAggregateRow_1) { // G_AggR_600
 
-	
-	/**
-	 * [tAggregateRow_1_AGGIN begin ] start
-	 */
+					/**
+					 * [tAggregateRow_1_AGGIN begin ] stop
+					 */
 
-	
+					/**
+					 * [tAggregateRow_1_AGGIN main ] start
+					 */
 
-	
-		
-		ok_Hash.put("tAggregateRow_1_AGGIN", false);
-		start_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
-		
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGIN";
+					currentVirtualComponent = "tAggregateRow_1";
 
-	
-		int tos_count_tAggregateRow_1_AGGIN = 0;
-		
+					currentComponent = "tAggregateRow_1_AGGIN";
 
-java.util.Collection<AggOperationStruct_tAggregateRow_1> values_tAggregateRow_1 = hash_tAggregateRow_1.values();
+					row6.nom_service = aggregated_row_tAggregateRow_1.nom_service;
 
-globalMap.put("tAggregateRow_1_NB_LINE", values_tAggregateRow_1.size());
+					tos_count_tAggregateRow_1_AGGIN++;
 
-for(AggOperationStruct_tAggregateRow_1 aggregated_row_tAggregateRow_1 : values_tAggregateRow_1) { // G_AggR_600
+					/**
+					 * [tAggregateRow_1_AGGIN main ] stop
+					 */
 
+					/**
+					 * [tAggregateRow_1_AGGIN process_data_begin ] start
+					 */
 
+					currentVirtualComponent = "tAggregateRow_1";
 
- 
+					currentComponent = "tAggregateRow_1_AGGIN";
 
+					/**
+					 * [tAggregateRow_1_AGGIN process_data_begin ] stop
+					 */
 
+					/**
+					 * [tDBOutput_2 main ] start
+					 */
 
-/**
- * [tAggregateRow_1_AGGIN begin ] stop
- */
-	
-	/**
-	 * [tAggregateRow_1_AGGIN main ] start
-	 */
+					currentComponent = "tDBOutput_2";
 
-	
+					// row6
+					// row6
 
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGIN";
+					if (execStat) {
+						runStat.updateStatOnConnection("row6" + iterateId, 1, 1);
+					}
 
-	
+					whetherReject_tDBOutput_2 = false;
+					if (row6.nom_service == null) {
+						pstmt_tDBOutput_2.setNull(1, java.sql.Types.VARCHAR);
+					} else {
+						pstmt_tDBOutput_2.setString(1, row6.nom_service);
+					}
 
-            				    row6.nom_service = aggregated_row_tAggregateRow_1.nom_service;
-            				    
+					try {
+						nb_line_tDBOutput_2++;
+						insertedCount_tDBOutput_2 = insertedCount_tDBOutput_2 + pstmt_tDBOutput_2.executeUpdate();
+					} catch (java.lang.Exception e) {
+						whetherReject_tDBOutput_2 = true;
+						System.err.print(e.getMessage());
+					}
 
- 
+					tos_count_tDBOutput_2++;
 
+					/**
+					 * [tDBOutput_2 main ] stop
+					 */
 
-	tos_count_tAggregateRow_1_AGGIN++;
+					/**
+					 * [tDBOutput_2 process_data_begin ] start
+					 */
 
-/**
- * [tAggregateRow_1_AGGIN main ] stop
- */
-	
-	/**
-	 * [tAggregateRow_1_AGGIN process_data_begin ] start
-	 */
+					currentComponent = "tDBOutput_2";
 
-	
+					/**
+					 * [tDBOutput_2 process_data_begin ] stop
+					 */
 
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGIN";
+					/**
+					 * [tDBOutput_2 process_data_end ] start
+					 */
 
-	
+					currentComponent = "tDBOutput_2";
 
- 
+					/**
+					 * [tDBOutput_2 process_data_end ] stop
+					 */
 
+					/**
+					 * [tAggregateRow_1_AGGIN process_data_end ] start
+					 */
 
+					currentVirtualComponent = "tAggregateRow_1";
 
-/**
- * [tAggregateRow_1_AGGIN process_data_begin ] stop
- */
+					currentComponent = "tAggregateRow_1_AGGIN";
 
-	
-	/**
-	 * [tDBOutput_2 main ] start
-	 */
+					/**
+					 * [tAggregateRow_1_AGGIN process_data_end ] stop
+					 */
 
-	
+					/**
+					 * [tAggregateRow_1_AGGIN end ] start
+					 */
 
-	
-	
-	currentComponent="tDBOutput_2";
+					currentVirtualComponent = "tAggregateRow_1";
 
-	
+					currentComponent = "tAggregateRow_1_AGGIN";
 
-			//row6
-			//row6
+				} // G_AggR_600
 
+				ok_Hash.put("tAggregateRow_1_AGGIN", true);
+				end_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
 
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("row6"+iterateId,1, 1);
+				/**
+				 * [tAggregateRow_1_AGGIN end ] stop
+				 */
+
+				/**
+				 * [tDBOutput_2 end ] start
+				 */
+
+				currentComponent = "tDBOutput_2";
+
+				if (pstmt_tDBOutput_2 != null) {
+
+					pstmt_tDBOutput_2.close();
+					resourceMap.remove("pstmt_tDBOutput_2");
+
 				}
-				
-				
-				
-			
+				resourceMap.put("statementClosed_tDBOutput_2", true);
 
-		
+				nb_line_deleted_tDBOutput_2 = nb_line_deleted_tDBOutput_2 + deletedCount_tDBOutput_2;
+				nb_line_update_tDBOutput_2 = nb_line_update_tDBOutput_2 + updatedCount_tDBOutput_2;
+				nb_line_inserted_tDBOutput_2 = nb_line_inserted_tDBOutput_2 + insertedCount_tDBOutput_2;
+				nb_line_rejected_tDBOutput_2 = nb_line_rejected_tDBOutput_2 + rejectedCount_tDBOutput_2;
 
+				globalMap.put("tDBOutput_2_NB_LINE", nb_line_tDBOutput_2);
+				globalMap.put("tDBOutput_2_NB_LINE_UPDATED", nb_line_update_tDBOutput_2);
+				globalMap.put("tDBOutput_2_NB_LINE_INSERTED", nb_line_inserted_tDBOutput_2);
+				globalMap.put("tDBOutput_2_NB_LINE_DELETED", nb_line_deleted_tDBOutput_2);
+				globalMap.put("tDBOutput_2_NB_LINE_REJECTED", nb_line_rejected_tDBOutput_2);
 
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("row6" + iterateId, 2, 0);
+					}
+				}
 
-        whetherReject_tDBOutput_2 = false;
-                        if(row6.nom_service == null) {
-pstmt_tDBOutput_2.setNull(1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_2.setString(1, row6.nom_service);
-}
+				ok_Hash.put("tDBOutput_2", true);
+				end_Hash.put("tDBOutput_2", System.currentTimeMillis());
 
-                try {
-                    nb_line_tDBOutput_2++;
-                    insertedCount_tDBOutput_2 = insertedCount_tDBOutput_2 + pstmt_tDBOutput_2.executeUpdate();
-                } catch(java.lang.Exception e) {
-                    whetherReject_tDBOutput_2 = true;
-                            System.err.print(e.getMessage());
-                }
+				/**
+				 * [tDBOutput_2 end ] stop
+				 */
 
- 
+				/**
+				 * [tNormalize_2 end ] start
+				 */
 
+				currentComponent = "tNormalize_2";
 
-	tos_count_tDBOutput_2++;
+				globalMap.put("tNormalize_2_NB_LINE", nb_line_tNormalize_2);
 
-/**
- * [tDBOutput_2 main ] stop
- */
-	
-	/**
-	 * [tDBOutput_2 process_data_begin ] start
-	 */
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("a_pour_serv" + iterateId, 2, 0);
+					}
+				}
 
-	
+				ok_Hash.put("tNormalize_2", true);
+				end_Hash.put("tNormalize_2", System.currentTimeMillis());
 
-	
-	
-	currentComponent="tDBOutput_2";
+				/**
+				 * [tNormalize_2 end ] stop
+				 */
 
-	
+				/**
+				 * [tFilterRow_1 end ] start
+				 */
 
- 
+				currentComponent = "tFilterRow_1";
 
+				globalMap.put("tFilterRow_1_NB_LINE", nb_line_tFilterRow_1);
+				globalMap.put("tFilterRow_1_NB_LINE_OK", nb_line_ok_tFilterRow_1);
+				globalMap.put("tFilterRow_1_NB_LINE_REJECT", nb_line_reject_tFilterRow_1);
 
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("row3" + iterateId, 2, 0);
+					}
+				}
 
-/**
- * [tDBOutput_2 process_data_begin ] stop
- */
-	
-	/**
-	 * [tDBOutput_2 process_data_end ] start
-	 */
+				ok_Hash.put("tFilterRow_1", true);
+				end_Hash.put("tFilterRow_1", System.currentTimeMillis());
 
-	
+				/**
+				 * [tFilterRow_1 end ] stop
+				 */
 
-	
-	
-	currentComponent="tDBOutput_2";
+				/**
+				 * [tAggregateRow_2_AGGOUT end ] start
+				 */
 
-	
+				currentVirtualComponent = "tAggregateRow_2";
 
- 
+				currentComponent = "tAggregateRow_2_AGGOUT";
 
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("row4" + iterateId, 2, 0);
+					}
+				}
 
+				ok_Hash.put("tAggregateRow_2_AGGOUT", true);
+				end_Hash.put("tAggregateRow_2_AGGOUT", System.currentTimeMillis());
 
-/**
- * [tDBOutput_2 process_data_end ] stop
- */
+				/**
+				 * [tAggregateRow_2_AGGOUT end ] stop
+				 */
 
+				/**
+				 * [tDBOutput_3 begin ] start
+				 */
 
+				ok_Hash.put("tDBOutput_3", false);
+				start_Hash.put("tDBOutput_3", System.currentTimeMillis());
 
-	
-	/**
-	 * [tAggregateRow_1_AGGIN process_data_end ] start
-	 */
+				currentComponent = "tDBOutput_3";
 
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGIN";
-
-	
-
- 
-
-
-
-/**
- * [tAggregateRow_1_AGGIN process_data_end ] stop
- */
-	
-	/**
-	 * [tAggregateRow_1_AGGIN end ] start
-	 */
-
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGIN";
-
-	
-
-} // G_AggR_600
-
- 
-
-ok_Hash.put("tAggregateRow_1_AGGIN", true);
-end_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
-
-
-
-
-/**
- * [tAggregateRow_1_AGGIN end ] stop
- */
-
-	
-	/**
-	 * [tDBOutput_2 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBOutput_2";
-
-	
-
-
-
-	
-
-        if(pstmt_tDBOutput_2 != null) {
-			
-				pstmt_tDBOutput_2.close();
-				resourceMap.remove("pstmt_tDBOutput_2");
-			
-        }
-    resourceMap.put("statementClosed_tDBOutput_2", true);
-
-	nb_line_deleted_tDBOutput_2=nb_line_deleted_tDBOutput_2+ deletedCount_tDBOutput_2;
-	nb_line_update_tDBOutput_2=nb_line_update_tDBOutput_2 + updatedCount_tDBOutput_2;
-	nb_line_inserted_tDBOutput_2=nb_line_inserted_tDBOutput_2 + insertedCount_tDBOutput_2;
-	nb_line_rejected_tDBOutput_2=nb_line_rejected_tDBOutput_2 + rejectedCount_tDBOutput_2;
-	
-        globalMap.put("tDBOutput_2_NB_LINE",nb_line_tDBOutput_2);
-        globalMap.put("tDBOutput_2_NB_LINE_UPDATED",nb_line_update_tDBOutput_2);
-        globalMap.put("tDBOutput_2_NB_LINE_INSERTED",nb_line_inserted_tDBOutput_2);
-        globalMap.put("tDBOutput_2_NB_LINE_DELETED",nb_line_deleted_tDBOutput_2);
-        globalMap.put("tDBOutput_2_NB_LINE_REJECTED", nb_line_rejected_tDBOutput_2);
-    
-	
-
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("row6"+iterateId,2, 0);
-			 	}
-			}
-			
-			
-			
-		
- 
-
-ok_Hash.put("tDBOutput_2", true);
-end_Hash.put("tDBOutput_2", System.currentTimeMillis());
-
-
-
-
-/**
- * [tDBOutput_2 end ] stop
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	/**
-	 * [tNormalize_2 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tNormalize_2";
-
-	
-
-    globalMap.put("tNormalize_2_NB_LINE", nb_line_tNormalize_2);
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("a_pour_serv"+iterateId,2, 0);
-			 	}
-			}
-			
-			
-			
-		
- 
-
-ok_Hash.put("tNormalize_2", true);
-end_Hash.put("tNormalize_2", System.currentTimeMillis());
-
-
-
-
-/**
- * [tNormalize_2 end ] stop
- */
-
-	
-	/**
-	 * [tFilterRow_1 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFilterRow_1";
-
-	
-    globalMap.put("tFilterRow_1_NB_LINE", nb_line_tFilterRow_1);
-    globalMap.put("tFilterRow_1_NB_LINE_OK", nb_line_ok_tFilterRow_1);
-    globalMap.put("tFilterRow_1_NB_LINE_REJECT", nb_line_reject_tFilterRow_1);
-    
-
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("row3"+iterateId,2, 0);
-			 	}
-			}
-			
-			
-			
-		
- 
-
-ok_Hash.put("tFilterRow_1", true);
-end_Hash.put("tFilterRow_1", System.currentTimeMillis());
-
-
-
-
-/**
- * [tFilterRow_1 end ] stop
- */
-
-	
-	/**
-	 * [tAggregateRow_2_AGGOUT end ] start
-	 */
-
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGOUT";
-
-	
-
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("row4"+iterateId,2, 0);
-			 	}
-			}
-			
-			
-			
-		
- 
-
-ok_Hash.put("tAggregateRow_2_AGGOUT", true);
-end_Hash.put("tAggregateRow_2_AGGOUT", System.currentTimeMillis());
-
-
-
-
-/**
- * [tAggregateRow_2_AGGOUT end ] stop
- */
-
-
-	
-	/**
-	 * [tDBOutput_3 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tDBOutput_3", false);
-		start_Hash.put("tDBOutput_3", System.currentTimeMillis());
-		
-	
-	currentComponent="tDBOutput_3";
-
-	
-			if (execStat) {
-				if(resourceMap.get("inIterateVComp") == null){
-					
-						
-						if(execStat) {
-							runStat.updateStatOnConnection("row7"+iterateId, 0, 0);
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null) {
+
+						if (execStat) {
+							runStat.updateStatOnConnection("row7" + iterateId, 0, 0);
 						}
-						
-						
-						
-					
+
+					}
 				}
-			} 
 
-		
-		int tos_count_tDBOutput_3 = 0;
-		
+				int tos_count_tDBOutput_3 = 0;
 
+				int nb_line_tDBOutput_3 = 0;
+				int nb_line_update_tDBOutput_3 = 0;
+				int nb_line_inserted_tDBOutput_3 = 0;
+				int nb_line_deleted_tDBOutput_3 = 0;
+				int nb_line_rejected_tDBOutput_3 = 0;
 
+				int deletedCount_tDBOutput_3 = 0;
+				int updatedCount_tDBOutput_3 = 0;
+				int insertedCount_tDBOutput_3 = 0;
 
+				int rejectedCount_tDBOutput_3 = 0;
 
+				String tableName_tDBOutput_3 = "a_pour_service_site";
+				boolean whetherReject_tDBOutput_3 = false;
 
+				java.util.Calendar calendar_tDBOutput_3 = java.util.Calendar.getInstance();
+				calendar_tDBOutput_3.set(1, 0, 1, 0, 0, 0);
+				long year1_tDBOutput_3 = calendar_tDBOutput_3.getTime().getTime();
+				calendar_tDBOutput_3.set(10000, 0, 1, 0, 0, 0);
+				long year10000_tDBOutput_3 = calendar_tDBOutput_3.getTime().getTime();
+				long date_tDBOutput_3;
 
-int nb_line_tDBOutput_3 = 0;
-int nb_line_update_tDBOutput_3 = 0;
-int nb_line_inserted_tDBOutput_3 = 0;
-int nb_line_deleted_tDBOutput_3 = 0;
-int nb_line_rejected_tDBOutput_3 = 0;
+				java.sql.Connection conn_tDBOutput_3 = null;
+				conn_tDBOutput_3 = (java.sql.Connection) globalMap.get("conn_tDBConnection_1");
 
-int deletedCount_tDBOutput_3=0;
-int updatedCount_tDBOutput_3=0;
-int insertedCount_tDBOutput_3=0;
+				int count_tDBOutput_3 = 0;
 
-int rejectedCount_tDBOutput_3=0;
+				String insert_tDBOutput_3 = "INSERT IGNORE INTO `" + "a_pour_service_site"
+						+ "` (`nom`,`url`) VALUES (?,?)";
 
-String tableName_tDBOutput_3 = "a_pour_service_site";
-boolean whetherReject_tDBOutput_3 = false;
+				java.sql.PreparedStatement pstmt_tDBOutput_3 = conn_tDBOutput_3.prepareStatement(insert_tDBOutput_3);
+				resourceMap.put("pstmt_tDBOutput_3", pstmt_tDBOutput_3);
 
-java.util.Calendar calendar_tDBOutput_3 = java.util.Calendar.getInstance();
-calendar_tDBOutput_3.set(1, 0, 1, 0, 0, 0);
-long year1_tDBOutput_3 = calendar_tDBOutput_3.getTime().getTime();
-calendar_tDBOutput_3.set(10000, 0, 1, 0, 0, 0);
-long year10000_tDBOutput_3 = calendar_tDBOutput_3.getTime().getTime();
-long date_tDBOutput_3;
+				/**
+				 * [tDBOutput_3 begin ] stop
+				 */
 
-java.sql.Connection conn_tDBOutput_3 = null;
-	conn_tDBOutput_3 = (java.sql.Connection)globalMap.get("conn_tDBConnection_1");
-	
+				/**
+				 * [tAggregateRow_2_AGGIN begin ] start
+				 */
 
-int count_tDBOutput_3=0;
-    	
-	    String insert_tDBOutput_3 = "INSERT IGNORE INTO `" + "a_pour_service_site" + "` (`nom`,`url`) VALUES (?,?)";
-	        
-	    java.sql.PreparedStatement pstmt_tDBOutput_3 = conn_tDBOutput_3.prepareStatement(insert_tDBOutput_3);
-	    resourceMap.put("pstmt_tDBOutput_3", pstmt_tDBOutput_3);
-	    
+				ok_Hash.put("tAggregateRow_2_AGGIN", false);
+				start_Hash.put("tAggregateRow_2_AGGIN", System.currentTimeMillis());
 
- 
+				currentVirtualComponent = "tAggregateRow_2";
 
+				currentComponent = "tAggregateRow_2_AGGIN";
 
+				int tos_count_tAggregateRow_2_AGGIN = 0;
 
-/**
- * [tDBOutput_3 begin ] stop
- */
+				java.util.Collection<AggOperationStruct_tAggregateRow_2> values_tAggregateRow_2 = hash_tAggregateRow_2
+						.values();
 
+				globalMap.put("tAggregateRow_2_NB_LINE", values_tAggregateRow_2.size());
 
+				for (AggOperationStruct_tAggregateRow_2 aggregated_row_tAggregateRow_2 : values_tAggregateRow_2) { // G_AggR_600
 
-	
-	/**
-	 * [tAggregateRow_2_AGGIN begin ] start
-	 */
+					/**
+					 * [tAggregateRow_2_AGGIN begin ] stop
+					 */
 
-	
+					/**
+					 * [tAggregateRow_2_AGGIN main ] start
+					 */
 
-	
-		
-		ok_Hash.put("tAggregateRow_2_AGGIN", false);
-		start_Hash.put("tAggregateRow_2_AGGIN", System.currentTimeMillis());
-		
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGIN";
+					currentVirtualComponent = "tAggregateRow_2";
 
-	
-		int tos_count_tAggregateRow_2_AGGIN = 0;
-		
+					currentComponent = "tAggregateRow_2_AGGIN";
 
-java.util.Collection<AggOperationStruct_tAggregateRow_2> values_tAggregateRow_2 = hash_tAggregateRow_2.values();
+					row7.nom = aggregated_row_tAggregateRow_2.nom;
 
-globalMap.put("tAggregateRow_2_NB_LINE", values_tAggregateRow_2.size());
+					row7.url = aggregated_row_tAggregateRow_2.url;
 
-for(AggOperationStruct_tAggregateRow_2 aggregated_row_tAggregateRow_2 : values_tAggregateRow_2) { // G_AggR_600
+					tos_count_tAggregateRow_2_AGGIN++;
 
+					/**
+					 * [tAggregateRow_2_AGGIN main ] stop
+					 */
 
+					/**
+					 * [tAggregateRow_2_AGGIN process_data_begin ] start
+					 */
 
- 
+					currentVirtualComponent = "tAggregateRow_2";
 
+					currentComponent = "tAggregateRow_2_AGGIN";
 
+					/**
+					 * [tAggregateRow_2_AGGIN process_data_begin ] stop
+					 */
 
-/**
- * [tAggregateRow_2_AGGIN begin ] stop
- */
-	
-	/**
-	 * [tAggregateRow_2_AGGIN main ] start
-	 */
+					/**
+					 * [tDBOutput_3 main ] start
+					 */
 
-	
+					currentComponent = "tDBOutput_3";
 
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGIN";
+					// row7
+					// row7
 
-	
+					if (execStat) {
+						runStat.updateStatOnConnection("row7" + iterateId, 1, 1);
+					}
 
-            				    row7.nom = aggregated_row_tAggregateRow_2.nom;
-            				    
-            				    row7.url = aggregated_row_tAggregateRow_2.url;
-            				    
+					whetherReject_tDBOutput_3 = false;
+					if (row7.nom == null) {
+						pstmt_tDBOutput_3.setNull(1, java.sql.Types.VARCHAR);
+					} else {
+						pstmt_tDBOutput_3.setString(1, row7.nom);
+					}
 
- 
+					if (row7.url == null) {
+						pstmt_tDBOutput_3.setNull(2, java.sql.Types.VARCHAR);
+					} else {
+						pstmt_tDBOutput_3.setString(2, row7.url);
+					}
 
+					try {
+						nb_line_tDBOutput_3++;
+						insertedCount_tDBOutput_3 = insertedCount_tDBOutput_3 + pstmt_tDBOutput_3.executeUpdate();
+					} catch (java.lang.Exception e) {
+						whetherReject_tDBOutput_3 = true;
+						System.err.print(e.getMessage());
+					}
 
-	tos_count_tAggregateRow_2_AGGIN++;
+					tos_count_tDBOutput_3++;
 
-/**
- * [tAggregateRow_2_AGGIN main ] stop
- */
-	
-	/**
-	 * [tAggregateRow_2_AGGIN process_data_begin ] start
-	 */
+					/**
+					 * [tDBOutput_3 main ] stop
+					 */
 
-	
+					/**
+					 * [tDBOutput_3 process_data_begin ] start
+					 */
 
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGIN";
+					currentComponent = "tDBOutput_3";
 
-	
+					/**
+					 * [tDBOutput_3 process_data_begin ] stop
+					 */
 
- 
+					/**
+					 * [tDBOutput_3 process_data_end ] start
+					 */
 
+					currentComponent = "tDBOutput_3";
 
+					/**
+					 * [tDBOutput_3 process_data_end ] stop
+					 */
 
-/**
- * [tAggregateRow_2_AGGIN process_data_begin ] stop
- */
+					/**
+					 * [tAggregateRow_2_AGGIN process_data_end ] start
+					 */
 
-	
-	/**
-	 * [tDBOutput_3 main ] start
-	 */
+					currentVirtualComponent = "tAggregateRow_2";
 
-	
+					currentComponent = "tAggregateRow_2_AGGIN";
 
-	
-	
-	currentComponent="tDBOutput_3";
+					/**
+					 * [tAggregateRow_2_AGGIN process_data_end ] stop
+					 */
 
-	
+					/**
+					 * [tAggregateRow_2_AGGIN end ] start
+					 */
 
-			//row7
-			//row7
+					currentVirtualComponent = "tAggregateRow_2";
 
+					currentComponent = "tAggregateRow_2_AGGIN";
 
-			
-				
-				if(execStat){
-					runStat.updateStatOnConnection("row7"+iterateId,1, 1);
+				} // G_AggR_600
+
+				ok_Hash.put("tAggregateRow_2_AGGIN", true);
+				end_Hash.put("tAggregateRow_2_AGGIN", System.currentTimeMillis());
+
+				/**
+				 * [tAggregateRow_2_AGGIN end ] stop
+				 */
+
+				/**
+				 * [tDBOutput_3 end ] start
+				 */
+
+				currentComponent = "tDBOutput_3";
+
+				if (pstmt_tDBOutput_3 != null) {
+
+					pstmt_tDBOutput_3.close();
+					resourceMap.remove("pstmt_tDBOutput_3");
+
 				}
-				
-				
-				
-			
+				resourceMap.put("statementClosed_tDBOutput_3", true);
 
-		
+				nb_line_deleted_tDBOutput_3 = nb_line_deleted_tDBOutput_3 + deletedCount_tDBOutput_3;
+				nb_line_update_tDBOutput_3 = nb_line_update_tDBOutput_3 + updatedCount_tDBOutput_3;
+				nb_line_inserted_tDBOutput_3 = nb_line_inserted_tDBOutput_3 + insertedCount_tDBOutput_3;
+				nb_line_rejected_tDBOutput_3 = nb_line_rejected_tDBOutput_3 + rejectedCount_tDBOutput_3;
 
+				globalMap.put("tDBOutput_3_NB_LINE", nb_line_tDBOutput_3);
+				globalMap.put("tDBOutput_3_NB_LINE_UPDATED", nb_line_update_tDBOutput_3);
+				globalMap.put("tDBOutput_3_NB_LINE_INSERTED", nb_line_inserted_tDBOutput_3);
+				globalMap.put("tDBOutput_3_NB_LINE_DELETED", nb_line_deleted_tDBOutput_3);
+				globalMap.put("tDBOutput_3_NB_LINE_REJECTED", nb_line_rejected_tDBOutput_3);
 
+				if (execStat) {
+					if (resourceMap.get("inIterateVComp") == null || !((Boolean) resourceMap.get("inIterateVComp"))) {
+						runStat.updateStatOnConnection("row7" + iterateId, 2, 0);
+					}
+				}
 
-        whetherReject_tDBOutput_3 = false;
-                        if(row7.nom == null) {
-pstmt_tDBOutput_3.setNull(1, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_3.setString(1, row7.nom);
-}
+				ok_Hash.put("tDBOutput_3", true);
+				end_Hash.put("tDBOutput_3", System.currentTimeMillis());
 
-                        if(row7.url == null) {
-pstmt_tDBOutput_3.setNull(2, java.sql.Types.VARCHAR);
-} else {pstmt_tDBOutput_3.setString(2, row7.url);
-}
+				/**
+				 * [tDBOutput_3 end ] stop
+				 */
 
-                try {
-                    nb_line_tDBOutput_3++;
-                    insertedCount_tDBOutput_3 = insertedCount_tDBOutput_3 + pstmt_tDBOutput_3.executeUpdate();
-                } catch(java.lang.Exception e) {
-                    whetherReject_tDBOutput_3 = true;
-                            System.err.print(e.getMessage());
-                }
+			} // end the resume
 
- 
+		} catch (java.lang.Exception e) {
 
+			TalendException te = new TalendException(e, currentComponent, globalMap);
 
-	tos_count_tDBOutput_3++;
+			te.setVirtualComponentName(currentVirtualComponent);
 
-/**
- * [tDBOutput_3 main ] stop
- */
-	
-	/**
-	 * [tDBOutput_3 process_data_begin ] start
-	 */
+			throw te;
+		} catch (java.lang.Error error) {
 
-	
+			runStat.stopThreadStat();
 
-	
-	
-	currentComponent="tDBOutput_3";
+			throw error;
+		} finally {
 
-	
+			// free memory for "tAggregateRow_2_AGGIN"
+			globalMap.remove("tAggregateRow_2");
 
- 
+			// free memory for "tAggregateRow_1_AGGIN"
+			globalMap.remove("tAggregateRow_1");
 
+			try {
 
+				/**
+				 * [tFileInputJSON_1 finally ] start
+				 */
 
-/**
- * [tDBOutput_3 process_data_begin ] stop
- */
-	
-	/**
-	 * [tDBOutput_3 process_data_end ] start
-	 */
+				currentComponent = "tFileInputJSON_1";
 
-	
+				/**
+				 * [tFileInputJSON_1 finally ] stop
+				 */
 
-	
-	
-	currentComponent="tDBOutput_3";
+				/**
+				 * [tMap_1 finally ] start
+				 */
 
-	
+				currentComponent = "tMap_1";
 
- 
+				/**
+				 * [tMap_1 finally ] stop
+				 */
 
+				/**
+				 * [tDBOutput_1 finally ] start
+				 */
 
+				currentComponent = "tDBOutput_1";
 
-/**
- * [tDBOutput_3 process_data_end ] stop
- */
+				if (resourceMap.get("statementClosed_tDBOutput_1") == null) {
+					java.sql.PreparedStatement pstmtToClose_tDBOutput_1 = null;
+					if ((pstmtToClose_tDBOutput_1 = (java.sql.PreparedStatement) resourceMap
+							.remove("pstmt_tDBOutput_1")) != null) {
+						pstmtToClose_tDBOutput_1.close();
+					}
+				}
 
+				/**
+				 * [tDBOutput_1 finally ] stop
+				 */
 
+				/**
+				 * [tNormalize_1 finally ] start
+				 */
 
-	
-	/**
-	 * [tAggregateRow_2_AGGIN process_data_end ] start
-	 */
+				currentComponent = "tNormalize_1";
 
-	
+				/**
+				 * [tNormalize_1 finally ] stop
+				 */
 
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGIN";
+				/**
+				 * [tFilterRow_2 finally ] start
+				 */
 
-	
+				currentComponent = "tFilterRow_2";
 
- 
+				/**
+				 * [tFilterRow_2 finally ] stop
+				 */
 
+				/**
+				 * [tAggregateRow_1_AGGOUT finally ] start
+				 */
 
+				currentVirtualComponent = "tAggregateRow_1";
 
-/**
- * [tAggregateRow_2_AGGIN process_data_end ] stop
- */
-	
-	/**
-	 * [tAggregateRow_2_AGGIN end ] start
-	 */
+				currentComponent = "tAggregateRow_1_AGGOUT";
 
-	
+				/**
+				 * [tAggregateRow_1_AGGOUT finally ] stop
+				 */
 
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGIN";
+				/**
+				 * [tAggregateRow_1_AGGIN finally ] start
+				 */
 
-	
+				currentVirtualComponent = "tAggregateRow_1";
 
-} // G_AggR_600
+				currentComponent = "tAggregateRow_1_AGGIN";
 
- 
+				/**
+				 * [tAggregateRow_1_AGGIN finally ] stop
+				 */
 
-ok_Hash.put("tAggregateRow_2_AGGIN", true);
-end_Hash.put("tAggregateRow_2_AGGIN", System.currentTimeMillis());
+				/**
+				 * [tDBOutput_2 finally ] start
+				 */
 
+				currentComponent = "tDBOutput_2";
 
+				if (resourceMap.get("statementClosed_tDBOutput_2") == null) {
+					java.sql.PreparedStatement pstmtToClose_tDBOutput_2 = null;
+					if ((pstmtToClose_tDBOutput_2 = (java.sql.PreparedStatement) resourceMap
+							.remove("pstmt_tDBOutput_2")) != null) {
+						pstmtToClose_tDBOutput_2.close();
+					}
+				}
 
+				/**
+				 * [tDBOutput_2 finally ] stop
+				 */
 
-/**
- * [tAggregateRow_2_AGGIN end ] stop
- */
+				/**
+				 * [tNormalize_2 finally ] start
+				 */
 
-	
-	/**
-	 * [tDBOutput_3 end ] start
-	 */
+				currentComponent = "tNormalize_2";
 
-	
+				/**
+				 * [tNormalize_2 finally ] stop
+				 */
 
-	
-	
-	currentComponent="tDBOutput_3";
+				/**
+				 * [tFilterRow_1 finally ] start
+				 */
 
-	
+				currentComponent = "tFilterRow_1";
 
+				/**
+				 * [tFilterRow_1 finally ] stop
+				 */
 
+				/**
+				 * [tAggregateRow_2_AGGOUT finally ] start
+				 */
 
-	
+				currentVirtualComponent = "tAggregateRow_2";
 
-        if(pstmt_tDBOutput_3 != null) {
-			
-				pstmt_tDBOutput_3.close();
-				resourceMap.remove("pstmt_tDBOutput_3");
-			
-        }
-    resourceMap.put("statementClosed_tDBOutput_3", true);
+				currentComponent = "tAggregateRow_2_AGGOUT";
 
-	nb_line_deleted_tDBOutput_3=nb_line_deleted_tDBOutput_3+ deletedCount_tDBOutput_3;
-	nb_line_update_tDBOutput_3=nb_line_update_tDBOutput_3 + updatedCount_tDBOutput_3;
-	nb_line_inserted_tDBOutput_3=nb_line_inserted_tDBOutput_3 + insertedCount_tDBOutput_3;
-	nb_line_rejected_tDBOutput_3=nb_line_rejected_tDBOutput_3 + rejectedCount_tDBOutput_3;
-	
-        globalMap.put("tDBOutput_3_NB_LINE",nb_line_tDBOutput_3);
-        globalMap.put("tDBOutput_3_NB_LINE_UPDATED",nb_line_update_tDBOutput_3);
-        globalMap.put("tDBOutput_3_NB_LINE_INSERTED",nb_line_inserted_tDBOutput_3);
-        globalMap.put("tDBOutput_3_NB_LINE_DELETED",nb_line_deleted_tDBOutput_3);
-        globalMap.put("tDBOutput_3_NB_LINE_REJECTED", nb_line_rejected_tDBOutput_3);
-    
-	
+				/**
+				 * [tAggregateRow_2_AGGOUT finally ] stop
+				 */
 
-			
-			if(execStat){
-				if(resourceMap.get("inIterateVComp") == null || !((Boolean)resourceMap.get("inIterateVComp"))){
-	 				runStat.updateStatOnConnection("row7"+iterateId,2, 0);
-			 	}
+				/**
+				 * [tAggregateRow_2_AGGIN finally ] start
+				 */
+
+				currentVirtualComponent = "tAggregateRow_2";
+
+				currentComponent = "tAggregateRow_2_AGGIN";
+
+				/**
+				 * [tAggregateRow_2_AGGIN finally ] stop
+				 */
+
+				/**
+				 * [tDBOutput_3 finally ] start
+				 */
+
+				currentComponent = "tDBOutput_3";
+
+				if (resourceMap.get("statementClosed_tDBOutput_3") == null) {
+					java.sql.PreparedStatement pstmtToClose_tDBOutput_3 = null;
+					if ((pstmtToClose_tDBOutput_3 = (java.sql.PreparedStatement) resourceMap
+							.remove("pstmt_tDBOutput_3")) != null) {
+						pstmtToClose_tDBOutput_3.close();
+					}
+				}
+
+				/**
+				 * [tDBOutput_3 finally ] stop
+				 */
+
+			} catch (java.lang.Exception e) {
+				// ignore
+			} catch (java.lang.Error error) {
+				// ignore
 			}
-			
-			
-			
-		
- 
-
-ok_Hash.put("tDBOutput_3", true);
-end_Hash.put("tDBOutput_3", System.currentTimeMillis());
-
-
-
-
-/**
- * [tDBOutput_3 end ] stop
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				}//end the resume
-
-				
-
-
-
-	
-			}catch(java.lang.Exception e){	
-				
-				TalendException te = new TalendException(e, currentComponent, globalMap);
-				
-					te.setVirtualComponentName(currentVirtualComponent);
-				
-				throw te;
-			}catch(java.lang.Error error){	
-				
-					runStat.stopThreadStat();
-				
-				throw error;
-			}finally{
-				
-							//free memory for "tAggregateRow_2_AGGIN"
-							globalMap.remove("tAggregateRow_2");
-						
-							//free memory for "tAggregateRow_1_AGGIN"
-							globalMap.remove("tAggregateRow_1");
-						
-				try{
-					
-	
-	/**
-	 * [tFileInputJSON_1 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFileInputJSON_1";
-
-	
-
- 
-
-
-
-/**
- * [tFileInputJSON_1 finally ] stop
- */
-
-	
-	/**
-	 * [tMap_1 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tMap_1";
-
-	
-
- 
-
-
-
-/**
- * [tMap_1 finally ] stop
- */
-
-	
-	/**
-	 * [tDBOutput_1 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBOutput_1";
-
-	
-
-
-
-    if (resourceMap.get("statementClosed_tDBOutput_1") == null) {
-                java.sql.PreparedStatement pstmtToClose_tDBOutput_1 = null;
-                if ((pstmtToClose_tDBOutput_1 = (java.sql.PreparedStatement) resourceMap.remove("pstmt_tDBOutput_1")) != null) {
-                    pstmtToClose_tDBOutput_1.close();
-                }
-    }
- 
-
-
-
-/**
- * [tDBOutput_1 finally ] stop
- */
-
-
-
-
-	
-	/**
-	 * [tNormalize_1 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tNormalize_1";
-
-	
-
- 
-
-
-
-/**
- * [tNormalize_1 finally ] stop
- */
-
-	
-	/**
-	 * [tFilterRow_2 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFilterRow_2";
-
-	
-
- 
-
-
-
-/**
- * [tFilterRow_2 finally ] stop
- */
-
-	
-	/**
-	 * [tAggregateRow_1_AGGOUT finally ] start
-	 */
-
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGOUT";
-
-	
-
- 
-
-
-
-/**
- * [tAggregateRow_1_AGGOUT finally ] stop
- */
-
-	
-	/**
-	 * [tAggregateRow_1_AGGIN finally ] start
-	 */
-
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_1";
-	
-	currentComponent="tAggregateRow_1_AGGIN";
-
-	
-
- 
-
-
-
-/**
- * [tAggregateRow_1_AGGIN finally ] stop
- */
-
-	
-	/**
-	 * [tDBOutput_2 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBOutput_2";
-
-	
-
-
-
-    if (resourceMap.get("statementClosed_tDBOutput_2") == null) {
-                java.sql.PreparedStatement pstmtToClose_tDBOutput_2 = null;
-                if ((pstmtToClose_tDBOutput_2 = (java.sql.PreparedStatement) resourceMap.remove("pstmt_tDBOutput_2")) != null) {
-                    pstmtToClose_tDBOutput_2.close();
-                }
-    }
- 
-
-
-
-/**
- * [tDBOutput_2 finally ] stop
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	/**
-	 * [tNormalize_2 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tNormalize_2";
-
-	
-
- 
-
-
-
-/**
- * [tNormalize_2 finally ] stop
- */
-
-	
-	/**
-	 * [tFilterRow_1 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tFilterRow_1";
-
-	
-
- 
-
-
-
-/**
- * [tFilterRow_1 finally ] stop
- */
-
-	
-	/**
-	 * [tAggregateRow_2_AGGOUT finally ] start
-	 */
-
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGOUT";
-
-	
-
- 
-
-
-
-/**
- * [tAggregateRow_2_AGGOUT finally ] stop
- */
-
-	
-	/**
-	 * [tAggregateRow_2_AGGIN finally ] start
-	 */
-
-	
-
-	
-	
-		currentVirtualComponent = "tAggregateRow_2";
-	
-	currentComponent="tAggregateRow_2_AGGIN";
-
-	
-
- 
-
-
-
-/**
- * [tAggregateRow_2_AGGIN finally ] stop
- */
-
-	
-	/**
-	 * [tDBOutput_3 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBOutput_3";
-
-	
-
-
-
-    if (resourceMap.get("statementClosed_tDBOutput_3") == null) {
-                java.sql.PreparedStatement pstmtToClose_tDBOutput_3 = null;
-                if ((pstmtToClose_tDBOutput_3 = (java.sql.PreparedStatement) resourceMap.remove("pstmt_tDBOutput_3")) != null) {
-                    pstmtToClose_tDBOutput_3.close();
-                }
-    }
- 
-
-
-
-/**
- * [tDBOutput_3 finally ] stop
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				}catch(java.lang.Exception e){	
-					//ignore
-				}catch(java.lang.Error error){
-					//ignore
-				}
-				resourceMap = null;
-			}
-		
+			resourceMap = null;
+		}
 
 		globalMap.put("tFileInputJSON_1_SUBPROCESS_STATE", 1);
 	}
-	
 
-public void tPrejob_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
-	globalMap.put("tPrejob_1_SUBPROCESS_STATE", 0);
+	public void tPrejob_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
+		globalMap.put("tPrejob_1_SUBPROCESS_STATE", 0);
 
- final boolean execStat = this.execStat;
-	
+		final boolean execStat = this.execStat;
+
 		String iterateId = "";
-	
-	
-	String currentComponent = "";
-	java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
 
-	try {
+		String currentComponent = "";
+		java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
+
+		try {
 			// TDI-39566 avoid throwing an useless Exception
 			boolean resumeIt = true;
 			if (globalResumeTicket == false && resumeEntryMethodName != null) {
 				String currentMethodName = new java.lang.Exception().getStackTrace()[0].getMethodName();
 				resumeIt = resumeEntryMethodName.equals(currentMethodName);
 			}
-			if (resumeIt || globalResumeTicket) { //start the resume
+			if (resumeIt || globalResumeTicket) { // start the resume
 				globalResumeTicket = true;
 
+				/**
+				 * [tPrejob_1 begin ] start
+				 */
 
+				ok_Hash.put("tPrejob_1", false);
+				start_Hash.put("tPrejob_1", System.currentTimeMillis());
 
-		
+				currentComponent = "tPrejob_1";
 
+				int tos_count_tPrejob_1 = 0;
 
-	
-	/**
-	 * [tPrejob_1 begin ] start
-	 */
+				/**
+				 * [tPrejob_1 begin ] stop
+				 */
 
-	
+				/**
+				 * [tPrejob_1 main ] start
+				 */
 
-	
-		
-		ok_Hash.put("tPrejob_1", false);
-		start_Hash.put("tPrejob_1", System.currentTimeMillis());
-		
-	
-	currentComponent="tPrejob_1";
+				currentComponent = "tPrejob_1";
 
-	
-		int tos_count_tPrejob_1 = 0;
-		
+				tos_count_tPrejob_1++;
 
- 
+				/**
+				 * [tPrejob_1 main ] stop
+				 */
 
+				/**
+				 * [tPrejob_1 process_data_begin ] start
+				 */
 
+				currentComponent = "tPrejob_1";
 
-/**
- * [tPrejob_1 begin ] stop
- */
-	
-	/**
-	 * [tPrejob_1 main ] start
-	 */
+				/**
+				 * [tPrejob_1 process_data_begin ] stop
+				 */
 
-	
+				/**
+				 * [tPrejob_1 process_data_end ] start
+				 */
 
-	
-	
-	currentComponent="tPrejob_1";
+				currentComponent = "tPrejob_1";
 
-	
+				/**
+				 * [tPrejob_1 process_data_end ] stop
+				 */
 
- 
+				/**
+				 * [tPrejob_1 end ] start
+				 */
 
+				currentComponent = "tPrejob_1";
 
-	tos_count_tPrejob_1++;
+				ok_Hash.put("tPrejob_1", true);
+				end_Hash.put("tPrejob_1", System.currentTimeMillis());
 
-/**
- * [tPrejob_1 main ] stop
- */
-	
-	/**
-	 * [tPrejob_1 process_data_begin ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tPrejob_1";
-
-	
-
- 
-
-
-
-/**
- * [tPrejob_1 process_data_begin ] stop
- */
-	
-	/**
-	 * [tPrejob_1 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tPrejob_1";
-
-	
-
- 
-
-
-
-/**
- * [tPrejob_1 process_data_end ] stop
- */
-	
-	/**
-	 * [tPrejob_1 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tPrejob_1";
-
-	
-
- 
-
-ok_Hash.put("tPrejob_1", true);
-end_Hash.put("tPrejob_1", System.currentTimeMillis());
-
-				if(execStat){   
-   	 				runStat.updateStatOnConnection("OnComponentOk1", 0, "ok");
+				if (execStat) {
+					runStat.updateStatOnConnection("OnComponentOk1", 0, "ok");
 				}
 				tDBConnection_1Process(globalMap);
 
+				/**
+				 * [tPrejob_1 end ] stop
+				 */
+			} // end the resume
 
+		} catch (java.lang.Exception e) {
 
-/**
- * [tPrejob_1 end ] stop
- */
-				}//end the resume
+			TalendException te = new TalendException(e, currentComponent, globalMap);
 
-				
+			throw te;
+		} catch (java.lang.Error error) {
 
+			runStat.stopThreadStat();
 
+			throw error;
+		} finally {
 
-	
-			}catch(java.lang.Exception e){	
-				
-				TalendException te = new TalendException(e, currentComponent, globalMap);
-				
-				throw te;
-			}catch(java.lang.Error error){	
-				
-					runStat.stopThreadStat();
-				
-				throw error;
-			}finally{
-				
-				try{
-					
-	
-	/**
-	 * [tPrejob_1 finally ] start
-	 */
+			try {
 
-	
+				/**
+				 * [tPrejob_1 finally ] start
+				 */
 
-	
-	
-	currentComponent="tPrejob_1";
+				currentComponent = "tPrejob_1";
 
-	
-
- 
-
-
-
-/**
- * [tPrejob_1 finally ] stop
- */
-				}catch(java.lang.Exception e){	
-					//ignore
-				}catch(java.lang.Error error){
-					//ignore
-				}
-				resourceMap = null;
+				/**
+				 * [tPrejob_1 finally ] stop
+				 */
+			} catch (java.lang.Exception e) {
+				// ignore
+			} catch (java.lang.Error error) {
+				// ignore
 			}
-		
+			resourceMap = null;
+		}
 
 		globalMap.put("tPrejob_1_SUBPROCESS_STATE", 1);
 	}
-	
 
-public void tDBConnection_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
-	globalMap.put("tDBConnection_1_SUBPROCESS_STATE", 0);
+	public void tDBConnection_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
+		globalMap.put("tDBConnection_1_SUBPROCESS_STATE", 0);
 
- final boolean execStat = this.execStat;
-	
+		final boolean execStat = this.execStat;
+
 		String iterateId = "";
-	
-	
-	String currentComponent = "";
-	java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
 
-	try {
+		String currentComponent = "";
+		java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
+
+		try {
 			// TDI-39566 avoid throwing an useless Exception
 			boolean resumeIt = true;
 			if (globalResumeTicket == false && resumeEntryMethodName != null) {
 				String currentMethodName = new java.lang.Exception().getStackTrace()[0].getMethodName();
 				resumeIt = resumeEntryMethodName.equals(currentMethodName);
 			}
-			if (resumeIt || globalResumeTicket) { //start the resume
+			if (resumeIt || globalResumeTicket) { // start the resume
 				globalResumeTicket = true;
 
+				/**
+				 * [tDBConnection_1 begin ] start
+				 */
 
+				ok_Hash.put("tDBConnection_1", false);
+				start_Hash.put("tDBConnection_1", System.currentTimeMillis());
 
+				currentComponent = "tDBConnection_1";
 
+				int tos_count_tDBConnection_1 = 0;
 
-	
-	/**
-	 * [tDBConnection_1 begin ] start
-	 */
-
-	
-
-	
-		
-		ok_Hash.put("tDBConnection_1", false);
-		start_Hash.put("tDBConnection_1", System.currentTimeMillis());
-		
-	
-	currentComponent="tDBConnection_1";
-
-	
-		int tos_count_tDBConnection_1 = 0;
-		
-	
-
-	
-		String properties_tDBConnection_1 = "noDatetimeStringSync=true&serverTimezone=UTC";
-		if (properties_tDBConnection_1 == null || properties_tDBConnection_1.trim().length() == 0) {
-			properties_tDBConnection_1 += "rewriteBatchedStatements=true";
-		}else if (properties_tDBConnection_1 != null && !properties_tDBConnection_1.contains("rewriteBatchedStatements")) {
-			properties_tDBConnection_1 += "&rewriteBatchedStatements=true";
-		}
-		
-		String url_tDBConnection_1 = "jdbc:mysql://" + context.BDD_Host + ":" + context.BDD_Port + "/" + context.BDD_name + "?" + properties_tDBConnection_1;
-		String dbUser_tDBConnection_1 = context.BDD_User;
-		
-		
-			
-	final String decryptedPassword_tDBConnection_1 = context.BDD_Password; 
-			String dbPwd_tDBConnection_1 = decryptedPassword_tDBConnection_1;
-		
-	java.sql.Connection conn_tDBConnection_1 = null;
-	
-		
-			String driverClass_tDBConnection_1 = "com.mysql.cj.jdbc.Driver";
-			java.lang.Class jdbcclazz_tDBConnection_1 = java.lang.Class.forName(driverClass_tDBConnection_1);
-		
-				conn_tDBConnection_1 = java.sql.DriverManager.getConnection(url_tDBConnection_1,dbUser_tDBConnection_1,dbPwd_tDBConnection_1);
-
-		globalMap.put("conn_tDBConnection_1", conn_tDBConnection_1);
-	if (null != conn_tDBConnection_1) {
-		
-			conn_tDBConnection_1.setAutoCommit(true);
-	}
-
-	globalMap.put("conn_tDBConnection_1",conn_tDBConnection_1);
-
-	globalMap.put("db_tDBConnection_1",context.BDD_name);
- 
-
-
-
-/**
- * [tDBConnection_1 begin ] stop
- */
-	
-	/**
-	 * [tDBConnection_1 main ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBConnection_1";
-
-	
-
- 
-
-
-	tos_count_tDBConnection_1++;
-
-/**
- * [tDBConnection_1 main ] stop
- */
-	
-	/**
-	 * [tDBConnection_1 process_data_begin ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBConnection_1";
-
-	
-
- 
-
-
-
-/**
- * [tDBConnection_1 process_data_begin ] stop
- */
-	
-	/**
-	 * [tDBConnection_1 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBConnection_1";
-
-	
-
- 
-
-
-
-/**
- * [tDBConnection_1 process_data_end ] stop
- */
-	
-	/**
-	 * [tDBConnection_1 end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBConnection_1";
-
-	
-
- 
-
-ok_Hash.put("tDBConnection_1", true);
-end_Hash.put("tDBConnection_1", System.currentTimeMillis());
-
-
-
-
-/**
- * [tDBConnection_1 end ] stop
- */
-				}//end the resume
-
-				
-
-
-
-	
-			}catch(java.lang.Exception e){	
-				
-				TalendException te = new TalendException(e, currentComponent, globalMap);
-				
-				throw te;
-			}catch(java.lang.Error error){	
-				
-					runStat.stopThreadStat();
-				
-				throw error;
-			}finally{
-				
-				try{
-					
-	
-	/**
-	 * [tDBConnection_1 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tDBConnection_1";
-
-	
-
- 
-
-
-
-/**
- * [tDBConnection_1 finally ] stop
- */
-				}catch(java.lang.Exception e){	
-					//ignore
-				}catch(java.lang.Error error){
-					//ignore
+				String properties_tDBConnection_1 = "noDatetimeStringSync=true&serverTimezone=UTC";
+				if (properties_tDBConnection_1 == null || properties_tDBConnection_1.trim().length() == 0) {
+					properties_tDBConnection_1 += "rewriteBatchedStatements=true";
+				} else if (properties_tDBConnection_1 != null
+						&& !properties_tDBConnection_1.contains("rewriteBatchedStatements")) {
+					properties_tDBConnection_1 += "&rewriteBatchedStatements=true";
 				}
-				resourceMap = null;
+
+				String url_tDBConnection_1 = "jdbc:mysql://" + context.BDD_Host + ":" + context.BDD_Port + "/"
+						+ context.BDD_name + "?" + properties_tDBConnection_1;
+				String dbUser_tDBConnection_1 = context.BDD_User;
+
+				final String decryptedPassword_tDBConnection_1 = context.BDD_Password;
+				String dbPwd_tDBConnection_1 = decryptedPassword_tDBConnection_1;
+
+				java.sql.Connection conn_tDBConnection_1 = null;
+
+				String driverClass_tDBConnection_1 = "com.mysql.cj.jdbc.Driver";
+				java.lang.Class jdbcclazz_tDBConnection_1 = java.lang.Class.forName(driverClass_tDBConnection_1);
+
+				conn_tDBConnection_1 = java.sql.DriverManager.getConnection(url_tDBConnection_1, dbUser_tDBConnection_1,
+						dbPwd_tDBConnection_1);
+
+				globalMap.put("conn_tDBConnection_1", conn_tDBConnection_1);
+				if (null != conn_tDBConnection_1) {
+
+					conn_tDBConnection_1.setAutoCommit(true);
+				}
+
+				globalMap.put("conn_tDBConnection_1", conn_tDBConnection_1);
+
+				globalMap.put("db_tDBConnection_1", context.BDD_name);
+
+				/**
+				 * [tDBConnection_1 begin ] stop
+				 */
+
+				/**
+				 * [tDBConnection_1 main ] start
+				 */
+
+				currentComponent = "tDBConnection_1";
+
+				tos_count_tDBConnection_1++;
+
+				/**
+				 * [tDBConnection_1 main ] stop
+				 */
+
+				/**
+				 * [tDBConnection_1 process_data_begin ] start
+				 */
+
+				currentComponent = "tDBConnection_1";
+
+				/**
+				 * [tDBConnection_1 process_data_begin ] stop
+				 */
+
+				/**
+				 * [tDBConnection_1 process_data_end ] start
+				 */
+
+				currentComponent = "tDBConnection_1";
+
+				/**
+				 * [tDBConnection_1 process_data_end ] stop
+				 */
+
+				/**
+				 * [tDBConnection_1 end ] start
+				 */
+
+				currentComponent = "tDBConnection_1";
+
+				ok_Hash.put("tDBConnection_1", true);
+				end_Hash.put("tDBConnection_1", System.currentTimeMillis());
+
+				/**
+				 * [tDBConnection_1 end ] stop
+				 */
+			} // end the resume
+
+		} catch (java.lang.Exception e) {
+
+			TalendException te = new TalendException(e, currentComponent, globalMap);
+
+			throw te;
+		} catch (java.lang.Error error) {
+
+			runStat.stopThreadStat();
+
+			throw error;
+		} finally {
+
+			try {
+
+				/**
+				 * [tDBConnection_1 finally ] start
+				 */
+
+				currentComponent = "tDBConnection_1";
+
+				/**
+				 * [tDBConnection_1 finally ] stop
+				 */
+			} catch (java.lang.Exception e) {
+				// ignore
+			} catch (java.lang.Error error) {
+				// ignore
 			}
-		
+			resourceMap = null;
+		}
 
 		globalMap.put("tDBConnection_1_SUBPROCESS_STATE", 1);
 	}
-	
-    public String resuming_logs_dir_path = null;
-    public String resuming_checkpoint_path = null;
-    public String parent_part_launcher = null;
-    private String resumeEntryMethodName = null;
-    private boolean globalResumeTicket = false;
 
-    public boolean watch = false;
-    // portStats is null, it means don't execute the statistics
-    public Integer portStats = null;
-    public int portTraces = 4334;
-    public String clientHost;
-    public String defaultClientHost = "localhost";
-    public String contextStr = "Prod";
-    public boolean isDefaultContext = true;
-    public String pid = "0";
-    public String rootPid = null;
-    public String fatherPid = null;
-    public String fatherNode = null;
-    public long startTime = 0;
-    public boolean isChildJob = false;
-    public String log4jLevel = "";
-    
-    private boolean enableLogStash;
+	public String resuming_logs_dir_path = null;
+	public String resuming_checkpoint_path = null;
+	public String parent_part_launcher = null;
+	private String resumeEntryMethodName = null;
+	private boolean globalResumeTicket = false;
 
-    private boolean execStat = true;
+	public boolean watch = false;
+	// portStats is null, it means don't execute the statistics
+	public Integer portStats = null;
+	public int portTraces = 4334;
+	public String clientHost;
+	public String defaultClientHost = "localhost";
+	public String contextStr = "Prod";
+	public boolean isDefaultContext = true;
+	public String pid = "0";
+	public String rootPid = null;
+	public String fatherPid = null;
+	public String fatherNode = null;
+	public long startTime = 0;
+	public boolean isChildJob = false;
+	public String log4jLevel = "";
 
-    private ThreadLocal<java.util.Map<String, String>> threadLocal = new ThreadLocal<java.util.Map<String, String>>() {
-        protected java.util.Map<String, String> initialValue() {
-            java.util.Map<String,String> threadRunResultMap = new java.util.HashMap<String, String>();
-            threadRunResultMap.put("errorCode", null);
-            threadRunResultMap.put("status", "");
-            return threadRunResultMap;
-        };
-    };
+	private boolean enableLogStash;
 
+	private boolean execStat = true;
 
-    private PropertiesWithType context_param = new PropertiesWithType();
-    public java.util.Map<String, Object> parentContextMap = new java.util.HashMap<String, Object>();
+	private ThreadLocal<java.util.Map<String, String>> threadLocal = new ThreadLocal<java.util.Map<String, String>>() {
+		protected java.util.Map<String, String> initialValue() {
+			java.util.Map<String, String> threadRunResultMap = new java.util.HashMap<String, String>();
+			threadRunResultMap.put("errorCode", null);
+			threadRunResultMap.put("status", "");
+			return threadRunResultMap;
+		};
+	};
 
-    public String status= "";
-    
+	private PropertiesWithType context_param = new PropertiesWithType();
+	public java.util.Map<String, Object> parentContextMap = new java.util.HashMap<String, Object>();
 
-    public static void main(String[] args){
-        final job_extractionTrustedShops job_extractionTrustedShopsClass = new job_extractionTrustedShops();
+	public String status = "";
 
-        int exitCode = job_extractionTrustedShopsClass.runJobInTOS(args);
+	public static void main(String[] args) {
+		final job_extractionTrustedShops job_extractionTrustedShopsClass = new job_extractionTrustedShops();
 
-        System.exit(exitCode);
-    }
+		int exitCode = job_extractionTrustedShopsClass.runJobInTOS(args);
 
+		System.exit(exitCode);
+	}
 
-    public String[][] runJob(String[] args) {
+	public String[][] runJob(String[] args) {
 
-        int exitCode = runJobInTOS(args);
-        String[][] bufferValue = new String[][] { { Integer.toString(exitCode) } };
+		int exitCode = runJobInTOS(args);
+		String[][] bufferValue = new String[][] { { Integer.toString(exitCode) } };
 
-        return bufferValue;
-    }
+		return bufferValue;
+	}
 
-    public boolean hastBufferOutputComponent() {
+	public boolean hastBufferOutputComponent() {
 		boolean hastBufferOutput = false;
-    	
-        return hastBufferOutput;
-    }
 
-    public int runJobInTOS(String[] args) {
-	   	// reset status
-	   	status = "";
-	   	
-        String lastStr = "";
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase("--context_param")) {
-                lastStr = arg;
-            } else if (lastStr.equals("")) {
-                evalParam(arg);
-            } else {
-                evalParam(lastStr + " " + arg);
-                lastStr = "";
-            }
-        }
+		return hastBufferOutput;
+	}
 
-    	
-    	
+	public int runJobInTOS(String[] args) {
+		// reset status
+		status = "";
 
-        if(clientHost == null) {
-            clientHost = defaultClientHost;
-        }
+		String lastStr = "";
+		for (String arg : args) {
+			if (arg.equalsIgnoreCase("--context_param")) {
+				lastStr = arg;
+			} else if (lastStr.equals("")) {
+				evalParam(arg);
+			} else {
+				evalParam(lastStr + " " + arg);
+				lastStr = "";
+			}
+		}
 
-        if(pid == null || "0".equals(pid)) {
-            pid = TalendString.getAsciiRandomString(6);
-        }
+		if (clientHost == null) {
+			clientHost = defaultClientHost;
+		}
 
-        if (rootPid==null) {
-            rootPid = pid;
-        }
-        if (fatherPid==null) {
-            fatherPid = pid;
-        }else{
-            isChildJob = true;
-        }
+		if (pid == null || "0".equals(pid)) {
+			pid = TalendString.getAsciiRandomString(6);
+		}
 
-        if (portStats != null) {
-            // portStats = -1; //for testing
-            if (portStats < 0 || portStats > 65535) {
-                // issue:10869, the portStats is invalid, so this client socket can't open
-                System.err.println("The statistics socket port " + portStats + " is invalid.");
-                execStat = false;
-            }
-        } else {
-            execStat = false;
-        }
+		if (rootPid == null) {
+			rootPid = pid;
+		}
+		if (fatherPid == null) {
+			fatherPid = pid;
+		} else {
+			isChildJob = true;
+		}
 
-        try {
-            //call job/subjob with an existing context, like: --context=production. if without this parameter, there will use the default context instead.
-            java.io.InputStream inContext = job_extractionTrustedShops.class.getClassLoader().getResourceAsStream("local_project/job_extractiontrustedshops_0_1/contexts/" + contextStr + ".properties");
-            if (inContext == null) {
-                inContext = job_extractionTrustedShops.class.getClassLoader().getResourceAsStream("config/contexts/" + contextStr + ".properties");
-            }
-            if (inContext != null) {
-                //defaultProps is in order to keep the original context value
-                if(context != null && context.isEmpty()) {
-	                defaultProps.load(inContext);
-	                context = new ContextProperties(defaultProps);
-                }
-                
-                inContext.close();
-            } else if (!isDefaultContext) {
-                //print info and job continue to run, for case: context_param is not empty.
-                System.err.println("Could not find the context " + contextStr);
-            }
+		if (portStats != null) {
+			// portStats = -1; //for testing
+			if (portStats < 0 || portStats > 65535) {
+				// issue:10869, the portStats is invalid, so this client socket can't open
+				System.err.println("The statistics socket port " + portStats + " is invalid.");
+				execStat = false;
+			}
+		} else {
+			execStat = false;
+		}
 
-            if(!context_param.isEmpty()) {
-                context.putAll(context_param);
-				//set types for params from parentJobs
-				for (Object key: context_param.keySet()){
+		try {
+			// call job/subjob with an existing context, like: --context=production. if
+			// without this parameter, there will use the default context instead.
+			java.io.InputStream inContext = job_extractionTrustedShops.class.getClassLoader().getResourceAsStream(
+					"local_project/job_extractiontrustedshops_0_1/contexts/" + contextStr + ".properties");
+			if (inContext == null) {
+				inContext = job_extractionTrustedShops.class.getClassLoader()
+						.getResourceAsStream("config/contexts/" + contextStr + ".properties");
+			}
+			if (inContext != null) {
+				// defaultProps is in order to keep the original context value
+				if (context != null && context.isEmpty()) {
+					defaultProps.load(inContext);
+					context = new ContextProperties(defaultProps);
+				}
+
+				inContext.close();
+			} else if (!isDefaultContext) {
+				// print info and job continue to run, for case: context_param is not empty.
+				System.err.println("Could not find the context " + contextStr);
+			}
+
+			if (!context_param.isEmpty()) {
+				context.putAll(context_param);
+				// set types for params from parentJobs
+				for (Object key : context_param.keySet()) {
 					String context_key = key.toString();
 					String context_type = context_param.getContextType(context_key);
 					context.setContextType(context_key, context_type);
 
 				}
-            }
-            class ContextProcessing {
-                private void processContext_0() {
-                        context.setContextType("BDD_Host", "id_String");
-                            context.BDD_Host=(String) context.getProperty("BDD_Host");
-                        context.setContextType("BDD_name", "id_String");
-                            context.BDD_name=(String) context.getProperty("BDD_name");
-                        context.setContextType("BDD_Password", "id_String");
-                            context.BDD_Password=(String) context.getProperty("BDD_Password");
-                        context.setContextType("BDD_Port", "id_String");
-                            context.BDD_Port=(String) context.getProperty("BDD_Port");
-                        context.setContextType("BDD_User", "id_String");
-                            context.BDD_User=(String) context.getProperty("BDD_User");
-                        context.setContextType("FILE_path", "id_String");
-                            context.FILE_path=(String) context.getProperty("FILE_path");
-                } 
-                public void processAllContext() {
-                        processContext_0();
-                }
-            }
+			}
+			class ContextProcessing {
+				private void processContext_0() {
+					context.setContextType("BDD_Host", "id_String");
+					context.BDD_Host = (String) context.getProperty("BDD_Host");
+					context.setContextType("BDD_name", "id_String");
+					context.BDD_name = (String) context.getProperty("BDD_name");
+					context.setContextType("BDD_Password", "id_String");
+					context.BDD_Password = (String) context.getProperty("BDD_Password");
+					context.setContextType("BDD_Port", "id_String");
+					context.BDD_Port = (String) context.getProperty("BDD_Port");
+					context.setContextType("BDD_User", "id_String");
+					context.BDD_User = (String) context.getProperty("BDD_User");
+					context.setContextType("FILE_path", "id_String");
+					context.FILE_path = (String) context.getProperty("FILE_path");
+				}
 
-            new ContextProcessing().processAllContext();
-        } catch (java.io.IOException ie) {
-            System.err.println("Could not load context "+contextStr);
-            ie.printStackTrace();
-        }
+				public void processAllContext() {
+					processContext_0();
+				}
+			}
 
-        // get context value from parent directly
-        if (parentContextMap != null && !parentContextMap.isEmpty()) {if (parentContextMap.containsKey("BDD_Host")) {
-                context.BDD_Host = (String) parentContextMap.get("BDD_Host");
-            }if (parentContextMap.containsKey("BDD_name")) {
-                context.BDD_name = (String) parentContextMap.get("BDD_name");
-            }if (parentContextMap.containsKey("BDD_Password")) {
-                context.BDD_Password = (String) parentContextMap.get("BDD_Password");
-            }if (parentContextMap.containsKey("BDD_Port")) {
-                context.BDD_Port = (String) parentContextMap.get("BDD_Port");
-            }if (parentContextMap.containsKey("BDD_User")) {
-                context.BDD_User = (String) parentContextMap.get("BDD_User");
-            }if (parentContextMap.containsKey("FILE_path")) {
-                context.FILE_path = (String) parentContextMap.get("FILE_path");
-            }
-        }
+			new ContextProcessing().processAllContext();
+		} catch (java.io.IOException ie) {
+			System.err.println("Could not load context " + contextStr);
+			ie.printStackTrace();
+		}
 
-        //Resume: init the resumeUtil
-        resumeEntryMethodName = ResumeUtil.getResumeEntryMethodName(resuming_checkpoint_path);
-        resumeUtil = new ResumeUtil(resuming_logs_dir_path, isChildJob, rootPid);
-        resumeUtil.initCommonInfo(pid, rootPid, fatherPid, projectName, jobName, contextStr, jobVersion);
+		// get context value from parent directly
+		if (parentContextMap != null && !parentContextMap.isEmpty()) {
+			if (parentContextMap.containsKey("BDD_Host")) {
+				context.BDD_Host = (String) parentContextMap.get("BDD_Host");
+			}
+			if (parentContextMap.containsKey("BDD_name")) {
+				context.BDD_name = (String) parentContextMap.get("BDD_name");
+			}
+			if (parentContextMap.containsKey("BDD_Password")) {
+				context.BDD_Password = (String) parentContextMap.get("BDD_Password");
+			}
+			if (parentContextMap.containsKey("BDD_Port")) {
+				context.BDD_Port = (String) parentContextMap.get("BDD_Port");
+			}
+			if (parentContextMap.containsKey("BDD_User")) {
+				context.BDD_User = (String) parentContextMap.get("BDD_User");
+			}
+			if (parentContextMap.containsKey("FILE_path")) {
+				context.FILE_path = (String) parentContextMap.get("FILE_path");
+			}
+		}
+
+		// Resume: init the resumeUtil
+		resumeEntryMethodName = ResumeUtil.getResumeEntryMethodName(resuming_checkpoint_path);
+		resumeUtil = new ResumeUtil(resuming_logs_dir_path, isChildJob, rootPid);
+		resumeUtil.initCommonInfo(pid, rootPid, fatherPid, projectName, jobName, contextStr, jobVersion);
 
 		List<String> parametersToEncrypt = new java.util.ArrayList<String>();
-        //Resume: jobStart
-        resumeUtil.addLog("JOB_STARTED", "JOB:" + jobName, parent_part_launcher, Thread.currentThread().getId() + "", "","","","",resumeUtil.convertToJsonText(context,parametersToEncrypt));
+		// Resume: jobStart
+		resumeUtil.addLog("JOB_STARTED", "JOB:" + jobName, parent_part_launcher, Thread.currentThread().getId() + "",
+				"", "", "", "", resumeUtil.convertToJsonText(context, parametersToEncrypt));
 
-if(execStat) {
-    try {
-        runStat.openSocket(!isChildJob);
-        runStat.setAllPID(rootPid, fatherPid, pid, jobName);
-        runStat.startThreadStat(clientHost, portStats);
-        runStat.updateStatOnJob(RunStat.JOBSTART, fatherNode);
-    } catch (java.io.IOException ioException) {
-        ioException.printStackTrace();
-    }
-}
+		if (execStat) {
+			try {
+				runStat.openSocket(!isChildJob);
+				runStat.setAllPID(rootPid, fatherPid, pid, jobName);
+				runStat.startThreadStat(clientHost, portStats);
+				runStat.updateStatOnJob(RunStat.JOBSTART, fatherNode);
+			} catch (java.io.IOException ioException) {
+				ioException.printStackTrace();
+			}
+		}
 
+		java.util.concurrent.ConcurrentHashMap<Object, Object> concurrentHashMap = new java.util.concurrent.ConcurrentHashMap<Object, Object>();
+		globalMap.put("concurrentHashMap", concurrentHashMap);
 
+		long startUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		long endUsedMemory = 0;
+		long end = 0;
 
-	
-	    java.util.concurrent.ConcurrentHashMap<Object, Object> concurrentHashMap = new java.util.concurrent.ConcurrentHashMap<Object, Object>();
-	    globalMap.put("concurrentHashMap", concurrentHashMap);
-	
+		startTime = System.currentTimeMillis();
 
-    long startUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-    long endUsedMemory = 0;
-    long end = 0;
+		this.globalResumeTicket = true;// to run tPreJob
 
-    startTime = System.currentTimeMillis();
+		try {
+			errorCode = null;
+			tPrejob_1Process(globalMap);
+			if (!"failure".equals(status)) {
+				status = "end";
+			}
+		} catch (TalendException e_tPrejob_1) {
+			globalMap.put("tPrejob_1_SUBPROCESS_STATE", -1);
 
+			e_tPrejob_1.printStackTrace();
 
+		}
 
+		this.globalResumeTicket = false;// to run others jobs
 
-this.globalResumeTicket = true;//to run tPreJob
+		try {
+			errorCode = null;
+			tFileInputJSON_1Process(globalMap);
+			if (!"failure".equals(status)) {
+				status = "end";
+			}
+		} catch (TalendException e_tFileInputJSON_1) {
+			globalMap.put("tFileInputJSON_1_SUBPROCESS_STATE", -1);
 
-try {
-errorCode = null;tPrejob_1Process(globalMap);
-if(!"failure".equals(status)) { status = "end"; }
-}catch (TalendException e_tPrejob_1) {
-globalMap.put("tPrejob_1_SUBPROCESS_STATE", -1);
+			e_tFileInputJSON_1.printStackTrace();
 
-e_tPrejob_1.printStackTrace();
+		}
 
-}
+		this.globalResumeTicket = true;// to run tPostJob
 
+		end = System.currentTimeMillis();
 
+		if (watch) {
+			System.out.println((end - startTime) + " milliseconds");
+		}
 
-this.globalResumeTicket = false;//to run others jobs
+		endUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		if (false) {
+			System.out.println((endUsedMemory - startUsedMemory)
+					+ " bytes memory increase when running : job_extractionTrustedShops");
+		}
 
-try {
-errorCode = null;tFileInputJSON_1Process(globalMap);
-if(!"failure".equals(status)) { status = "end"; }
-}catch (TalendException e_tFileInputJSON_1) {
-globalMap.put("tFileInputJSON_1_SUBPROCESS_STATE", -1);
+		if (execStat) {
+			runStat.updateStatOnJob(RunStat.JOBEND, fatherNode);
+			runStat.stopThreadStat();
+		}
+		int returnCode = 0;
+		if (errorCode == null) {
+			returnCode = status != null && status.equals("failure") ? 1 : 0;
+		} else {
+			returnCode = errorCode.intValue();
+		}
+		resumeUtil.addLog("JOB_ENDED", "JOB:" + jobName, parent_part_launcher, Thread.currentThread().getId() + "", "",
+				"" + returnCode, "", "", "");
 
-e_tFileInputJSON_1.printStackTrace();
+		return returnCode;
 
-}
+	}
 
-this.globalResumeTicket = true;//to run tPostJob
+	// only for OSGi env
+	public void destroy() {
+		closeSqlDbConnections();
 
+	}
 
+	private void closeSqlDbConnections() {
+		try {
+			Object obj_conn;
+			obj_conn = globalMap.remove("conn_tDBConnection_1");
+			if (null != obj_conn) {
+				((java.sql.Connection) obj_conn).close();
+			}
+		} catch (java.lang.Exception e) {
+		}
+	}
 
+	private java.util.Map<String, Object> getSharedConnections4REST() {
+		java.util.Map<String, Object> connections = new java.util.HashMap<String, Object>();
+		connections.put("conn_tDBConnection_1", globalMap.get("conn_tDBConnection_1"));
 
-        end = System.currentTimeMillis();
+		return connections;
+	}
 
-        if (watch) {
-            System.out.println((end-startTime)+" milliseconds");
-        }
-
-        endUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        if (false) {
-            System.out.println((endUsedMemory - startUsedMemory) + " bytes memory increase when running : job_extractionTrustedShops");
-        }
-
-
-
-if (execStat) {
-    runStat.updateStatOnJob(RunStat.JOBEND, fatherNode);
-    runStat.stopThreadStat();
-}
-    int returnCode = 0;
-    if(errorCode == null) {
-         returnCode = status != null && status.equals("failure") ? 1 : 0;
-    } else {
-         returnCode = errorCode.intValue();
-    }
-    resumeUtil.addLog("JOB_ENDED", "JOB:" + jobName, parent_part_launcher, Thread.currentThread().getId() + "", "","" + returnCode,"","","");
-
-    return returnCode;
-
-  }
-
-    // only for OSGi env
-    public void destroy() {
-    closeSqlDbConnections();
-
-
-    }
-
-
-
-    private void closeSqlDbConnections() {
-        try {
-            Object obj_conn;
-            obj_conn = globalMap.remove("conn_tDBConnection_1");
-            if (null != obj_conn) {
-                ((java.sql.Connection) obj_conn).close();
-            }
-        } catch (java.lang.Exception e) {
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-    private java.util.Map<String, Object> getSharedConnections4REST() {
-        java.util.Map<String, Object> connections = new java.util.HashMap<String, Object>();
-            connections.put("conn_tDBConnection_1", globalMap.get("conn_tDBConnection_1"));
-
-
-
-
-
-
-
-        return connections;
-    }
-
-    private void evalParam(String arg) {
-        if (arg.startsWith("--resuming_logs_dir_path")) {
-            resuming_logs_dir_path = arg.substring(25);
-        } else if (arg.startsWith("--resuming_checkpoint_path")) {
-            resuming_checkpoint_path = arg.substring(27);
-        } else if (arg.startsWith("--parent_part_launcher")) {
-            parent_part_launcher = arg.substring(23);
-        } else if (arg.startsWith("--watch")) {
-            watch = true;
-        } else if (arg.startsWith("--stat_port=")) {
-            String portStatsStr = arg.substring(12);
-            if (portStatsStr != null && !portStatsStr.equals("null")) {
-                portStats = Integer.parseInt(portStatsStr);
-            }
-        } else if (arg.startsWith("--trace_port=")) {
-            portTraces = Integer.parseInt(arg.substring(13));
-        } else if (arg.startsWith("--client_host=")) {
-            clientHost = arg.substring(14);
-        } else if (arg.startsWith("--context=")) {
-            contextStr = arg.substring(10);
-            isDefaultContext = false;
-        } else if (arg.startsWith("--father_pid=")) {
-            fatherPid = arg.substring(13);
-        } else if (arg.startsWith("--root_pid=")) {
-            rootPid = arg.substring(11);
-        } else if (arg.startsWith("--father_node=")) {
-            fatherNode = arg.substring(14);
-        } else if (arg.startsWith("--pid=")) {
-            pid = arg.substring(6);
-        } else if (arg.startsWith("--context_type")) {
-            String keyValue = arg.substring(15);
+	private void evalParam(String arg) {
+		if (arg.startsWith("--resuming_logs_dir_path")) {
+			resuming_logs_dir_path = arg.substring(25);
+		} else if (arg.startsWith("--resuming_checkpoint_path")) {
+			resuming_checkpoint_path = arg.substring(27);
+		} else if (arg.startsWith("--parent_part_launcher")) {
+			parent_part_launcher = arg.substring(23);
+		} else if (arg.startsWith("--watch")) {
+			watch = true;
+		} else if (arg.startsWith("--stat_port=")) {
+			String portStatsStr = arg.substring(12);
+			if (portStatsStr != null && !portStatsStr.equals("null")) {
+				portStats = Integer.parseInt(portStatsStr);
+			}
+		} else if (arg.startsWith("--trace_port=")) {
+			portTraces = Integer.parseInt(arg.substring(13));
+		} else if (arg.startsWith("--client_host=")) {
+			clientHost = arg.substring(14);
+		} else if (arg.startsWith("--context=")) {
+			contextStr = arg.substring(10);
+			isDefaultContext = false;
+		} else if (arg.startsWith("--father_pid=")) {
+			fatherPid = arg.substring(13);
+		} else if (arg.startsWith("--root_pid=")) {
+			rootPid = arg.substring(11);
+		} else if (arg.startsWith("--father_node=")) {
+			fatherNode = arg.substring(14);
+		} else if (arg.startsWith("--pid=")) {
+			pid = arg.substring(6);
+		} else if (arg.startsWith("--context_type")) {
+			String keyValue = arg.substring(15);
 			int index = -1;
-            if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
-                if (fatherPid==null) {
-                    context_param.setContextType(keyValue.substring(0, index), replaceEscapeChars(keyValue.substring(index + 1)));
-                } else { // the subjob won't escape the especial chars
-                    context_param.setContextType(keyValue.substring(0, index), keyValue.substring(index + 1) );
-                }
+			if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
+				if (fatherPid == null) {
+					context_param.setContextType(keyValue.substring(0, index),
+							replaceEscapeChars(keyValue.substring(index + 1)));
+				} else { // the subjob won't escape the especial chars
+					context_param.setContextType(keyValue.substring(0, index), keyValue.substring(index + 1));
+				}
 
-            }
+			}
 
 		} else if (arg.startsWith("--context_param")) {
-            String keyValue = arg.substring(16);
-            int index = -1;
-            if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
-                if (fatherPid==null) {
-                    context_param.put(keyValue.substring(0, index), replaceEscapeChars(keyValue.substring(index + 1)));
-                } else { // the subjob won't escape the especial chars
-                    context_param.put(keyValue.substring(0, index), keyValue.substring(index + 1) );
-                }
-            }
-        } else if (arg.startsWith("--log4jLevel=")) {
-            log4jLevel = arg.substring(13);
-		} else if (arg.startsWith("--monitoring=")) {//for trunjob call
+			String keyValue = arg.substring(16);
+			int index = -1;
+			if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
+				if (fatherPid == null) {
+					context_param.put(keyValue.substring(0, index), replaceEscapeChars(keyValue.substring(index + 1)));
+				} else { // the subjob won't escape the especial chars
+					context_param.put(keyValue.substring(0, index), keyValue.substring(index + 1));
+				}
+			}
+		} else if (arg.startsWith("--log4jLevel=")) {
+			log4jLevel = arg.substring(13);
+		} else if (arg.startsWith("--monitoring=")) {// for trunjob call
 			enableLogStash = "true".equalsIgnoreCase(arg.substring(13));
 		}
-		
-		if(!enableLogStash) {
+
+		if (!enableLogStash) {
 			enableLogStash = "true".equalsIgnoreCase(System.getProperty("monitoring"));
 		}
-    }
-    
-    private static final String NULL_VALUE_EXPRESSION_IN_COMMAND_STRING_FOR_CHILD_JOB_ONLY = "<TALEND_NULL>";
+	}
 
-    private final String[][] escapeChars = {
-        {"\\\\","\\"},{"\\n","\n"},{"\\'","\'"},{"\\r","\r"},
-        {"\\f","\f"},{"\\b","\b"},{"\\t","\t"}
-        };
-    private String replaceEscapeChars (String keyValue) {
+	private static final String NULL_VALUE_EXPRESSION_IN_COMMAND_STRING_FOR_CHILD_JOB_ONLY = "<TALEND_NULL>";
+
+	private final String[][] escapeChars = { { "\\\\", "\\" }, { "\\n", "\n" }, { "\\'", "\'" }, { "\\r", "\r" },
+			{ "\\f", "\f" }, { "\\b", "\b" }, { "\\t", "\t" } };
+
+	private String replaceEscapeChars(String keyValue) {
 
 		if (keyValue == null || ("").equals(keyValue.trim())) {
 			return keyValue;
@@ -6782,15 +5230,17 @@ if (execStat) {
 			int index = -1;
 			// judege if the left string includes escape chars
 			for (String[] strArray : escapeChars) {
-				index = keyValue.indexOf(strArray[0],currIndex);
-				if (index>=0) {
+				index = keyValue.indexOf(strArray[0], currIndex);
+				if (index >= 0) {
 
-					result.append(keyValue.substring(currIndex, index + strArray[0].length()).replace(strArray[0], strArray[1]));
+					result.append(keyValue.substring(currIndex, index + strArray[0].length()).replace(strArray[0],
+							strArray[1]));
 					currIndex = index + strArray[0].length();
 					break;
 				}
 			}
-			// if the left string doesn't include escape chars, append the left into the result
+			// if the left string doesn't include escape chars, append the left into the
+			// result
 			if (index < 0) {
 				result.append(keyValue.substring(currIndex));
 				currIndex = currIndex + keyValue.length();
@@ -6798,20 +5248,19 @@ if (execStat) {
 		}
 
 		return result.toString();
-    }
+	}
 
-    public Integer getErrorCode() {
-        return errorCode;
-    }
+	public Integer getErrorCode() {
+		return errorCode;
+	}
 
+	public String getStatus() {
+		return status;
+	}
 
-    public String getStatus() {
-        return status;
-    }
-
-    ResumeUtil resumeUtil = null;
+	ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- *     151682 characters generated by Talend Open Studio for Data Integration 
- *     on the 27 février 2020 22:06:09 CET
+ * 151682 characters generated by Talend Open Studio for Data Integration on the
+ * 25 mars 2020 16:34:49 CET
  ************************************************************************************************/

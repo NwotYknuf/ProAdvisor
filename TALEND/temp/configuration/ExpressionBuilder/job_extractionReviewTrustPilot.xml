@@ -1,0 +1,13 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<expression:EMFExpression xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:expression="http:///expression.ecore" id="tMap_1=>" expression="row1.idEntite.matches(&quot;[0-9]{14}&quot;) ? null : row1.idEntite">
+  <variables name="row1.auteur" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row1.date" value="null" talendType="id_Date" nullable="true"/>
+  <variables name="row1.note" value="null" talendType="id_Float" nullable="true"/>
+  <variables name="row1.commentaire" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row1.idEntite" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row1.source" value="null" talendType="id_String" nullable="true"/>
+  <variables name="false;&#xD;&#xA;if(row1.auteur.equals(&quot;annonyme&quot;)){&#xD;&#xA;Var.anon=true;&#xD;&#xA;} " value="false" talendType="id_Boolean"/>
+  <variables name="row1.idEntite.contains(&quot;[0-9]{14}&quot;) ? null : row1.idEntite " value="null" talendType="id_String"/>
+  <variables name="row1.idEntite.contains(&quot;[0-9]{14}&quot;) ? row1.idEntite : null " value="null" talendType="id_String"/>
+  <variables name="row1.idEntite.matches(&quot;[0-9]{14}&quot;) ? row1.idEntite : null " value="null" talendType="id_String"/>
+</expression:EMFExpression>

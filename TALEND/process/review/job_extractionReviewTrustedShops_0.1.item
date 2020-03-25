@@ -22,7 +22,7 @@
     <contextParameter comment="" name="BDD_Password" prompt="BDD_Password?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;HdntL3T8Wnsuasp6&quot;"/>
     <contextParameter comment="" name="BDD_Port" prompt="BDD_Port?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;33062&quot;"/>
     <contextParameter comment="" name="BDD_User" prompt="BDD_User?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;root&quot;"/>
-    <contextParameter comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;&quot;"/>
+    <contextParameter comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;D:/Projet synthèse/New&quot;"/>
   </context>
   <context confirmationNeeded="false" name="Test">
     <contextParameter comment="" name="BDD_Host" prompt="BDD_Host?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;r-pro-advisor.gq&quot;"/>
@@ -30,7 +30,7 @@
     <contextParameter comment="" name="BDD_Password" prompt="BDD_Password?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;HdntL3T8Wnsuasp6&quot;"/>
     <contextParameter comment="" name="BDD_Port" prompt="BDD_Port?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;33069&quot;"/>
     <contextParameter comment="" name="BDD_User" prompt="BDD_User?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;root&quot;"/>
-    <contextParameter comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;&quot;"/>
+    <contextParameter comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" repositoryContextId="_8kFt0BEOEeqSVsL8WijBMw" type="id_String" value="&quot;D:/Projet synthèse/New&quot;"/>
   </context>
   <parameters>
     <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" show="false"/>
@@ -282,11 +282,11 @@
       <column comment="" key="false" length="128" name="source" nullable="true" pattern="&quot;dd-MM-yyyy&quot;" precision="0" type="id_String" usefulColumn="true"/>
     </metadata>
     <nodeData xsi:type="TalendMapper:MapperData">
-      <uiProperties/>
+      <uiProperties shellMaximized="true"/>
       <varTables sizeState="INTERMEDIATE" name="Var">
         <mapperTableEntries name="anon" expression="false;&#xD;&#xA;if(row1.auteur.equals(&quot;annonyme&quot;)){&#xD;&#xA;Var.anon=true;&#xD;&#xA;} " type="id_Boolean"/>
-        <mapperTableEntries name="url" expression="row1.idEntite.contains(&quot;[0-9]{14}&quot;) ? null : row1.idEntite " type="id_String"/>
-        <mapperTableEntries name="siret" expression="row1.idEntite.contains(&quot;[0-9]{14}&quot;) ?  row1.idEntite : null " type="id_String"/>
+        <mapperTableEntries name="url" expression="row1.idEntite.matches(&quot;[0-9]{14}&quot;) ? null : row1.idEntite " type="id_String"/>
+        <mapperTableEntries name="siret" expression="row1.idEntite.matches(&quot;[0-9]{14}&quot;) ?  row1.idEntite : null " type="id_String"/>
       </varTables>
       <outputTables sizeState="INTERMEDIATE" name="source">
         <mapperTableEntries name="url" expression="row1.source " type="id_String" nullable="true"/>
@@ -624,7 +624,7 @@
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="row3" show="false"/>
   </connection>
   <subjob>
-    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="true"/>
+    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="true" show="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tPrejob_1" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="230;100;0"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="255;220;180"/>
