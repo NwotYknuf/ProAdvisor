@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendJSON="http://www.talend.org/json" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendJSON:JSONFileConnection xmi:id="__M3mUUKEEeqIq9064FFEPA" name="ExtractionTrustPilot" dataPackage="__M3mWkKEEeqIq9064FFEPA" JSONFilePath="D:/Projet synthèse/New/infosTrustPilot.com.json" Encoding="UTF-8" readbyMode="JSONPATH">
+    <schema xmi:id="__M3mUkKEEeqIq9064FFEPA" LimitBoucle="0" AbsoluteXPathQuery="$[*]">
+      <schemaTargets xmi:id="__M3mU0KEEeqIq9064FFEPA" RelativeXPathQuery="id_entite" TagName="id_entite"/>
+      <schemaTargets xmi:id="__M3mVEKEEeqIq9064FFEPA" RelativeXPathQuery="nom" TagName="nom"/>
+      <schemaTargets xmi:id="__M3mVUKEEeqIq9064FFEPA" RelativeXPathQuery="description" TagName="description"/>
+      <schemaTargets xmi:id="__M3mVkKEEeqIq9064FFEPA" RelativeXPathQuery="adresse" TagName="adresse"/>
+      <schemaTargets xmi:id="__M3mV0KEEeqIq9064FFEPA" RelativeXPathQuery="telephone" TagName="telephone"/>
+      <schemaTargets xmi:id="__M3mWEKEEeqIq9064FFEPA" RelativeXPathQuery="email" TagName="email"/>
+      <schemaTargets xmi:id="__M3mWUKEEeqIq9064FFEPA" RelativeXPathQuery="categories" TagName="categories"/>
+    </schema>
+  </TalendJSON:JSONFileConnection>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="__M3mWkKEEeqIq9064FFEPA" name="default" dataManager="__M3mUUKEEeqIq9064FFEPA">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="__M3mW0KEEeqIq9064FFEPA" id="_1rAOgEKEEeqIq9064FFEPA" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__M3mXEKEEeqIq9064FFEPA" label="id_entite" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__M3mXUKEEeqIq9064FFEPA" label="nom" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__M3mXkKEEeqIq9064FFEPA" label="description" length="1000" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__M3mX0KEEeqIq9064FFEPA" label="adresse" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__M3mYEKEEeqIq9064FFEPA" label="telephone" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__M3mYUKEEeqIq9064FFEPA" label="email" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__M3mYkKEEeqIq9064FFEPA" label="categories" length="128" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>

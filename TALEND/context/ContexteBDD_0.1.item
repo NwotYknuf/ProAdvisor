@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd">
+  <talendfile:ContextType xmi:id="_8kTJMBEOEeqSVsL8WijBMw" confirmationNeeded="false" name="Dev">
+    <contextParameter xmi:id="_8kTJMREOEeqSVsL8WijBMw" comment="" name="BDD_Host" prompt="BDD_Host?" promptNeeded="false" type="id_String" value="&quot;localhost&quot;"/>
+    <contextParameter xmi:id="_8kTJMhEOEeqSVsL8WijBMw" comment="" name="BDD_Port" prompt="BDD_Port?" promptNeeded="false" type="id_String" value="3306"/>
+    <contextParameter xmi:id="_8kTJMxEOEeqSVsL8WijBMw" comment="" name="BDD_name" prompt="BDD_name?" promptNeeded="false" type="id_String" value="&quot;projetsynthese&quot;"/>
+    <contextParameter xmi:id="_zKivEBEPEeqSVsL8WijBMw" comment="" name="BDD_Password" prompt="BDD_Password?" promptNeeded="false" type="id_String" value="&quot;&quot;"/>
+    <contextParameter xmi:id="_zKivEREPEeqSVsL8WijBMw" comment="" name="BDD_User" prompt="BDD_User?" promptNeeded="false" type="id_String" value="&quot;root&quot;"/>
+    <contextParameter xmi:id="_e2SN8FmYEeqr19FRpLjL0A" comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" type="id_String" value="&quot;D:/Projet synthèse/New&quot;"/>
+  </talendfile:ContextType>
+  <talendfile:ContextType xmi:id="_8kTJNBEOEeqSVsL8WijBMw" confirmationNeeded="false" name="Prod">
+    <contextParameter xmi:id="_8kTJNREOEeqSVsL8WijBMw" comment="" name="BDD_Host" prompt="BDD_Host?" promptNeeded="false" type="id_String" value="&quot;r-pro-advisor.gq&quot;"/>
+    <contextParameter xmi:id="_8kTJNhEOEeqSVsL8WijBMw" comment="" name="BDD_Port" prompt="BDD_Port?" promptNeeded="false" type="id_String" value="&quot;33062&quot;"/>
+    <contextParameter xmi:id="_8kTJNxEOEeqSVsL8WijBMw" comment="" name="BDD_name" prompt="BDD_name?" promptNeeded="false" type="id_String" value="&quot;projetsynthese&quot;"/>
+    <contextParameter xmi:id="_zKivEhEPEeqSVsL8WijBMw" comment="" name="BDD_Password" prompt="BDD_Password?" promptNeeded="false" type="id_String" value="&quot;HdntL3T8Wnsuasp6&quot;"/>
+    <contextParameter xmi:id="_zKivExEPEeqSVsL8WijBMw" comment="" name="BDD_User" prompt="BDD_User?" promptNeeded="false" type="id_String" value="&quot;root&quot;"/>
+    <contextParameter xmi:id="_e2SN8VmYEeqr19FRpLjL0A" comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" type="id_String" value="&quot;&quot;"/>
+  </talendfile:ContextType>
+  <talendfile:ContextType xmi:id="_8kTJOBEOEeqSVsL8WijBMw" confirmationNeeded="false" name="Test">
+    <contextParameter xmi:id="_8kTJOREOEeqSVsL8WijBMw" comment="" name="BDD_Host" prompt="BDD_Host?" promptNeeded="false" type="id_String" value="&quot;r-pro-advisor.gq&quot;"/>
+    <contextParameter xmi:id="_8kTJOhEOEeqSVsL8WijBMw" comment="" name="BDD_Port" prompt="BDD_Port?" promptNeeded="false" type="id_String" value="&quot;33069&quot;"/>
+    <contextParameter xmi:id="_8kTJOxEOEeqSVsL8WijBMw" comment="" name="BDD_name" prompt="BDD_name?" promptNeeded="false" type="id_String" value="&quot;projetsynthese&quot;"/>
+    <contextParameter xmi:id="_zKivFBEPEeqSVsL8WijBMw" comment="" name="BDD_Password" prompt="BDD_Password?" promptNeeded="false" type="id_String" value="&quot;HdntL3T8Wnsuasp6&quot;"/>
+    <contextParameter xmi:id="_zKivFREPEeqSVsL8WijBMw" comment="" name="BDD_User" prompt="BDD_User?" promptNeeded="false" type="id_String" value="&quot;root&quot;"/>
+    <contextParameter xmi:id="_e2SN8lmYEeqr19FRpLjL0A" comment="" name="FILE_path" prompt="FILE_path?" promptNeeded="false" type="id_String" value="&quot;&quot;"/>
+  </talendfile:ContextType>
+</xmi:XMI>

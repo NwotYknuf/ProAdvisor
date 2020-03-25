@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendJSON="http://www.talend.org/json" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendJSON:JSONFileConnection xmi:id="__6JYYDCDEeq_OYyf7yB7cA" name="TrustPilot" id="__6IxUDCDEeq_OYyf7yB7cA" dataPackage="__6JYbzCDEeq_OYyf7yB7cA" JSONFilePath="D:/Projet synthèse/TrustPilot.com.json" Encoding="UTF-8" readbyMode="JSONPATH">
+    <schema xmi:id="__6JYYTCDEeq_OYyf7yB7cA" LimitBoucle="0" AbsoluteXPathQuery="$[*]">
+      <schemaTargets xmi:id="__6JYYjCDEeq_OYyf7yB7cA" RelativeXPathQuery="entreprise.url" TagName="url_entreprise"/>
+      <schemaTargets xmi:id="__6JYYzCDEeq_OYyf7yB7cA" RelativeXPathQuery="entreprise.nom" TagName="nom_entreprise"/>
+      <schemaTargets xmi:id="__6JYZDCDEeq_OYyf7yB7cA" RelativeXPathQuery="entreprise.description" TagName="description_entreprise"/>
+      <schemaTargets xmi:id="__6JYZTCDEeq_OYyf7yB7cA" RelativeXPathQuery="entreprise.adresse" TagName="adresse_entreprise"/>
+      <schemaTargets xmi:id="__6JYZjCDEeq_OYyf7yB7cA" RelativeXPathQuery="entreprise.telephone" TagName="telephone_entreprise"/>
+      <schemaTargets xmi:id="__6JYZzCDEeq_OYyf7yB7cA" RelativeXPathQuery="entreprise.email" TagName="email_entreprise"/>
+      <schemaTargets xmi:id="__6JYaDCDEeq_OYyf7yB7cA" RelativeXPathQuery="entreprise.categories" TagName="categories_entreprise"/>
+      <schemaTargets xmi:id="__6JYaTCDEeq_OYyf7yB7cA" RelativeXPathQuery="review.auteur.nom" TagName="nom_auteur"/>
+      <schemaTargets xmi:id="__6JYajCDEeq_OYyf7yB7cA" RelativeXPathQuery="review.commentaire" TagName="commentaire"/>
+      <schemaTargets xmi:id="__6JYazCDEeq_OYyf7yB7cA" RelativeXPathQuery="review.source.source" TagName="source"/>
+      <schemaTargets xmi:id="__6JYbDCDEeq_OYyf7yB7cA" RelativeXPathQuery="review.source.respecteAFNOR" TagName="respecteAFNOR"/>
+      <schemaTargets xmi:id="__6JYbTCDEeq_OYyf7yB7cA" RelativeXPathQuery="review.note" TagName="note"/>
+      <schemaTargets xmi:id="__6JYbjCDEeq_OYyf7yB7cA" RelativeXPathQuery="review.date" TagName="date"/>
+    </schema>
+  </TalendJSON:JSONFileConnection>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="__6JYbzCDEeq_OYyf7yB7cA" name="default" dataManager="__6JYYDCDEeq_OYyf7yB7cA">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="__6JYcDCDEeq_OYyf7yB7cA" id="_Xu41YDCDEeq_OYyf7yB7cA" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYcTCDEeq_OYyf7yB7cA" label="url_entreprise" length="22" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYcjCDEeq_OYyf7yB7cA" label="nom_entreprise" length="14" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYczCDEeq_OYyf7yB7cA" label="description_entreprise" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYdDCDEeq_OYyf7yB7cA" label="adresse_entreprise" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYdTCDEeq_OYyf7yB7cA" label="telephone_entreprise" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYdjCDEeq_OYyf7yB7cA" label="email_entreprise" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYdzCDEeq_OYyf7yB7cA" label="categories_entreprise" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYeDCDEeq_OYyf7yB7cA" label="nom_auteur" length="20" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYeTCDEeq_OYyf7yB7cA" label="commentaire" length="520" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYejCDEeq_OYyf7yB7cA" label="source" length="14" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYezCDEeq_OYyf7yB7cA" label="respecteAFNOR" length="4" talendType="id_Boolean" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYfDCDEeq_OYyf7yB7cA" label="note" length="3" precision="2" talendType="id_Float" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="__6JYfTCDEeq_OYyf7yB7cA" label="date" length="19" talendType="id_Date" pattern="&quot;yyyy-MM-dd'T'HH:mm:ss&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>
